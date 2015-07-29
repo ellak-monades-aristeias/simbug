@@ -9,7 +9,25 @@ A SIMBUG is considered to have the following workflow:
 
 
 ##Entities
+###Game
 
+
+###Player(a)
+A humam or non-human subject that interacts with the game. It must be identified by a [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+
+###Player Choices Variables
+
+###External Data
+
+###Random Numbers
+
+###Configuration Data
+
+###Algorithm
+
+###User State Variables
+
+###World State Variables
 
 ##Definition File
 
