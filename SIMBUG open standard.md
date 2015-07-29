@@ -22,7 +22,13 @@ Variables can be any type of:
 * Integer
 * String
 * Float
-There are two type of variables: Player Choices and External Variables.
+
+There are three type of variables, each with different semantics: 
+
+1. Player Choices Variables
+2. External Variables
+3. User State Variables 
+4. World State Variables
 
 ###Parameters
 Place-holders for things that their value will not change during a game.
@@ -30,6 +36,7 @@ Parameters can be any type of:
 * Integer
 * String
 * Float
+
 A Parameter can either have an initial value or an initial assignment function.
 
 ###Player Choices Variables
@@ -42,20 +49,25 @@ For example this could refer to a call to a REST API from another server in the 
 For each external variable an assignment function should be declared.
 
 
-###Random Numbers
+###Random Number Generators
+Many Random Number Generators (RNG) can be defined. 
+Each of them must return a float value in [0,1] and a calculation function should be declared.
 
 
 ###Configuration Parameters
+Parameters that are defined for a game.
 
+###Choices-To-State Algorithm
+This is the algorithm defining the feedback loop between the player choices and their state and the state of the world
 
-###Algorithm
-
-
-###User State Variables
-
+###User State Variables 
+Variables that are attached to a player but are not directly affected by him. 
+They represent the state of any player.
+Their semantics are the results of (all) players actions to a specific player. 
 
 ###World State Variables
-
+Variables that are attached to the whole game.
+Their semantics are the results of (all) players actions to a specific aspect of the game environment. 
 
 ##Definition File
-
+A SIMBUG game can be fully represented by a definition file (DeF). 
