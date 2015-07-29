@@ -12,28 +12,40 @@ A SIMBUG is considered to have the following workflow:
 ###Game
 One realization of a definition file
 
-###Player(a)
+###Player(s)
 A human or non-human subject that interacts with the game. It must be identified by a [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 
 ###Variables
-Place-holders for things (integers, float, text) that change during the simulation
+Place-holders for things that their values might change during the simulation. 
+Variables can be any type of:
+* Integer
+* String
+* Float
+There are two type of variables: Player Choices and External Variables.
 
 ###Parameters
-Place-holders for fixed things that are not subject to change from the players or the simulation itself
+Place-holders for things that their value will not change during a game.
+Parameters can be any type of:
+* Integer
+* String
+* Float
+A Parameter can either have an initial value or an initial assignment function.
 
 ###Player Choices Variables
 Variables that within each turn every player gives values to. 
 
 
-###External Parameters
-
+###External Variables
+Variables that their value is calculated from an outside procedure. 
+For example this could refer to a call to a REST API from another server in the web.
+For each external variable an assignment function should be declared.
 
 
 ###Random Numbers
 
 
-###Configuration Data
+###Configuration Parameters
 
 
 ###Algorithm
