@@ -16,6 +16,7 @@ One realization of a definition file
 A human or non-human subject that interacts with the game. It must be identified by a [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 
+
 ###Variables
 Place-holders for things that their values might change during the simulation. 
 Variables can be any type of:
@@ -23,7 +24,7 @@ Variables can be any type of:
 * String
 * Float
 
-There are three type of variables, each with different semantics: 
+Several types of variables exist, each with different semantics: 
 
 1. Player Choices Variables
 2. External Variables
@@ -71,3 +72,5 @@ Their semantics are the results of (all) players actions to a specific aspect of
 
 ##Definition File
 A SIMBUG game can be fully represented by a definition file (DeF). 
+In the definition file several special placeholders can be used:
+* {JAVA} ... {/JAVA}: java code is included

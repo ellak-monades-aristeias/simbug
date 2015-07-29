@@ -1,0 +1,70 @@
+<configuration>
+	<parameter>
+		<name>Config1</name>
+		<type>Integer</type>
+		<value>15</value>
+	</parameter>
+	
+	<parameter>
+		<name>Config2</name>
+		<type>Integer</type>
+		<value>25</value>
+	</parameter>
+</configuration>
+
+
+<random_number_generators>
+	<rng>
+		<name>uniform</name>
+		<function>
+			<JAVA>
+				Random rnd = new Random();
+				return rnd.next();
+			</JAVA>
+		</function>
+	</rng>
+</random_number_generators>
+
+
+<variables>
+	<player_choices>
+		<variable>
+			<name>Choice1</name>
+			<type>Integer</type>
+		</variable>
+		
+		<variable>
+			<name>Choice2</name>
+			<type>Integer</type>
+		</variable>
+	</player_choices>
+	
+	<user_state>
+		<variable>
+			<name>UserState1</name>
+			<type>Integer</type>
+		</variable>
+		
+		<variable>
+			<name>UserState2</name>
+			<type>Integer</type>
+		</variable>
+	</user_state>
+	
+	<world_state>
+		<variable>
+			<name>WorldState1</name>
+			<type>Integer</type>
+		</variable>
+	</world_state>
+	
+	<external>
+	</external>
+</variables>
+
+
+<choices_to_state_algorithm>
+	UserState1 = Choice1 + Choice2
+	UserState2 = Choice2
+	WorldState1 = UserState1 - UserState2 
+</choices_to_state_algorithm>
