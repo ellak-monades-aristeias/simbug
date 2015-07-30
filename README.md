@@ -8,8 +8,7 @@ More specifically, SIMBUG will include an open standard and a server implementat
 In order to do so, an [open standard](https://github.com/dkremmydas/simbug/blob/master/SIMBUG%20open%20standard.md) will be made publicly available and an open source JAVA RESTful server will be crafted
 
 ##Acknowledgments
-This repository is about an [ELLAAK](https://ellak.gr/) funded project aiming at developing an open standard for computerized simulation business games (SIMBUG).
-The project is consisted of three work packages
+SIMBUG was initiated by an [ELLAAK](https://ellak.gr/) funded project. The original project was consisted of three work-packages
 
 1. Compiling a computerized business games open standard
 2. Developing a RESTful server that serves SIMBUGs, following the developed standard
