@@ -7,8 +7,11 @@ A SIMBUG is considered to have the following workflow:
 
 
 ##Entities
+###Game Definition
+The business logic
+
 ###Game
-One realization of a definition file
+One realization of a Game Definition file
 
 ###Player(s)
 A human or non-human subject that interacts with the game. It must be identified by a [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)
