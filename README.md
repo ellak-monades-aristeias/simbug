@@ -6,7 +6,9 @@ A SIMBUG is an acronym for a *Simulation Business Game*. SIMBUG is related to **
 More specifically, SIMBUG will include an open standard and a server implementation aiming at providing an easy way for educators to setup a simulation business game. Those two components of SIMBUG focus on the "business logic" and "data storage" layers (of the [three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)) and leave the implementation of the "presentation layer" to the educator side. 
 
 ##Motivation and Objective
-Creating a simulation business game shoudl follow several design principles. Furthermore several computing and programming skills are necessary. We want to seperate those two concerns and give the ability to educators all over the world to focus on their main skill, i.e designing the game. 
+Creating a simulation business game should follow several design principles. Furthermore several computing and programming skills are necessary. We want to seperate those two concerns and give the ability to educators all over the world to focus on their main skill, i.e designing the game. 
+
+![simbug_architecture](https://cloud.githubusercontent.com/assets/13544631/8997250/ef670784-3727-11e5-84d2-f407fe3f89b6.png)
 
 In order to do so, we have setup a 
 
