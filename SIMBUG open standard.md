@@ -3,7 +3,7 @@
 ##What a SIMBUG is
 A SIMBUG is considered to have the following workflow:
 
-![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8970933/339c6ed6-3655-11e5-92d7-e32dc0f66b1e.png)
+![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8996812/bfa27e74-3723-11e5-812e-8e344d365688.png)
 
 
 ##Entities
