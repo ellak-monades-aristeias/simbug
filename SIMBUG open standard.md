@@ -1,7 +1,11 @@
 #SIMBUG Open Standard
 
 ##What a SIMBUG is
-A SIMBUG is an acronym for a *Computerized turn-based Simulation Business Game*.
+A SIMBUG is an acronym for a *Computerized turn-based Simulation Business Game*. SIMBUG is targeting **serious or applied games**, i.e. games designed for a primary purpose other than pure entertainment.
+
+Furthermore SIMBUG will include an open standard and a server implementation aiming at providing an easy way for educators to setup a simulation business game.
+
+We focus on the "business logic" and "data storage" and leave the implementation of the "presentation layer" to third party. 
 
 A SIMBUG is considered to have the following workflow:
 
