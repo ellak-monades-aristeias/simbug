@@ -1,22 +1,18 @@
 #SIMBUG Open Standard
 
-##What a SIMBUG is
-A SIMBUG is considered to have the following workflow:
+##Open Standard Components
+A SIMBUG is composed of **structural static elements** and of a **dynamic aspect** concering the communication of the game's business logic with the presentation layer.
+
+The structural elements are the entities of the business logic definition while the communication aspect will deal with the API annotations of the RESTful server.
+
+It is necessary to clarify the following definitions from the beggining. *Game* will refer to the business logic and *Game realization* will pertain to a play-cycle of a game. A *Player* will be a human or non-human subject that interacts with the game realization through the presentation layer.
+
+IMBUG is considered to have the following workflow:
 
 ![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8996812/bfa27e74-3723-11e5-812e-8e344d365688.png)
 
 
-##Entities
-###Game Definition
-The business logic
-
-###Game
-One realization of a Game Definition file
-
-###Player(s)
-A human or non-human subject that interacts with the game. It must be identified by a [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)
-
-
+##Business Logic Definition Entities
 
 ###Variables
 Place-holders for things that their values might change during the simulation. 
@@ -75,3 +71,6 @@ Their semantics are the results of (all) players actions to a specific aspect of
 A SIMBUG game can be fully represented by a definition file (DeF). 
 In the definition file several special placeholders can be used:
 * {JAVA} ... {/JAVA}: java code is included
+* 
+
+##Communication with the presentation layer (API annotations)
