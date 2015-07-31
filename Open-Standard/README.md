@@ -14,19 +14,24 @@ It is necessary to clarify the following definitions from the beggining.
 
 ##Business Logic Definition Entities
 
-
-
 A Simulation Business Game (SIMBUG) is considered to be sufficiently modelled by the workflow of th following figure:
 
 ![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8996812/bfa27e74-3723-11e5-812e-8e344d365688.png)
 
 Several players are making several choices. Those choices are treated as input, among other things (external ddata, random numbers and configuration data) in order to update some (user or/and world) state variables through some kind of algorithm.
 
+Thus the entities of the figure above are what is needed to be defined by a game designer in order to completely describe the business logic og the game.
+
 
 ###Reserved Words
-####${NUM_PLAYERS} : Number of Players 
-####${CUR_TURN} : Current Turn Count 
-####${TOTAL_TURNS} : Current Turn Count 
+####${NUM_PLAYERS}
+Number of Players 
+
+####${CUR_TURN}
+Current Turn Count 
+
+####${TOTAL_TURNS}
+Current Turn Count 
 
 ###Variables
 Place-holders for things that their values might change during the simulation. 
