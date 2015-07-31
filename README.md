@@ -3,11 +3,11 @@
 ##What is SIMBUG
 A SIMBUG is an acronym for a *Simulation Business Game*. SIMBUG is related to [serious or applied games](https://en.wikipedia.org/wiki/Serious_game), i.e. games designed for a primary purpose other than pure entertainment and are used to enhance learning in business education.
 
-More specifically, SIMBUG will include an open standard and a server implementation aiming at providing an easy way for educators to setup a simulation business game. Those two components of SIMBUG focus on the "business logic" and "data storage" layers (of the [three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)) and leave the implementation of the "presentation layer" to the educator side. 
+More specifically, SIMBUG will include an open standard and a server implementation aiming at providing an easy way for educators to setup a simulation business game. Those two components of SIMBUG focus on the "business logic" and "data storage" layers (of the [three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)) and leave the implementation of the "presentation layer" to the educator side. SIMBUG is the subsystems included in red line in the following figure.
 
-![simbug_architecture](https://cloud.githubusercontent.com/assets/13544631/8997250/ef670784-3727-11e5-84d2-f407fe3f89b6.png)
+![simbug_architecture](https://cloud.githubusercontent.com/assets/13544631/9016385/802dad20-37d9-11e5-9734-c3f99318b96b.png)
 
-As it is shown in the figure above, the educator will be responsible for providing the "business logic" of the game through an easy-to-write definition file. He will be also responsible for designing and implementing the presentation layer (e.g. the web forms that the players will complete), although in the future a default presentation layer will be offered. Then the Restful server will be responsible for implementing the game's business logic and will also cater the data storage needs that actually depend on the former. 
+Hence the educator will be responsible for providing the "business logic" of the game through an easy-to-write definition file. He will be also responsible for designing and implementing the presentation layer (e.g. the web forms that the players will complete), although in the future a default presentation layer will be offered. Then the Restful server will be responsible for implementing the game's business logic and will also cater the data storage needs that actually depend on the former. 
 
 ##Motivation and Objective
 Creating a simulation business game should follow several educational design principles but also requires several computing and programming skills. We want to seperate those two concerns and give the ability to educators all over the world to focus on their main skill, i.e designing the game. 
