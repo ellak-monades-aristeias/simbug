@@ -7,21 +7,27 @@ The structural elements are the entities of the business logic definition while 
 
 It is necessary to clarify the following definitions from the beggining. 
 
-**Game** will refer to the business logic and will be fully defined in a definition file.
-
-**Game realization** will pertain to a play-cycle of a game. 
-
-A **Player** will be a human or non-human subject that interacts with the game realization through the presentation layer.
-
-
-SIMBUG is considered to have the following workflow:
-
-![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8996812/bfa27e74-3723-11e5-812e-8e344d365688.png)
+* **Game** will refer to the business logic and will be fully defined in a definition file.
+* **Game realization** will pertain to a play-cycle of a game. 
+* A **Player** will be a human or non-human subject that interacts with the game realization through the presentation layer.
 
 
 ##Business Logic Definition Entities
 
-###Reserved 
+
+
+A Simulation Business Game (SIMBUG) is considered to be sufficiently modelled by the workflow of th following figure:
+
+![simbug_pattern](https://cloud.githubusercontent.com/assets/13544631/8996812/bfa27e74-3723-11e5-812e-8e344d365688.png)
+
+Several players are making several choices. Those choices are treated as input, among other things (external ddata, random numbers and configuration data) in order to update some (user or/and world) state variables through some kind of algorithm.
+
+
+###Reserved Words
+####${NUM_PLAYERS} : Number of Players 
+####${CUR_TURN} : Current Turn Count 
+####${TOTAL_TURNS} : Current Turn Count 
+
 ###Variables
 Place-holders for things that their values might change during the simulation. 
 Variables can be any type of:
