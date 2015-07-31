@@ -13,7 +13,7 @@ So, in terms of the [three-tier architecture](https://en.wikipedia.org/wiki/Mult
 
 Hence the educator will be responsible for providing the "business logic" of the game through an easy-to-write definition file. He will be also responsible for designing and implementing the presentation layer (e.g. the web forms that the players will complete), although in the future a default presentation layer will be offered. Then the Restful server will be responsible for implementing the game's business logic and will also cater the data storage needs that actually depend on the former. 
 
-An [open standard](https://github.com/dkremmydas/simbug/blob/master/SIMBUG%20open%20standard.md) will be made publicly available and an open source JAVA RESTful server will be crafted.
+An [open standard](https://github.com/dkremmydas/simbug/tree/master/Open-Standard) will be made publicly available and an open source JAVA RESTful server will be crafted.
 
 
 ##Acknowledgments
