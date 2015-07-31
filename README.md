@@ -3,18 +3,17 @@
 ##What is SIMBUG
 A SIMBUG is an acronym for a *Simulation Business Game*. SIMBUG is related to [serious or applied games](https://en.wikipedia.org/wiki/Serious_game), i.e. games designed for a primary purpose other than pure entertainment and are used to enhance learning in business education.
 
-More specifically, SIMBUG will include an open standard and a server implementation aiming at providing an easy way for educators to setup a simulation business game. Those two components of SIMBUG focus on the "business logic" and "data storage" layers (of the [three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture)) and leave the implementation of the "presentation layer" to the educator side. SIMBUG is actually all the subsystems included in red line in the following figure.
+Creating a simulation business game should follow several educational design principles but also requires several computing and programming skills. We want to seperate those two concerns and give the ability to educators all over the world to focus on their main skill, i.e designing the game. 
 
-So SIMBUG is composed of **structural static elements** (business logic and data layer) and of a **dynamic aspect** concering the communication of the game's business logic with the presentation layer (the API).
+SIMBUG is actually all the subsystems included in red line in the following figure.
 
 ![simbug_architecture](https://cloud.githubusercontent.com/assets/13544631/9016385/802dad20-37d9-11e5-9734-c3f99318b96b.png)
 
+So, in terms of the [three-tier architecture](https://en.wikipedia.org/wiki/Multitier_architecture), SIMBUG is composed of **structural static elements** (business logic and data layer) and of a **dynamic aspect** concering the communication of the game's business logic with the presentation layer (the API).
+
 Hence the educator will be responsible for providing the "business logic" of the game through an easy-to-write definition file. He will be also responsible for designing and implementing the presentation layer (e.g. the web forms that the players will complete), although in the future a default presentation layer will be offered. Then the Restful server will be responsible for implementing the game's business logic and will also cater the data storage needs that actually depend on the former. 
 
-##Motivation and Objective
-Creating a simulation business game should follow several educational design principles but also requires several computing and programming skills. We want to seperate those two concerns and give the ability to educators all over the world to focus on their main skill, i.e designing the game. 
-
-In order to do so, an [open standard](https://github.com/dkremmydas/simbug/blob/master/SIMBUG%20open%20standard.md) will be made publicly available and an open source JAVA RESTful server will be crafted
+An [open standard](https://github.com/dkremmydas/simbug/blob/master/SIMBUG%20open%20standard.md) will be made publicly available and an open source JAVA RESTful server will be crafted.
 
 
 ##Acknowledgments
