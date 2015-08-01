@@ -24,14 +24,26 @@ Thus the entities of the figure above are what is needed to be defined by a game
 
 
 ###Reserved Words
-####${NUM_PLAYERS}
+####NUM_PLAYERS()
 Number of Players 
 
-####${CUR_TURN}
+####CUR_TURN()
+Function that returns the Current Turn Count 
+
+####TOTAL_TURNS()
 Current Turn Count 
 
-####${TOTAL_TURNS}
-Current Turn Count 
+####AVERAGE()
+Function that calculates the average of a player variable over all players
+
+####MIN(), MAX()
+Function that calculates the minimum/maximum of a player variable over all players
+
+####TURN_WORLD_VALUE(variable_name,turn_count)
+Function that return the value of a world variable on a specific turn count. Return zero if the turn count is not yet reached in the game realization.
+
+####PLAYER_VALUE(player_variable_name,turn_count,player_uuid)
+Function that returns the value of a user variable
 
 ###Variables
 Place-holders for things that their values might change during the simulation. 
