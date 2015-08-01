@@ -59,7 +59,7 @@
 
 
 <choices_to_state_algorithm>
-	UserState1 = Choice1 + Choice2
-	UserState2 = Choice2
+	UserState1 = AVERAGE(Choice1) + Choice2
+	UserState2 = Choice1 + AVERAGE(Choice2)
 	WorldState1 = UserState1 - UserState2 
 </choices_to_state_algorithm>
