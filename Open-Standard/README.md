@@ -92,4 +92,7 @@ In the definition file several special placeholders can be used:
 * {JAVA} ... {/JAVA}: java code is included
 * 
 
-##Communication with the presentation layer (API annotations)
+##Communication with the presentation elayer (API annotations)
+###/initGAME
+POST variables: 
+players[], array of uuids
