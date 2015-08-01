@@ -102,7 +102,25 @@ Function that return the value of a world variable on a specific turn count. Ret
 ###PLAYER_VALUE(player_variable_name,turn_count,player_uuid)
 Function that returns the value of a user variable
 
-##Communication with the presentation elayer (API annotations)
-###/initGAME
+##Communication with the presentation layer (API annotations)
+###/initGAME/UUID_of_GAME
 POST variables: 
-players[], array of uuids
+* players[], array of uuids
+* definition file (xml)
+
+
+###/advanceTurn/UUID_of_GAME
+
+###/submitChoices/UUID_of_GAME
+POST variables:
+* JSON string {player_uuid: array[choice_variable_name: value]}
+Returns:
+* "ok"
+
+###/getWorldState/UUID_of_GAME
+Returns:
+* JSON string of world variables {world_state_variable_name: value]}
+
+###/getPlayerState/UUID_of_GAME/UUID_of_PLAYER
+Returns:
+* JSON string of world variables {user_state_variable_name: value]}
