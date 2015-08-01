@@ -1,14 +1,14 @@
 <configuration>
 	<parameter>
-		<name>Config1</name>
-		<type>Integer</type>
-		<value>15</value>
+		<name>config1</name>
+		<value>int config1 = 4;</name>
+		<comment>The first configuration parameter</comment>
 	</parameter>
 	
 	<parameter>
-		<name>Config2</name>
-		<type>Integer</type>
-		<value>25</value>
+		<name>config2</name>
+		<expression>int config2 = 4;</name>
+		<comment>The second configuration parameter</comment>
 	</parameter>
 </configuration>
 
@@ -16,12 +16,7 @@
 <random_number_generators>
 	<rng>
 		<name>uniform</name>
-		<function>
-			<JAVA>
-				Random rnd = new Random();
-				return rnd.next();
-			</JAVA>
-		</function>
+		<expression>return Math.random();</expression> 
 	</rng>
 </random_number_generators>
 
@@ -29,8 +24,8 @@
 <variables>
 	<player_choices>
 		<variable>
-			<name>Choice1</name>
-			<type>Integer</type>
+			<name>choice1</name>
+			<expression>Integer</expression>
 		</variable>
 		
 		<variable>
