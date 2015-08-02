@@ -67,6 +67,9 @@ Parameters that are defined for a game.
 ###Choices-To-State Algorithm
 This is the algorithm defining the feedback loop between the player choices and their state and the state of the world
 The algorithm is written in a javascript-like syntax.
+It contains two parts:
+* the world state update that is run once
+* the players state updates, run for every user
 
 ###User State Variables 
 Variables that are attached to a player but are not directly affected by him. 
