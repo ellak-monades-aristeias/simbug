@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="definition">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="configuration">
+          <xs:complexType>
+              <xs:element name="parameter" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:all>
+                    
+                    <xs:element type="xs:string" name="string">
+                    	 <xs:complexType>
+                    	 	<xs:all>
+                    	 		 <xs:element type="xs:string" name="name"  maxOccurs="1" minOccurs="1" />
+                    	 		 <xs:element type="xs:string" name="value"  maxOccurs="1" minOccurs="1" />
+                    	 		 <xs:element type="xs:string" name="comment"  maxOccurs="1" minOccurs="0" />
+                    	 	</xs:all>
+                    	 </xs:complexType>
+                    </xs:element>
+                    
+                     <xs:element type="xs:integer" name="integer">
+                    	 <xs:complexType>
+                    	 	<xs:all>
+                    	 		<xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    	 		<xs:element type="xs:integer" name="value"  maxOccurs="1" minOccurs="1" />
+                    	 		 <xs:element type="xs:string" name="comment"  maxOccurs="0" minOccurs="1" />
+                    	 	</xs:all>
+                    	 </xs:complexType>
+                    </xs:element>
+
+                  </xs:all>
+                </xs:complexType>
+              </xs:element>
+          </xs:complexType>
+        </xs:element>
+        
+        
+        
+        <xs:element name="random_number_generators">
+          <xs:complexType>
+              <xs:element name="random_number_generator">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element type="xs:string" name="name"  maxOccurs="1" minOccurs="1"  />
+                    <xs:element type="xs:string" name="expression"  maxOccurs="1" minOccurs="1"  />
+                  </xs:all>
+                </xs:complexType>
+              </xs:element>
+          </xs:complexType>
+        </xs:element>
+        
+        
+        <xs:element name="variables">
+          <xs:complexType>
+            <xs:all>
+            
+              <xs:element name="player_choices">
+                <xs:complexType>
+                  <xs:all>
+                  
+                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                    
+                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                  </xs:all>
+                </xs:complexType>
+              </xs:element>
+              
+              
+              
+              
+              
+              <xs:element name="user_state">
+                <xs:complexType>
+                  <xs:all>
+                  
+                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                    
+                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                  </xs:all>
+                </xs:complexType>
+                
+                
+              </xs:element>
+              <xs:element name="world_state">
+               <xs:complexType>
+                  <xs:all>
+                  
+                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                    
+                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
+                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
+                    </xs:element>
+                    
+                  </xs:all>
+                </xs:complexType>
+        </xs:element>
+        
+        
+        
+        <xs:element name="choices_to_state_algorithm">
+          <xs:complexType>
+            <xs:all>
+              	<xs:element type="xs:string" name="players" >
+                        <xs:element type="xs:string" name="expression" maxOccurs="1" minOccurs="1" />
+                 </xs:element>
+              <xs:element type="xs:string" name="world">
+              	 <xs:element type="xs:string" name="expression" maxOccurs="1" minOccurs="1" />
+              </xs:element>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
