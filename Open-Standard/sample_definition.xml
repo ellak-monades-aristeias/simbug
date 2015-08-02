@@ -1,23 +1,25 @@
 <configuration>
 	<parameter>
 		<name>config1</name>
-		<value>int config1 = 4;</name>
+		<type>Integer</type>
+		<value>4</name>
 		<comment>The first configuration parameter</comment>
 	</parameter>
 	
 	<parameter>
 		<name>config2</name>
-		<expression>int config2 = 4;</name>
+		<type>Integer</type>
+		<value>5</value>
 		<comment>The second configuration parameter</comment>
 	</parameter>
 </configuration>
 
 
 <random_number_generators>
-	<rng>
+	<random_number_generator>
 		<name>uniform</name>
 		<expression>return Math.random();</expression> 
-	</rng>
+	</random_number_generator>
 </random_number_generators>
 
 
@@ -25,30 +27,30 @@
 	<player_choices>
 		<variable>
 			<name>choice1</name>
-			<expression>Integer</expression>
+			<type>Integer</type>
 		</variable>
 		
 		<variable>
-			<name>Choice2</name>
+			<name>choice2</name>
 			<type>Integer</type>
 		</variable>
 	</player_choices>
 	
 	<user_state>
 		<variable>
-			<name>UserState1</name>
+			<name>userState1</name>
 			<type>Integer</type>
 		</variable>
 		
 		<variable>
-			<name>UserState2</name>
+			<name>userState2</name>
 			<type>Integer</type>
 		</variable>
 	</user_state>
 	
 	<world_state>
 		<variable>
-			<name>WorldState1</name>
+			<name>worldState1</name>
 			<type>Integer</type>
 		</variable>
 	</world_state>
@@ -59,7 +61,11 @@
 
 
 <choices_to_state_algorithm>
-	UserState1 = AVERAGE(Choice1) + Choice2
-	UserState2 = Choice1 + AVERAGE(Choice2)
-	WorldState1 = UserState1 - UserState2 
+	<players>
+		userState1 = AVERAGE(Choice1) + Choice2;
+		userState2 = Choice1 + AVERAGE(Choice2);	
+	</players>
+	<world>
+		worldState1 = UserState1 - UserState2;	
+	</world>
 </choices_to_state_algorithm>
