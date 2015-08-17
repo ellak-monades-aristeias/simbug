@@ -1,141 +1,107 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="definition">
-    <xs:complexType>
-      <xs:all>
-        <xs:element name="configuration">
-             
-             <xs:complexType>
-          	  <xs:sequence  maxOccurs="unbounded" minOccurs="0">
-          	  
-          	  
-	          	  <xs:element name="parameter">
-	                <xs:complexType>
-	                  <xs:sequence>  
-	                    <xs:element type="xs:string" name="string">
-	                    	 <xs:complexType>
-	                    	 	<xs:all>
-	                    	 		 <xs:element type="xs:string" name="name"  maxOccurs="1" minOccurs="1" />
-	                    	 		 <xs:element type="xs:string" name="value"  maxOccurs="1" minOccurs="1" />
-	                    	 		 <xs:element type="xs:string" name="comment"  maxOccurs="1" minOccurs="0" />
-	                    	 	</xs:all>
-	                    	 </xs:complexType>
-	                    </xs:element>
-	                    </xs:sequence>
-	                    
-	                     <xs:sequence maxOccurs="unbounded" minOccurs="0" >  
-	                     <xs:element type="xs:integer" name="integer">
-	                    	 <xs:complexType>
-	                    	 	<xs:all>
-	                    	 		<xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-	                    	 		<xs:element type="xs:integer" name="value"  maxOccurs="1" minOccurs="1" />
-	                    	 		 <xs:element type="xs:string" name="comment"  maxOccurs="0" minOccurs="1" />
-	                    	 	</xs:all>
-	                    	 </xs:complexType>
-	                    </xs:element>
-	                    </xs:sequence>
-	
-	                  
-	                </xs:complexType>
-	              </xs:element>
-          	  </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        
-        
-        
-        <xs:element name="random_number_generators">
-          <xs:complexType>
-              <xs:element name="random_number_generator">
-                <xs:complexType>
-                  <xs:all>
-                    <xs:element type="xs:string" name="name"  maxOccurs="1" minOccurs="1"  />
-                    <xs:element type="xs:string" name="expression"  maxOccurs="1" minOccurs="1"  />
-                  </xs:all>
-                </xs:complexType>
-              </xs:element>
-          </xs:complexType>
-        </xs:element>
-        
-        
-        <xs:element name="variables">
-          <xs:complexType>
-            <xs:all>
-            
-              <xs:element name="player_choices">
-                <xs:complexType>
-                  <xs:all>
-                  
-                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                    
-                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                  </xs:all>
-                </xs:complexType>
-              </xs:element>
-              
-              
-              
-              
-              
-              <xs:element name="user_state">
-                <xs:complexType>
-                  <xs:all>
-                  
-                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                    
-                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                  </xs:all>
-                </xs:complexType>
-                
-                
-              </xs:element>
-              <xs:element name="world_state">
-               <xs:complexType>
-                  <xs:all>
-                  
-                    <xs:element name="string" type="xs:string" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                    
-                      <xs:element name="integer" type="xs:integer" maxOccurs="unbounded" minOccurs="0">
-                          <xs:element type="xs:string" name="name" maxOccurs="1" minOccurs="1" />
-                    </xs:element>
-                    
-                  </xs:all>
-                </xs:complexType>
-        </xs:element>
-        
-        
-        
-        <xs:element name="choices_to_state_algorithm">
-          <xs:complexType>
-            <xs:all>
-              	<xs:element type="xs:string" name="players" >
-                        <xs:element type="xs:string" name="expression" maxOccurs="1" minOccurs="1" />
-                 </xs:element>
-              <xs:element type="xs:string" name="world">
-              	 <xs:element type="xs:string" name="expression" maxOccurs="1" minOccurs="1" />
-              </xs:element>
-            </xs:all>
-          </xs:complexType>
-        </xs:element>
-      </xs:all>
-    </xs:complexType>
-  </xs:element>
-  </xs:all>
+
+  <xs:complexType name="ParameterType">
+  	<xs:sequence>
+		<xs:element name="Name" type="xs:string"></xs:element>
+		<xs:element name="Type" type="dataType"></xs:element>
+		<xs:element name="Value" type="xs:string"></xs:element>
+	</xs:sequence>
   </xs:complexType>
+  
+  <xs:complexType name="VariableType">
+  	<xs:sequence>
+		<xs:element name="Name" type="xs:string"></xs:element>
+		<xs:element name="Type" type="dataType"></xs:element>
+	</xs:sequence>
+  </xs:complexType>
+  
+   <xs:complexType name="ExternalDataType">
+	   <xs:complexContent>
+	   	<xs:extension base="VariableType">
+	   		<xs:sequence>
+	   			<xs:element name="uriLocation" type="xs:anyURI" />
+	   		</xs:sequence>
+	   	</xs:extension>
+	   </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="RandomNumberGeneratorType">
+  	<xs:sequence>
+		<xs:element name="Name" type="xs:string"></xs:element>
+		<xs:element name="Expression" type="xs:string"></xs:element>
+	</xs:sequence>
+  </xs:complexType>
+  
+  
+ 
+  <xs:simpleType name="dataType">
+  	<xs:restriction base="xs:string">
+  		<xs:enumeration value="Integer" />
+  		<xs:enumeration value="Float" />
+  		<xs:enumeration value="String" />
+  	</xs:restriction>
+  </xs:simpleType>
+  
+  
+  
+  
+  <xs:element name="Definitions">
+    <xs:complexType>
+    	<xs:all>
+
+    		<xs:element name="Configuration"><xs:complexType><xs:all>
+						<xs:element name="Parameter" type="ParameterType">
+						</xs:element>
+						</xs:all></xs:complexType>
+    		</xs:element>
+
+			<xs:element name="PlayerChoiceVariables">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="PlayerChoiceVariable" type="dataType" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="UserStateVariables">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="UserStateVariable" type="dataType" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="WorldStateVariables">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="WorldStateVariable" type="dataType" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="ExternalVariables">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="PlayerChoiceVariable" type="ExternalDataType" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="RandomNumberGenerators">
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="RandomNumberGenerator" type="RandomNumberGeneratorType" />
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+			
+			<xs:element name="ChoicesToStateAlgorithm" type="xs:string">
+				
+			</xs:element>			
+			
+
+    	</xs:all>
+    </xs:complexType>
 </xs:element>
 </xs:schema>
