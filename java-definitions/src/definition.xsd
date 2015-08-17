@@ -3,16 +3,16 @@
 
   <xs:complexType name="ParameterType">
   	<xs:sequence>
-		<xs:element name="Name" type="xs:string"></xs:element>
-		<xs:element name="Type" type="dataType"></xs:element>
-		<xs:element name="Value" type="xs:string"></xs:element>
+		<xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+		<xs:element name="Type" type="dataType" minOccurs="1" maxOccurs="1"></xs:element>
+		<xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
 	</xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="VariableType">
   	<xs:sequence>
-		<xs:element name="Name" type="xs:string"></xs:element>
-		<xs:element name="Type" type="dataType"></xs:element>
+		<xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+		<xs:element name="Type" type="dataType" minOccurs="1" maxOccurs="1"></xs:element>
 	</xs:sequence>
   </xs:complexType>
   
@@ -20,7 +20,7 @@
 	   <xs:complexContent>
 	   	<xs:extension base="VariableType">
 	   		<xs:sequence>
-	   			<xs:element name="uriLocation" type="xs:anyURI" />
+	   			<xs:element name="uriLocation" type="xs:anyURI"  minOccurs="1" maxOccurs="1" />
 	   		</xs:sequence>
 	   	</xs:extension>
 	   </xs:complexContent>
@@ -28,8 +28,8 @@
   
   <xs:complexType name="RandomNumberGeneratorType">
   	<xs:sequence>
-		<xs:element name="Name" type="xs:string"></xs:element>
-		<xs:element name="Expression" type="xs:string"></xs:element>
+		<xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
+		<xs:element name="Expression" type="xs:string" minOccurs="1" maxOccurs="1"></xs:element>
 	</xs:sequence>
   </xs:complexType>
   
@@ -59,7 +59,7 @@
 			<xs:element name="PlayerChoiceVariables">
 				<xs:complexType>
 					<xs:all>
-						<xs:element name="PlayerChoiceVariable" type="dataType" />
+						<xs:element name="PlayerChoiceVariable" type="VariableType" />
 					</xs:all>
 				</xs:complexType>
 			</xs:element>
@@ -67,7 +67,7 @@
 			<xs:element name="UserStateVariables">
 				<xs:complexType>
 					<xs:all>
-						<xs:element name="UserStateVariable" type="dataType" />
+						<xs:element name="UserStateVariable" type="VariableType" />
 					</xs:all>
 				</xs:complexType>
 			</xs:element>
@@ -75,7 +75,7 @@
 			<xs:element name="WorldStateVariables">
 				<xs:complexType>
 					<xs:all>
-						<xs:element name="WorldStateVariable" type="dataType" />
+						<xs:element name="WorldStateVariable" type="VariableType" />
 					</xs:all>
 				</xs:complexType>
 			</xs:element>
