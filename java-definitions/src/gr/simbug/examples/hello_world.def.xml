@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../definition.xsd">
+  <Configuration>
+    
+  </Configuration>
+  <PlayerChoiceVariables>
+    <PlayerChoiceVariable>
+      <Name>numberChoice</Name>
+      <Type>Integer</Type>
+    </PlayerChoiceVariable>
+  </PlayerChoiceVariables>
+  <UserStateVariables>
+    <UserStateVariable>
+      <Name>roundDistanceFromAverage</Name>
+      <Type>Float</Type>
+    </UserStateVariable>
+    <UserStateVariable>
+    	<Name>roundRank</Name>
+    	<Type>Float</Type>
+		
+    </UserStateVariable>
+    <UserStateVariable>
+      <Name>overallScore</Name>
+      <Type>Float</Type>
+    </UserStateVariable>
+  </UserStateVariables>
+  <WorldStateVariables>
+    <WorldStateVariable>
+      <Name>averageAllPlayers</Name>
+      <Type>Float</Type>
+    </WorldStateVariable>
+  </WorldStateVariables>
+  <ExternalVariables>
+  </ExternalVariables>
+  <RandomNumberGenerators>
+  </RandomNumberGenerators>
+  <ChoicesToStateAlgorithm>
+  	<![CDATA[
+		//1. calculate average of all players (world level)
+		sum=0;
+		for (i = 0; i < %%PLAYERS_COUNT%%; i++) {
+		    sum = sum + %%VAR_CUR.numberChoice%%[i];
+		}	
+		%%VAR_CUR.averageAllPlayers%% = sum/%%PLAYERS_COUNT%%;
+		
+		//2. calculate distance of each player 
+		
+		//3. compute rank of each player
+		
+				
+	]]>
+  
+  </ChoicesToStateAlgorithm>
+</Definitions>
