@@ -11,4 +11,4 @@ the rules are:
   
   c) for each player the overal score is updated following the formula: score=prev_score+rank
   
-3. The game finishes after 10 turns
+3. The game finishes after some turns
