@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../definition/definition.xsd">
+<Definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../definition/definition.xsd">
   <Configuration>
   </Configuration>
   <PlayerChoiceVariables>
@@ -50,4 +50,4 @@
 	]]>
   
   </ChoicesToStateAlgorithm>
-</Definitions>
+</Definition>

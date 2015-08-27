@@ -11,21 +11,20 @@ package gr.aua.simbug.definition;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ExternalDataType complex type.
+ * <p>Java class for UserStateVariableDataType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ExternalDataType">
+ * &lt;complexType name="UserStateVariableDataType">
  *   &lt;complexContent>
  *     &lt;extension base="{}VariableType">
  *       &lt;sequence>
- *         &lt;element name="uriLocation" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *         &lt;element name="WorldVisible" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -35,39 +34,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ExternalDataType", propOrder = {
-    "uriLocation"
+@XmlType(name = "UserStateVariableDataType", propOrder = {
+    "worldVisible"
 })
-public class ExternalDataType
+public class UserStateVariableDataType
     extends VariableType
 {
 
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String uriLocation;
+    @XmlElement(name = "WorldVisible", defaultValue = "false")
+    protected Boolean worldVisible;
 
     /**
-     * Gets the value of the uriLocation property.
+     * Gets the value of the worldVisible property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public String getUriLocation() {
-        return uriLocation;
+    public Boolean isWorldVisible() {
+        return worldVisible;
     }
 
     /**
-     * Sets the value of the uriLocation property.
+     * Sets the value of the worldVisible property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Boolean }
      *     
      */
-    public void setUriLocation(String value) {
-        this.uriLocation = value;
+    public void setWorldVisible(Boolean value) {
+        this.worldVisible = value;
     }
 
 }
