@@ -81,7 +81,7 @@
 			<xs:element name="PlayerStateVariables">
 				<xs:complexType >
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
-						<xs:element name="UserStateVariable" type="UserStateVariableDataType"/>
+						<xs:element name="PlayerStateVariable" type="PlayerStateVariableDataType"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

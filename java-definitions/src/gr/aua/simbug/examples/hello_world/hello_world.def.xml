@@ -8,29 +8,29 @@
       <Type>Integer</Type>
     </PlayerChoiceVariable>
   </PlayerChoiceVariables>
-  <UserStateVariables>
-    <UserStateVariable>
+  <PlayerStateVariables>
+    <PlayerStateVariable>
       <Name>roundDistanceFromAverage</Name>
       <Type>Float</Type>
-    </UserStateVariable>
-    <UserStateVariable>
+    </PlayerStateVariable>
+    <PlayerStateVariable>
     	<Name>roundRank</Name>
     	<Type>Float</Type>
 		
-    </UserStateVariable>
-    <UserStateVariable>
+    </PlayerStateVariable>
+    <PlayerStateVariable>
       <Name>overallScore</Name>
       <Type>Float</Type>
-    </UserStateVariable>
-  </UserStateVariables>
+    </PlayerStateVariable>
+  </PlayerStateVariables>
   <WorldStateVariables>
     <WorldStateVariable>
       <Name>averageAllPlayers</Name>
       <Type>Float</Type>
     </WorldStateVariable>
   </WorldStateVariables>
-  <ExternalVariables>
-  </ExternalVariables>
+  <ExternalParameters>
+  </ExternalParameters>
   <RandomNumberGenerators>
   </RandomNumberGenerators>
   <ChoicesToStateAlgorithm>
