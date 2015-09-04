@@ -27,7 +27,7 @@
 	   </xs:complexContent>
   </xs:complexType>
   
-    <xs:complexType name="UserStateVariableDataType">
+    <xs:complexType name="PlayerStateVariableDataType">
 	   <xs:complexContent>
 	   	<xs:extension base="VariableType">
 	   		<xs:sequence>
@@ -78,7 +78,7 @@
 				</xs:complexType>
 			</xs:element>
 			
-			<xs:element name="UserStateVariables">
+			<xs:element name="PlayerStateVariables">
 				<xs:complexType >
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
 						<xs:element name="UserStateVariable" type="UserStateVariableDataType"/>
