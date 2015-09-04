@@ -19,7 +19,7 @@
   
    <xs:complexType name="ExternalDataType">
 	   <xs:complexContent>
-	   	<xs:extension base="VariableType">
+	   	<xs:extension base="ParameterType">
 	   		<xs:sequence>
 	   			<xs:element name="uriLocation" type="xs:anyURI"  minOccurs="1" maxOccurs="1" />
 	   		</xs:sequence>
@@ -94,7 +94,7 @@
 				</xs:complexType>
 			</xs:element>
 			
-			<xs:element name="ExternalVariables" minOccurs="0">
+			<xs:element name="ExternalParameters" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
 						<xs:element name="ExternalVariable" type="ExternalDataType"   />
