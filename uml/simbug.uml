@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_rtASAFqqEeW1pIggOirnTA" name="RootElement">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_rv_UkFqqEeW1pIggOirnTA" name="Activity1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_zcnCAFqqEeW1pIggOirnTA" name="Definition">
+    <nestedClassifier xmi:type="uml:Class" xmi:id="_6DYhsFqqEeW1pIggOirnTA" name="Class1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_90v6gFqqEeW1pIggOirnTA" name="Configuration"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_Bh0CIFqrEeW1pIggOirnTA" client="_zcnCAFqqEeW1pIggOirnTA" supplier="_90v6gFqqEeW1pIggOirnTA"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Dbb2MFqrEeW1pIggOirnTA" name="PlayerChoiceVariables"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_GJuBYFqrEeW1pIggOirnTA" name="UserStateVariables"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Hq114FqrEeW1pIggOirnTA" name="WorldStateVariables"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_LWu40FqrEeW1pIggOirnTA" client="_zcnCAFqqEeW1pIggOirnTA" supplier="_Dbb2MFqrEeW1pIggOirnTA"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_McpYAFqrEeW1pIggOirnTA" client="_zcnCAFqqEeW1pIggOirnTA" supplier="_GJuBYFqrEeW1pIggOirnTA"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_NiCSwFqrEeW1pIggOirnTA" client="_zcnCAFqqEeW1pIggOirnTA" supplier="_Hq114FqrEeW1pIggOirnTA"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_2-CE4FqrEeW1pIggOirnTA" name="Player"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_3_yc0FqrEeW1pIggOirnTA" name="GameSession"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_-IcdIFqrEeW1pIggOirnTA" memberEnd="_-IlAAFqrEeW1pIggOirnTA _-IlnEFqrEeW1pIggOirnTA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-IgukFqrEeW1pIggOirnTA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_-IhVoFqrEeW1pIggOirnTA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-IlnEFqrEeW1pIggOirnTA" type="_3_yc0FqrEeW1pIggOirnTA" aggregation="composite" association="_-IcdIFqrEeW1pIggOirnTA"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_-IlAAFqrEeW1pIggOirnTA" type="_zcnCAFqqEeW1pIggOirnTA" association="_-IcdIFqrEeW1pIggOirnTA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Ay1m0FqsEeW1pIggOirnTA" memberEnd="_Ay6fUFqsEeW1pIggOirnTA _Ay6fUVqsEeW1pIggOirnTA">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Ay5RMFqsEeW1pIggOirnTA" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Ay54QFqsEeW1pIggOirnTA" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Ay6fUFqsEeW1pIggOirnTA" type="_2-CE4FqrEeW1pIggOirnTA" association="_Ay1m0FqsEeW1pIggOirnTA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8yb3AFqsEeW1pIggOirnTA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8yfhYFqsEeW1pIggOirnTA" value="*"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Ay6fUVqsEeW1pIggOirnTA" type="_3_yc0FqrEeW1pIggOirnTA" aggregation="composite" association="_Ay1m0FqsEeW1pIggOirnTA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7TZtMFqsEeW1pIggOirnTA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7TnIkFqsEeW1pIggOirnTA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>
