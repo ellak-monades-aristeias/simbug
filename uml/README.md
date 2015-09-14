@@ -1,1 +1,1 @@
-The UML diagramms
+The UML diagramms in Eclipse-Papyrus
