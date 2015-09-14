@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:sec="http://www.springframework.org/schema/security" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans.xsd 
+							http://www.springframework.org/schema/security 
+							http://www.springframework.org/schema/security/spring-security.xsd ">
+
+	<sec:http pattern="/css/**" security="none"/>
+	<sec:http pattern="/images/**" security="none"/>
+	<sec:http pattern="/js/**" security="none"/>
+	
+	<sec:http use-expressions="true" >
+
+		<sec:intercept-url pattern="/" access="permitAll"/>
+		<sec:intercept-url pattern="/css/**" access="permitAll"/> 
+		<sec:intercept-url pattern="/images/**"  access="permitAll"/>
+		<sec:intercept-url pattern="/js/**" access="permitAll"/>
+		<sec:intercept-url pattern="/admin/*" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/trial*" access="isAuthenticated()" />
+
+		<sec:form-login 
+			login-page="/login.do" 
+			default-target-url="/admin/main.do?a=1" 
+			always-use-default-target="false" 
+			authentication-success-handler-ref="AuthenticationSuccessHandler" 
+		/>
+		<sec:logout logout-success-url="/login.do" />
+		
+		<sec:headers>
+			<sec:frame-options policy="SAMEORIGIN" />
+		</sec:headers>
+		<sec:csrf disabled="true"/>
+	</sec:http>
+
+	<sec:authentication-manager>
+		<sec:authentication-provider user-service-ref="UserService" />
+	</sec:authentication-manager>
+
+	<bean id="AuthenticationSuccessHandler" class="gr.findhere.util.MyAuthenticationSuccessHandler" />
+
+</beans>
