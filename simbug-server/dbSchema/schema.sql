@@ -28,19 +28,6 @@ create table simbug.game_session
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-alter table simbug.game_session
-add game_session_uuid varchar(100) not null;
-
-alter table simbug.game_session_player
-add player_uuid varchar(100) not null;
-
-drop column player_uuid;
-
-alter table simbug.game_session_round_player
-add player_uuid varchar(100) not null;
-
-drop column player_uuid;
-
 create table simbug.game_session_player
 (
 	id INT NOT NULL AUTO_INCREMENT,
