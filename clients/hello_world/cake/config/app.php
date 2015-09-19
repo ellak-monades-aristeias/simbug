@@ -62,7 +62,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => '25f5c0a18ac498824ff0dce81f99c4fc7237162b0e769372e95e891146a28c0c',
+        'salt' => '25f5c0a18ac498824ffhgfhhgfhhfg162b0e769372e95e891146a28c0c',
     ],
 
     /**
@@ -192,7 +192,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            'from' => 'kremmydas@aua.gr',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
@@ -244,25 +244,7 @@ return [
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
 
-        /**
-         * The test connection is used during the test suite.
-         */
-        'test' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
-            'host' => 'localhost',
-            //'port' => 'nonstandard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'test_myapp',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
-        ],
+        
     ],
 
     /**
