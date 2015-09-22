@@ -50,7 +50,7 @@
  *
  */
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
-		define('CAKE_CORE_INCLUDE_PATH', ROOT);
+		define('CAKE_CORE_INCLUDE_PATH', DS.'var'.DS.'www'.DS.'cake_1.3.last');
 	}
 
 /**
