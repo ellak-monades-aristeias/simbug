@@ -23,7 +23,7 @@ $id = false;
         <div class="panel-heading">
             <h2><?php
                 if (empty(${$singularVar}[$modelClass][$this->model->displayField])) {
-                    echo __d('View');
+                    echo __d('View', true);
                 } else {
                     echo ${$singularVar}[$modelClass][$this->model->displayField];
                 }
@@ -38,20 +38,20 @@ $id = false;
                         <?php
                         echo "\t\t<li>";
 
-                        echo $this->Html->link(__d('cake', '<span class="glyphicon glyphicon-edit"></span> Edit %s', $singularHumanName), array('action' => 'edit', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-edit"></span> Edit %s',true), $singularHumanName), array('action' => 'edit', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
                         echo " </li>\n";
 
                         echo "\t\t<li>";
 
-                        echo $this->Html->link(__d('cake', '<span class="glyphicon glyphicon-remove"></span> Delete %s', $singularHumanName), array('action' => 'delete', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false), __d('cake', 'Are you sure you want to delete # %s?', ${$singularVar}[$modelClass][$primaryKey]));
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-remove"></span> Delete %s',true), $singularHumanName), array('action' => 'delete', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false), __d('cake', 'Are you sure you want to delete # %s?', ${$singularVar}[$modelClass][$primaryKey]));
                         echo " </li>\n";
                         echo "\t\t<li class=\"divider\"></li>";
                         echo "\t\t<li>";
-                        echo $this->Html->link(__d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s', $pluralHumanName), array('action' => 'index'), array('escape' => false));
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s',true), $pluralHumanName), array('action' => 'index'), array('escape' => false));
                         echo " </li>\n";
 
                         echo "\t\t<li>";
-                        echo $this->Html->link(__d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> New %s', $singularHumanName), array('action' => 'add'), array('escape' => false));
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> New %s',true), $singularHumanName), array('action' => 'add'), array('escape' => false));
                         echo " </li>\n";
 
                         echo "\t\t<li class=\"divider\"></li>";
@@ -61,12 +61,12 @@ $id = false;
                                 if ($_details['controller'] != $this->name && !in_array($_details['controller'], $done)) {
                                     echo "\t\t<li>";
                                     echo $this->Html->link(
-                                            __d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s', Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index'), array('escape' => false)
+                                             sprintf(__d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s',true), Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index'), array('escape' => false)
                                     );
                                     echo "</li>\n";
                                     echo "\t\t<li>";
                                     echo $this->Html->link(
-                                            __d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> New %s', Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add'), array('escape' => false)
+                                            sprintf( __d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> New %s',true), Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add'), array('escape' => false)
                                     );
                                     echo "</li>\n";
                                     $done[] = $_details['controller'];
@@ -138,7 +138,7 @@ $id = false;
                 ?>
                 <div class="panel-footer">
                     <h3><?php echo Inflector::humanize($_details['controller']) ?> 
-                        <small><?php echo __d('cake', "Related"); ?></small>
+                        <small><?php echo __d('cake', "Related",true); ?></small>
 
                         <div class="btn-group pull-right">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -147,7 +147,7 @@ $id = false;
                             <ul class="dropdown-menu" role="menu">
                                 <li><?php
                                     echo $this->Html->link(
-                                            __d('cake', 'Edit %s', Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'edit', ${$singularVar}[$_alias][$_details['primaryKey']])
+                                             sprintf(__d('cake', 'Edit %s',true), Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'edit', ${$singularVar}[$_alias][$_details['primaryKey']])
                                     );
                                     echo "</li>\n";
                                     ?>
@@ -199,7 +199,7 @@ $id = false;
                         <ul class="dropdown-menu" role="menu">
                             <li><?php
                                 echo $this->Html->link(
-                                        __d('cake', "New %s", Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add', '?' => $_details['foreignKey'] . '=' . $this->model->id)
+                                         sprintf(__d('cake', "New %s", true),Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add', '?' => $_details['foreignKey'] . '=' . $this->model->id)
                                 );
                                 ?> </li>
                         </ul>
@@ -239,17 +239,17 @@ $id = false;
                                 echo "\t\t\t<td class=\"actions\">\n";
                                 echo "\t\t\t\t";
                                 echo $this->Html->link(
-                                        __d('cake', 'View'), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'view', ${$otherSingularVar}[$_details['primaryKey']])
+                                        __d('cake', 'View',true), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'view', ${$otherSingularVar}[$_details['primaryKey']])
                                 );
                                 echo "\n";
                                 echo "\t\t\t\t";
                                 echo $this->Html->link(
-                                        __d('cake', 'Edit'), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'edit', ${$otherSingularVar}[$_details['primaryKey']])
+                                        __d('cake', 'Edit',true), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'edit', ${$otherSingularVar}[$_details['primaryKey']])
                                 );
                                 echo "\n";
                                 echo "\t\t\t\t";
                                 echo $this->Html->link(
-                                        __d('cake', 'Delete'), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'delete', ${$otherSingularVar}[$_details['primaryKey']]), null, __d('cake', 'Are you sure you want to delete # %s?', ${$otherSingularVar}[$_details['primaryKey']])
+                                        __d('cake', 'Delete',true), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'delete', ${$otherSingularVar}[$_details['primaryKey']]), null, __d('cake', 'Are you sure you want to delete # %s?', ${$otherSingularVar}[$_details['primaryKey']])
                                 );
                                 echo "\n";
                                 echo "\t\t\t</td>\n";

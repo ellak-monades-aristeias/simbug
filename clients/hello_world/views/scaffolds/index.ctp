@@ -88,7 +88,7 @@ if ($simple_view) {
                         <?php foreach ($table_fields as $_field): ?>
                             <th><?php echo $this->Paginator->sort($_field); ?></th>
                         <?php endforeach; ?>
-                        <th><?php echo __d('cake', 'Actions'); ?></th>
+                        <th><?php echo __d('cake', 'Actions', true); ?></th>
                     </tr>
                 </thead>
                 <tbody>

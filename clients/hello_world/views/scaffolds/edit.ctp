@@ -20,8 +20,8 @@ $field_type = $this->model->getColumnTypes();
   $v = array('empty' => '');
   }
  */
-$action_name = ($this->request->action === 'add') ? 'Add' : 'Edit';
-$button_name = ($this->request->action === 'add') ? 'Add' : 'Save';
+$action_name = ($this->action === 'add') ? 'Add' : 'Edit';
+$button_name = ($this->action === 'add') ? 'Add' : 'Save';
 ?>
 <div class="container">
 
@@ -38,23 +38,23 @@ $button_name = ($this->request->action === 'add') ? 'Add' : 'Save';
                         Actions <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <?php if ($this->request->action !== 'add'): ?>
+                        <?php if ($this->action !== 'add'): ?>
                             <li><?php
-                                echo $this->Form->postLink(
-                                        __d('cake', 'Delete'), array('action' => 'delete', $this->Form->value($modelClass . '.' . $primaryKey)), null, __d('cake', 'Are you sure you want to delete # %s?', $this->Form->value($modelClass . '.' . $primaryKey)));
+                                echo $this->Html->link(
+                                        __d('cake', 'Delete', true), array('action' => 'delete', $this->Form->value($modelClass . '.' . $primaryKey)), null,  sprintf(__d('cake', 'Are you sure you want to delete # %s?',true), $this->Form->value($modelClass . '.' . $primaryKey)));
                                 ?></li>
                         <?php endif; ?>
-                        <li><?php echo $this->Html->link(__d('cake', 'List') . ' ' . $pluralHumanName, array('action' => 'index')); ?></li>
+                        <li><?php echo $this->Html->link(__d('cake', 'List', true) . ' ' . $pluralHumanName, array('action' => 'index')); ?></li>
                         <?php
                         $done = array();
                         foreach ($associations as $_type => $_data) {
                             foreach ($_data as $_alias => $_details) {
                                 if ($_details['controller'] != $this->name && !in_array($_details['controller'], $done)) {
                                     echo "\t\t<li>" . $this->Html->link(
-                                            __d('cake', 'List %s', Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index')
+                                             sprintf(__d('cake', 'List %s',true), Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index')
                                     ) . "</li>\n";
                                     echo "\t\t<li>" . $this->Html->link(
-                                            __d('cake', 'New %s', Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add')
+                                             sprintf(__d('cake', 'New %s',true), Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add')
                                     ) . "</li>\n";
                                     $done[] = $_details['controller'];
                                 }
