@@ -39,8 +39,11 @@
 
 	<!-- Services. -->
 
-<!-- 	<bean id="BankTransactionService" class="gr.findhere.service.impl.BankTransactionServiceImpl" /> -->
-
+	<bean id="GameService" class="gr.aua.simbug.service.impl.GameServiceImpl" />
+	<bean id="GameSessionService" class="gr.aua.simbug.service.impl.GameSessionServiceImpl" />
+	<bean id="GameSessionRoundService" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl" />
+	<bean id="GameSessionPlayerService" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl" />
+	<bean id="GameSessionRoundPlayerService" class="gr.aua.simbug.service.impl.GameSessionRoundPlayerServiceImpl" />
 
 	<!-- Security thingies. -->
 <!-- 	<import resource="application-context-security.xml" /> -->

@@ -26,20 +26,28 @@ public class GameSessionController
 	}
 
 	@RequestMapping("/submitChoices/{UuidOfGameSession}")
-	public String submitChoices( @PathVariable String UuidOfGameSession)
+	public String submitChoices( @PathVariable String UuidOfGameSession, @RequestParam("jsonString") String jsonString)
 	{
+		// POST variables:
+		// JSON string {player_uuid: array[choice_variable_name: value]} 
+		// Returns: "ok"
+
 		return UuidOfGameSession;
 	}
 
 	@RequestMapping("/getWorldState/{UuidOfGameSession}")
 	public String getWorldState( @PathVariable String UuidOfGameSession)
 	{
+		// Returns: JSON string of world variables {world_state_variable_name: value]}
+
 		return UuidOfGameSession;
 	}
 
 	@RequestMapping("/getPlayerState/{UuidOfGameSession}/{UuidOfPlayer}")
 	public String getPlayerState( @PathVariable String UuidOfGameSession, @PathVariable String UuidOfPlayer)
 	{
+		// Returns: JSON string of world variables {user_state_variable_name: value]}
+
 		return UuidOfGameSession + "/" + UuidOfPlayer;
 	}
 

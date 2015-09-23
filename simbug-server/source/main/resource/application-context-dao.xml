@@ -51,11 +51,20 @@
 
 	<!-- DAO's. -->
 
-<!-- 	<bean id="AdministrativeRegionDAO" class="gr.aua.simbug.dao.impl.AdministrativeRegionDAOImpl"> -->
-<!-- 		<property name="sessionFactory"> -->
-<!-- 			<ref bean="sessionFactory" /> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-
+	<bean id="GameDAO" class="gr.aua.simbug.dao.impl.GameDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"> </property>
+	</bean>
+	<bean id="GameSessionDAO" class="gr.aua.simbug.dao.impl.GameSessionDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionPlayerDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionRoundDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionRoundPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
 
 </beans>

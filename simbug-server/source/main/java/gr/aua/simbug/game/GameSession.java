@@ -41,6 +41,9 @@ public class GameSession
 		initialize();
 	}
 	
+	/**
+	 * Gets as input the json string jsonListOfPlayers (array of uuids) and creates ArrayList<Player> players
+	 */
 	private void creatListOfPlayers(String jsonListOfPlayers)
 	{
 		System.out.println("\n\nListOfPlayers"); //ListOfPlayers
@@ -66,38 +69,64 @@ public class GameSession
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("\nPlayerChoiceVariables"); //PlayerChoiceVariables
+		// Players
+		System.out.println("\nPlayers: " + players.size());
+		for (Player player : players)
+		{
+			System.out.println(player.getUuid()); 
+		}
 	}
 
+	/**
+	 * Game initialization. 
+	 * Stores the game structure into the database
+	 */
 	private void initialize()
 	{
+		// Configuration parameters
 		System.out.println(definition.getConfiguration().getClass());
+		
+		// RandomNumberGenerators
 		System.out.println(definition.getRandomNumberGenerators());
 
-		System.out.println("\nExternalParameters"); //ExternalParameters
+		// ExternalParameters
+		System.out.println("\nExternalParameters"); 
 		for (ExternalDataType param : definition.getExternalParameters().getExternalVariable())
 		{
 			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
 		}
-		System.out.println("\nWorldStateVariables"); //WorldStateVariables
-		for (VariableType param : definition.getWorldStateVariables().getWorldStateVariable())
-		{
-			System.out.println(param.getName() + "-" + param.getType());
-		}
-		System.out.println("\nChoicesToStateAlgorithm"); //ChoicesToStateAlgorithm
+		
+		// ChoicesToStateAlgorithm
+		System.out.println("\nChoicesToStateAlgorithm"); 
 		//System.out.println(definition.getChoicesToStateAlgorithm());
 
+		// PlayerChoiceVariables
+		// A value for each player
 		for (VariableType param : definition.getPlayerChoiceVariables().getPlayerChoiceVariable())
 		{
 			System.out.println(param.getName() + "-" + param.getType());
 		}
-		System.out.println("\nPlayerStateVariables"); //PlayerStateVariables
+		
+		// PlayerStateVariables
+		// A value for each player
+		System.out.println("\nPlayerStateVariables"); 
 		for (PlayerStateVariableDataType param : definition.getPlayerStateVariables().getPlayerStateVariable())
 		{
 			System.out.println(param.getName() + "-" + param.getType());
 		}
 
+		// WorldStateVariables
+		System.out.println("\nWorldStateVariables"); 
+		for (VariableType param : definition.getWorldStateVariables().getWorldStateVariable())
+		{
+			System.out.println(param.getName() + "-" + param.getType());
+		}
+		
 	}
+	
+	/**
+	 * Creates the Definition definition object from the definitionString (xml structure)
+	 */
 	private void createDefinition(String definitionString)
 	{
 		JAXBContext jc;
