@@ -3,8 +3,8 @@
 class GamesController extends AppController {
 	
 	
-	var $name = 'Players';
-	
+	var $name = 'Games';
+	var $scaffold;
 	
 	
 	
