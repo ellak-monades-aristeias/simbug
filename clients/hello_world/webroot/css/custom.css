@@ -1,8 +1,12 @@
 @CHARSET "UTF-8";
 
-body > .container {
-  padding-top: 40px;
+nav ~ div.container {
+  padding-top: 50px;
   background-color: white;
+}
+
+div.container[role=messages] {
+	  padding-top: 60px;
 }
 
 /*

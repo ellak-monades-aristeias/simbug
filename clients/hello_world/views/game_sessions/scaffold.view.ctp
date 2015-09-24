@@ -37,7 +37,14 @@ $id = false;
                     <ul class="dropdown-menu" role="menu">
                         <?php
                         echo "\t\t<li>";
-
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-tags"></span> Status',true)), array('action' => 'status', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
+                        echo " </li>\n";
+                        
+                        echo "\t\t<li>";
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-road"></span> Advance Round',true)), array('action' => 'advanceRound', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
+                        echo " </li>\n";
+                        
+                        echo "\t\t<li>";
                         echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-edit"></span> Edit %s',true), $singularHumanName), array('action' => 'edit', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
                         echo " </li>\n";
 

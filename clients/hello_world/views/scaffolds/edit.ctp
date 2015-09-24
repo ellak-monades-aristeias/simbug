@@ -73,7 +73,7 @@ $button_name = ($this->action === 'add') ? 'Add' : 'Save';
             ));
             ?>
             <?php
-            echo $this->Form->create();
+            //echo $this->Form->create();
             foreach ($scaffoldFields as $scaffoldField) {
                 if ($scaffoldField == $primaryKey) {
                     echo $this->Form->input($scaffoldField, array

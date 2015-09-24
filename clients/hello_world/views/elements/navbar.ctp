@@ -16,7 +16,7 @@
             	<li><a href="#">Logged in as <? echo $this->Session->read('Auth.Player.username'); ?></a></li>
             	<? if($this->Session->read('Auth.Player.isAdmin')==1): ?>
             		<li><a href="<?php  echo $this->webroot; ?>games">Games</a></li>
-            		<li><a href="<?php  echo $this->webroot; ?>game_sessions/admin_index">Game Sessions</a></li>
+            		<li><a href="<?php  echo $this->webroot; ?>game_sessions/index">Game Sessions</a></li>
             		<li><a href="<?php  echo $this->webroot; ?>players">Players</a></li>
             	<? else: ?>
             		 <li><a href="<?php  echo $this->webroot; ?>game_sessions/">My Games</a></li>

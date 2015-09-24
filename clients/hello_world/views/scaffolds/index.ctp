@@ -61,12 +61,12 @@ if ($simple_view) {
                                     echo '<li class="divider"></li>';
                                     echo '<li>';
                                     echo $this->Html->link(
-                                            sprintf(__d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s',true), Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index'), array('escape' => false)
+                                            sprintf(__d('cake', '<span class="glyphicon glyphicon-list-alt"></span> List %s',true), Inflector::humanize($_details['controller'])), array('controller' => $_details['controller'], 'action' => 'index'), array('escape' => false)
                                     );
                                     echo '</li>';
                                     echo '<li>';
                                     echo $this->Html->link(
-                                            sprintf(__d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> Create %s', e),truInflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add'), array('escape' => false)
+                                            sprintf(__d('cake', '<span class="glyphicon glyphicon-plus-sign"></span> Create %s', true),Inflector::humanize(Inflector::underscore($_alias))), array('controller' => $_details['controller'], 'action' => 'add'), array('escape' => false)
                                     );
                                     echo '</li>';
                                     $done[] = $_details['controller'];

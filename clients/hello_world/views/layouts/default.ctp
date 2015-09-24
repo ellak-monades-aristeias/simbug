@@ -24,16 +24,19 @@
 
   </head>
   <body role="document">
-  	
+	
     <!-- Fixed navbar -->
     <?php echo $this->element('navbar'); ?>
   
-  	<?php if($this->Session->flash('error')): ?>
-	 <div class="container" role="main" >
+  	<?php $a=$session->flash();if($a): ?>
+	 <div class="container" role="messages" >
 	  	 <div class="row">
-	  	 	 <div class="col-xs-8 modal-content">
-	  		<?php echo $this->Session->flash('error'); ?>
+	  	 	 <div class="col-xs-1"></div>
+	  	 	 <div class="col-xs-10 modal-content">
+	  		<h2>Messages:</h2>
+	  		<?php echo $a; ?>
 	  		</div> 
+	  		<div class="col-xs-1"></div>
 	  	 </div>    
     </div>	
 	<?php endif; ?>
@@ -47,7 +50,7 @@
 	  	 </div>    
     </div>
     
-     <div class="container" role="main" >
+     <div class="container" role="sql" >
 	  	 <div class="row">
 	  	 	 <div class="col-xs-12">
 	  		<?php echo $this->element('sql_dump'); ?>
