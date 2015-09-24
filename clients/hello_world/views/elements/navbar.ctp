@@ -19,7 +19,7 @@
             		<li><a href="<?php  echo $this->webroot; ?>game_sessions/index">Game Sessions</a></li>
             		<li><a href="<?php  echo $this->webroot; ?>players">Players</a></li>
             	<? else: ?>
-            		 <li><a href="<?php  echo $this->webroot; ?>game_sessions/">My Games</a></li>
+            		 <li><a href="<?php  echo $this->webroot; ?>game_sessions/mygames">My Games</a></li>
             	<? endif; ?>
             	<li><a href="<?php  echo $this->webroot; ?>players/logout">Logout</a></li>
             <? else: ?>

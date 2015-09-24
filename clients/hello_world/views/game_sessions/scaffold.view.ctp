@@ -37,7 +37,7 @@ $id = false;
                     <ul class="dropdown-menu" role="menu">
                         <?php
                         echo "\t\t<li>";
-                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-tags"></span> Status',true)), array('action' => 'status', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
+                        echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-tags"></span> Status',true)), array('action' => 'admin_status', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
                         echo " </li>\n";
                         
                         echo "\t\t<li>";
