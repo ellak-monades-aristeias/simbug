@@ -3,6 +3,7 @@
 CREATE DATABASE simbug
 CHARACTER SET utf8_general_ci;
 
+drop table simbug.game;
 create table simbug.game
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -12,6 +13,7 @@ create table simbug.game
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session;
 create table simbug.game_session
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -28,6 +30,7 @@ create table simbug.game_session
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_player;
 create table simbug.game_session_player
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -40,6 +43,7 @@ create table simbug.game_session_player
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_variable;
 create table simbug.game_session_variable
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -55,6 +59,7 @@ create table simbug.game_session_variable
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_round;
 create table simbug.game_session_round
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -67,6 +72,7 @@ create table simbug.game_session_round
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_round_variable;
 create table simbug.game_session_round_variable
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -83,6 +89,7 @@ create table simbug.game_session_round_variable
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_round_player;
 create table simbug.game_session_round_player
 (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -96,6 +103,7 @@ create table simbug.game_session_round_player
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table simbug.game_session_round_player_variable;
 create table simbug.game_session_round_player_variable
 (
 	id INT NOT NULL AUTO_INCREMENT,
