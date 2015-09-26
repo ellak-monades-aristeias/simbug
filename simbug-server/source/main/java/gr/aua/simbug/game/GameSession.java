@@ -3,8 +3,7 @@ package gr.aua.simbug.game;
 import gr.aua.simbug.beans.Player;
 import gr.aua.simbug.definition.Definition;
 import gr.aua.simbug.definition.ExternalDataType;
-import gr.aua.simbug.definition.PlayerStateVariableDataType;
-import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.definition.ParameterType;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -21,143 +20,211 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class GameSession
+public class GameSession implements GameConstants
 {
 	private Definition definition;
-	private ArrayList<Player> players = new ArrayList<Player>();
-	
+	private List<GameSessionPlayer> gameSessionPlayers = new ArrayList<GameSessionPlayer>();
+	private List<GameSessionRound> gameSessionRounds = new ArrayList<GameSessionRound>();
+	private List<GameSessionVariable> configurationParameters = new ArrayList<GameSessionVariable>();	
+	private List<GameSessionVariable> externalVariables = new ArrayList<GameSessionVariable>();
 	private int currentRound;
-	
-	public GameSession()
+	private String uuidOfGameSession;
+
+	/**
+	 * 
+	 */
+	public GameSession() 
 	{
 		super();
 	}
 
-	public GameSession(String UuidOfGameSession, String definitionString, String jsonListOfPlayers)
+	/**
+	 * Define the initial state of the game
+	 * 
+	 * @param uuidOfGameSession
+	 * @param definitionString
+	 * @param jsonListOfPlayers
+	 */
+	public GameSession(String uuidOfGameSession, String definitionString, String jsonListOfPlayers) 
 	{
 		super();
-		createDefinition(definitionString);
-		creatListOfPlayers(jsonListOfPlayers);
-		initialize();
+		this.uuidOfGameSession = uuidOfGameSession;
+		currentRound = 1;
+		createSession(definitionString, jsonListOfPlayers);
+		createRound(currentRound);
 	}
-	
+
 	/**
-	 * Gets as input the json string jsonListOfPlayers (array of uuids) and creates ArrayList<Player> players
+	 * 
+	 * @param xmlDefinition
+	 * @param jsonListOfPlayers
+	 */
+	private void createSession(String xmlDefinition, String jsonListOfPlayers) 
+	{
+		createDefinitionFromXml(xmlDefinition);
+		creatListOfPlayers(jsonListOfPlayers);
+		
+		// TODO 
+		// Save session data
+		
+		// Save the session players into the database
+		savePlayers();
+		
+		// Save Configuration parameters
+		saveConfigurationParameters(definition.getConfiguration().getParameter());
+
+		// Save ExternalParameters
+		saveExternalParameters(definition.getExternalParameters().getExternalVariable());
+
+		// randomNumberGenerators. Are contained into the xmlDefinition and is
+		// not saved separately into the database
+		System.out.println("\nrandomNumberGenerators");
+		System.out.println(definition.getRandomNumberGenerators().getRandomNumberGenerator());
+
+		// choicesToStateAlgorithm. The choicesToStateAlgorithm is contained
+		// into the xmlDefinition and is not saved separately into the database
+		System.out.println("\nChoicesToStateAlgorithm");
+		// System.out.println(definition.getChoicesToStateAlgorithm());
+	}
+
+	/**
+	 * 
+	 * @param externalVariables
+	 */
+	private void saveExternalParameters(List<ExternalDataType> externalVariables) 
+	{
+		System.out.println("\nExternalParameters");
+		for (ExternalDataType param : externalVariables) 
+		{
+			GameSessionVariable var = new GameSessionVariable(EXTERNAL_PARAMETER, param, uuidOfGameSession);
+			var.save();
+			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
+		}
+	}
+
+	/**
+	 * Save configuration parameters
+	 * @param parameter
+	 */
+	private void saveConfigurationParameters(List<ParameterType> parameters) 
+	{
+		System.out.println("\nConfiguration");
+		for (ParameterType param : parameters) 
+		{
+			GameSessionVariable var = new GameSessionVariable(CONFIGURATION_PARAMETER, param, uuidOfGameSession);
+			var.save();
+			//this.configurationParameters.add(var);
+			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
+		}
+	}
+
+	/**
+	 * Save session players
+	 */
+	private void savePlayers() 
+	{
+		for (GameSessionPlayer player : gameSessionPlayers) 
+		{
+			player.save();
+		}		
+		showPlayers();
+	}
+
+	/**
+	 * List content of session players
+	 */
+	private void showPlayers() 
+	{
+		System.out.println("\nPlayers: " + gameSessionPlayers.size());
+		for (GameSessionPlayer player : gameSessionPlayers) 
+		{
+			System.out.println(player.getUuid());
+		}
+	}
+
+	/**
+	 * 
+	 * @param round
+	 */
+	private void createRound(int round) 
+	{
+		GameSessionRound gameSessionRound = new GameSessionRound(this, currentRound);
+
+		// Save WorldStateVariables
+		gameSessionRound.saveWorldStateVariables(definition.getWorldStateVariables().getWorldStateVariable());
+
+		// Save PlayerChoiceVariables
+		gameSessionRound.savePlayerChoiceVariables(gameSessionPlayers, definition.getPlayerChoiceVariables().getPlayerChoiceVariable());
+
+		// Save playerStateVariables
+		gameSessionRound.savePlayerStateVariables(gameSessionPlayers, definition.getPlayerStateVariables().getPlayerStateVariable());
+	}
+
+	/**
+	 * Gets as input the json string jsonListOfPlayers (array of uuids) and
+	 * creates ArrayList<gameSessionPlayers> players
 	 */
 	private void creatListOfPlayers(String jsonListOfPlayers)
 	{
-		System.out.println("\n\nListOfPlayers"); //ListOfPlayers
+		System.out.println("\n\nListOfPlayers"); // ListOfPlayers
 		System.out.println(jsonListOfPlayers);
-		
-	    ObjectMapper objectMapper = new ObjectMapper();
-		try
+
+		// Extract the list of players from the json array
+		ObjectMapper objectMapper = new ObjectMapper();
+		try 
 		{
-			setPlayers(objectMapper.readValue(jsonListOfPlayers, objectMapper.getTypeFactory().constructCollectionType(List.class, Player.class)));
-		}
-		catch (JsonParseException e)
+			gameSessionPlayers = objectMapper.readValue(jsonListOfPlayers, 
+					objectMapper.getTypeFactory().constructCollectionType(List.class, Player.class));
+		} 
+		catch (JsonParseException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		catch (JsonMappingException e)
+		} 
+		catch (JsonMappingException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		catch (IOException e)
+		} 
+		catch (IOException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		// Players
-		System.out.println("\nPlayers: " + players.size());
-		for (Player player : players)
-		{
-			System.out.println(player.getUuid()); 
 		}
 	}
 
 	/**
-	 * Game initialization. 
-	 * Stores the game structure into the database
+	 * Creates the Definition definition object from the definitionString (xml
+	 * structure)
 	 */
-	private void initialize()
-	{
-		// Configuration parameters
-		System.out.println(definition.getConfiguration().getClass());
-		
-		// RandomNumberGenerators
-		System.out.println(definition.getRandomNumberGenerators());
-
-		// ExternalParameters
-		System.out.println("\nExternalParameters"); 
-		for (ExternalDataType param : definition.getExternalParameters().getExternalVariable())
-		{
-			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
-		}
-		
-		// ChoicesToStateAlgorithm
-		System.out.println("\nChoicesToStateAlgorithm"); 
-		//System.out.println(definition.getChoicesToStateAlgorithm());
-
-		// PlayerChoiceVariables
-		// A value for each player
-		for (VariableType param : definition.getPlayerChoiceVariables().getPlayerChoiceVariable())
-		{
-			System.out.println(param.getName() + "-" + param.getType());
-		}
-		
-		// PlayerStateVariables
-		// A value for each player
-		System.out.println("\nPlayerStateVariables"); 
-		for (PlayerStateVariableDataType param : definition.getPlayerStateVariables().getPlayerStateVariable())
-		{
-			System.out.println(param.getName() + "-" + param.getType());
-		}
-
-		// WorldStateVariables
-		System.out.println("\nWorldStateVariables"); 
-		for (VariableType param : definition.getWorldStateVariables().getWorldStateVariable())
-		{
-			System.out.println(param.getName() + "-" + param.getType());
-		}
-		
-	}
-	
-	/**
-	 * Creates the Definition definition object from the definitionString (xml structure)
-	 */
-	private void createDefinition(String definitionString)
+	private void createDefinitionFromXml(String xmlDefinition) 
 	{
 		JAXBContext jc;
 		Unmarshaller unmarshaller;
-		try
+		try 
 		{
 			jc = JAXBContext.newInstance(Definition.class);
 			unmarshaller = jc.createUnmarshaller();
 
-			InputStream xmlStream = new ByteArrayInputStream(definitionString.getBytes(StandardCharsets.UTF_8));
+			InputStream xmlStream = new ByteArrayInputStream(xmlDefinition.getBytes(StandardCharsets.UTF_8));
 			definition = (Definition) unmarshaller.unmarshal(xmlStream);
-		}
-		catch (JAXBException e1)
+		} 
+		catch (JAXBException e1) 
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}		
+		}
 	}
 
 	/**
 	 * @return the definition
 	 */
-	public Definition getDefinition()
+	public Definition getDefinition() 
 	{
 		return definition;
 	}
 
 	/**
-	 * @param definition the definition to set
+	 * @param definition
+	 *            the definition to set
 	 */
-	public void setDefinition(Definition definition)
+	public void setDefinition(Definition definition) 
 	{
 		this.definition = definition;
 	}
@@ -165,28 +232,59 @@ public class GameSession
 	/**
 	 * @return the currentRound
 	 */
-	public int getCurrentRound()
+	public int getCurrentRound() 
 	{
 		return currentRound;
 	}
 
 	/**
-	 * @param currentRound the currentRound to set
+	 * @param currentRound
+	 *            the currentRound to set
 	 */
-	public void setCurrentRound(int currentRound)
+	public void setCurrentRound(int currentRound) 
 	{
 		this.currentRound = currentRound;
 	}
 
-	public ArrayList<Player> getPlayers()
-	{
-		return players;
+	public List<GameSessionPlayer> getGameSessionPlayers() {
+		return gameSessionPlayers;
 	}
 
-	public void setPlayers(ArrayList<Player> players)
-	{
-		this.players = players;
+	public void setGameSessionPlayers(List<GameSessionPlayer> gameSessionPlayers) {
+		this.gameSessionPlayers = gameSessionPlayers;
 	}
-	
+
+	public List<GameSessionRound> getGameSessionRounds() {
+		return gameSessionRounds;
+	}
+
+	public void setGameSessionRounds(List<GameSessionRound> gameSessionRounds) {
+		this.gameSessionRounds = gameSessionRounds;
+	}
+
+	public List<GameSessionVariable> getConfigurationParameters() {
+		return configurationParameters;
+	}
+
+	public void setConfigurationParameters(
+			List<GameSessionVariable> configurationParameters) {
+		this.configurationParameters = configurationParameters;
+	}
+
+	public List<GameSessionVariable> getExternalVariables() {
+		return externalVariables;
+	}
+
+	public void setExternalVariables(List<GameSessionVariable> externalVariables) {
+		this.externalVariables = externalVariables;
+	}
+
+	public String getUuidOfGameSession() {
+		return uuidOfGameSession;
+	}
+
+	public void setUuidOfGameSession(String uuidOfGameSession) {
+		this.uuidOfGameSession = uuidOfGameSession;
+	}
 
 }

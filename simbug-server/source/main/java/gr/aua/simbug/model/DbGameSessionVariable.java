@@ -12,35 +12,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * The {@code GameSessionRoundPlayerVariable} class represents game session round player variables.
+ * The {@code GameSessionVariable} class represents game session variables.
+ * 
+ * Contains configuration and external parameters
  * 
  * @author michael
  * 
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "game_session_round_player_variable")
-public class DbGameSessionRoundPlayerVariable implements Serializable
+@Table(name = "game_session_variable")
+public class DbGameSessionVariable implements Serializable
 {
-	/**
-	 * The ID of this game session round player variable.
+    /**
+	 * The ID of this game session variable.
 	 */
 	@Id
 	@GeneratedValue
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
-
-	/**
-	 * The player_uuid of this game session player variable.
-	 */
-	@Column(name = "player_uuid", nullable = false, length = 100)
-	private String playerUuid;
-
-	/**
-	 * The round of this game session round.
-	 */
-	@Column(name = "round_num", nullable = false)
-	private Integer roundNum;
 
 	/**
 	 * The category of this game session variable.
@@ -72,4 +62,5 @@ public class DbGameSessionRoundPlayerVariable implements Serializable
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "game_session_id", nullable = false)
 	private DbGameSession gameSession;
+
 }

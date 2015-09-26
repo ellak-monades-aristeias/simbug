@@ -12,18 +12,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * The {@code GameSessionPlayer} class represents game session players.
+ * The {@code GameSessionRound} class represents game session rounds.
  * 
  * @author michael
  * 
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "game_session_player")
-public class DbGameSessionPlayer implements Serializable
+@Table(name = "game_session_round")
+public class DbGameSessionRound implements Serializable
 {
-	/**
-	 * The ID of this game session player.
+    /**
+	 * The ID of this game session round.
 	 */
 	@Id
 	@GeneratedValue
@@ -31,13 +31,13 @@ public class DbGameSessionPlayer implements Serializable
 	private Long id;
 
 	/**
-	 * The player_uuid of this game session player.
+	 * The round of this game session round.
 	 */
-	@Column(name = "player_uuid", nullable = false, length = 100)
-	private String playerUuid;
+	@Column(name = "round_num", nullable = false)
+	private Integer roundNum;
 
 	/**
-	 * The game session of this player.
+	 * The game session of this round.
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "game_session_id", nullable = false)

@@ -40,18 +40,46 @@ create table simbug.game_session_player
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table simbug.game_session_variable
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	game_session_id INTEGER,
+	category INTEGER,
+	variable_name varchar(50),
+	variable_value varchar(100),
+	variable_type varchar(100),
+	PRIMARY KEY (id),
+    CONSTRAINT game_session_variable_game_session_id FOREIGN KEY (game_session_id) 
+    	REFERENCES simbug.game_session (id) ON DELETE SET NULL,
+    INDEX i_game_session_variable_game_session_id (game_session_id)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table simbug.game_session_round
 (
 	id INT NOT NULL AUTO_INCREMENT,
 	game_session_id INTEGER,
 	round_num INTEGER,
-	variable_name varchar(50),
-	variable_value varchar(100),
-	variable_type varchar(100),
 	PRIMARY KEY (id),
     CONSTRAINT game_session_round_game_session_id FOREIGN KEY (game_session_id) 
     	REFERENCES simbug.game_session (id) ON DELETE SET NULL,
     INDEX i_game_session_round_game_session_id (game_session_id)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table simbug.game_session_round_variable
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	game_session_id INTEGER,
+	round_num INTEGER,
+	category INTEGER,
+	variable_name varchar(50),
+	variable_value varchar(100),
+	variable_type varchar(100),
+	PRIMARY KEY (id),
+    CONSTRAINT game_session_round_variable_game_session_id FOREIGN KEY (game_session_id) 
+    	REFERENCES simbug.game_session (id) ON DELETE SET NULL,
+    INDEX i_game_session_round_variable_game_session_id (game_session_id)	
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -61,12 +89,27 @@ create table simbug.game_session_round_player
 	game_session_id INTEGER,
 	player_uuid varchar(100) not null,
 	round_num INTEGER,
-	variable_name varchar(50),
-	variable_value varchar(100),
-	variable_type varchar(100),
 	PRIMARY KEY (id),
     CONSTRAINT game_session_round_player_game_session_id FOREIGN KEY (game_session_id) 
     	REFERENCES simbug.game_session (id) ON DELETE SET NULL,
     INDEX i_game_session_round_player_game_session_id (game_session_id)	
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table simbug.game_session_round_player_variable
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	game_session_id INTEGER,
+	player_uuid varchar(100) not null,
+	round_num INTEGER,
+	category INTEGER,
+	variable_name varchar(50),
+	variable_value varchar(100),
+	variable_type varchar(100),
+	PRIMARY KEY (id),
+    CONSTRAINT game_session_round_player_variable_game_session_id FOREIGN KEY (game_session_id) 
+    	REFERENCES simbug.game_session (id) ON DELETE SET NULL,
+    INDEX i_game_session_round_player_variable_game_session_id (game_session_id)	
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
