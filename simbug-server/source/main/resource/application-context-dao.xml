@@ -44,10 +44,10 @@
 	<!-- Transaction manager. -->
 
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory">
-		<property name="nestedTransactionAllowed">
-			<value>true</value>
-		</property>
+		<property name="nestedTransactionAllowed"> <value>true</value> </property>
 	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<!-- DAO's. -->
 
@@ -63,7 +63,16 @@
 	<bean id="GameSessionRoundDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionRoundPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
+	<bean id="GameSessionRoundPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionVariableDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionRoundVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundVariableDAOImpl">
+		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
+	</bean>
+	<bean id="GameSessionRoundPlayerVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerVariableDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
 

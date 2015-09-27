@@ -2,16 +2,53 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.VariableType;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 {
 
 	private String playerUuid;
 	
-	public GameSessionRoundPlayerVariable(int category, VariableType param, String uuidOfGameSession, int roundNum, String uuid) 
+	public GameSessionRoundPlayerVariable() 
 	{
-		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * 
+	 * @param category
+	 * @param param
+	 * @param uuidOfGameSession
+	 * @param roundNum
+	 * @param uuid
+	 */
+	public GameSessionRoundPlayerVariable(int category, VariableType param, String uuidOfGameSession, long roundNum, String uuid) 
+	{
 		super(category, param, uuidOfGameSession, roundNum);
 		this.setPlayerUuid(uuid);
+	}
+
+	/**
+	 * 
+	 * @param category
+	 * @param param
+	 * @param uuidOfGameSession
+	 * @param roundNum
+	 * @param uuid
+	 */
+	public void createSessionRoundPlayerVariable(int category, VariableType param, String uuidOfGameSession, long roundNum, String uuid) 
+	{
+		super.createGameSessionRoundVariable(category, param, uuidOfGameSession, roundNum);
+		this.setPlayerUuid(uuid);
+		System.out.println(uuid);
+	}
+
+	/**
+	 * 
+	 */
+	public void saveSessionRoundPlayerVariable() 
+	{
+		getGameSessionRoundService().saveGameSessionRoundPlayerVariable(this);
 	}
 
 	public String getPlayerUuid() {
@@ -22,10 +59,5 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 		this.playerUuid = playerUuid;
 	}
 
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		super.save();
-	}
 
 }

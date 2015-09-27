@@ -2,42 +2,74 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.PlayerStateVariableDataType;
 import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.service.GameSessionRoundService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GameSessionRound implements GameConstants
 {
+	/**
+	 * The GameSessionRound service.
+	 */
+	@Autowired
+	private GameSessionRoundService gameSessionRoundService;
+	
+	@Autowired
+	private GameSessionRoundVariable gameSessionRoundVariable;
+	
+	@Autowired
+	GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable;
+	
+	@Autowired
+	GameSessionRoundPlayer gameSessionRoundPlayer;
+
 	private GameSession gameSession;
-	private int roundNum;
+	private long roundNum;
 	private List<GameSessionRoundVariable> worldStateVariables = new ArrayList<GameSessionRoundVariable>();
 	private List<GameSessionRoundPlayer> sessionRoundPlayer = new ArrayList<GameSessionRoundPlayer>();
 	
+	/**
+	 * 
+	 */
 	public GameSessionRound()
 	{
 		super();
 	}
 
-	public GameSessionRound(GameSession gameSession, int round) 
+	/**
+	 * 
+	 * @param gameSession
+	 * @param round
+	 */
+	public void createRound(GameSession gameSession, long round) 
 	{
 		this.gameSession = gameSession;
 		this.roundNum = round;
-		// TODO Auto-generated constructor stub
+		gameSessionRoundService.save(this);		
+		// Save round players
+		for (GameSessionPlayer player : gameSession.getGameSessionPlayers()) 
+		{
+			gameSessionRoundPlayer.createSessionRoundPlayer(player, this);
+			gameSessionRoundPlayer.saveSessionRoundPlayer();
+		}		
 	}
-
+	
 	/**
 	 * 
 	 * @param worldStateVariables
 	 */
 	public void saveWorldStateVariables(List<VariableType> worldStateVariables) 
 	{
-		// TODO Auto-generated method stub
 		System.out.println("\nWorldStateVariables");
 		for (VariableType param : worldStateVariables) 
 		{
-			GameSessionRoundVariable var = new GameSessionRoundVariable(WORLD_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum);
-			var.save();
+			gameSessionRoundVariable.createGameSessionRoundVariable(WORLD_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum);
+			gameSessionRoundVariable.saveSessionRoundVariable();
 			System.out.println(param.getName() + "-" + param.getType());
 		}
 	}
@@ -49,14 +81,14 @@ public class GameSessionRound implements GameConstants
 	 */
 	public void savePlayerChoiceVariables(List<GameSessionPlayer> players, List<VariableType> variables) 
 	{
-		// TODO Auto-generated method stub
 		// Save a value for each player
+		System.out.println("\nPlayerChoiceVariables");
 		for (GameSessionPlayer player : players) 
 		{			
 			for (VariableType param : variables) 
 			{
-				GameSessionRoundPlayerVariable var = new GameSessionRoundPlayerVariable(PLAYER_CHOICE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
-				var.save();
+				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_CHOICE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
+				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
 				System.out.println(param.getName() + "-" + param.getType());
 			}
 		}
@@ -69,15 +101,14 @@ public class GameSessionRound implements GameConstants
 	 */
 	public void savePlayerStateVariables(List<GameSessionPlayer> players, List<PlayerStateVariableDataType> variables) 
 	{
-		// TODO Auto-generated method stub
 		// Save a value for each player
 		System.out.println("\nPlayerStateVariables");
 		for (GameSessionPlayer player : players) 
 		{			
 			for (PlayerStateVariableDataType param : variables) 
 			{
-				GameSessionRoundPlayerVariable var = new GameSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
-				var.save();
+				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
+				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
 				System.out.println(param.getName() + "-" + param.getType());
 			}
 		}
@@ -91,11 +122,11 @@ public class GameSessionRound implements GameConstants
 		this.gameSession = gameSession;
 	}
 
-	public int getRoundNum() {
+	public long getRoundNum() {
 		return roundNum;
 	}
 
-	public void setRoundNum(int roundNum) {
+	public void setRoundNum(long roundNum) {
 		this.roundNum = roundNum;
 	}
 
@@ -115,6 +146,42 @@ public class GameSessionRound implements GameConstants
 	public void setSessionRoundPlayer(
 			List<GameSessionRoundPlayer> sessionRoundPlayer) {
 		this.sessionRoundPlayer = sessionRoundPlayer;
+	}
+
+	public GameSessionRoundService getGameSessionRoundService() {
+		return gameSessionRoundService;
+	}
+
+	public void setGameSessionRoundService(
+			GameSessionRoundService gameSessionRoundService) {
+		this.gameSessionRoundService = gameSessionRoundService;
+	}
+
+	public GameSessionRoundVariable getGameSessionRoundVariable() {
+		return gameSessionRoundVariable;
+	}
+
+	public void setGameSessionRoundVariable(
+			GameSessionRoundVariable gameSessionRoundVariable) {
+		this.gameSessionRoundVariable = gameSessionRoundVariable;
+	}
+
+	public GameSessionRoundPlayerVariable getGameSessionRoundPlayerVariable() {
+		return gameSessionRoundPlayerVariable;
+	}
+
+	public void setGameSessionRoundPlayerVariable(
+			GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable) {
+		this.gameSessionRoundPlayerVariable = gameSessionRoundPlayerVariable;
+	}
+
+	public GameSessionRoundPlayer getGameSessionRoundPlayer() {
+		return gameSessionRoundPlayer;
+	}
+
+	public void setGameSessionRoundPlayer(
+			GameSessionRoundPlayer gameSessionRoundPlayer) {
+		this.gameSessionRoundPlayer = gameSessionRoundPlayer;
 	}
 
 }

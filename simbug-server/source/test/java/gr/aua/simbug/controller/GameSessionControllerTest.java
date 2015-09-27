@@ -78,7 +78,7 @@ public class GameSessionControllerTest
 */	    
 		String definitionFile = "source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
 		String definitionString = SimbugUtils.fileToString(definitionFile);
-		String listOfPlayers = "{\"id\":1,\"firstname\":\"Test Firstname\",\"lastname\":\"Test Lastname\"}";
+		String listOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
 		
 		MockHttpServletRequestBuilder initGameSession = post("/initGameSession/{UuidOfGameSession}",UuidOfGameSession)
 				.param("definitionString", definitionString)

@@ -1,17 +1,35 @@
 package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.service.GameSessionRoundService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class GameSessionRoundVariable extends GameSessionVariable 
 {
-	private int roundNum;
+	/**
+	 * The GameSessionRound service.
+	 */
+	@Autowired
+	private GameSessionRoundService gameSessionRoundService;
+	
+	private long roundNum;
 	
 	public GameSessionRoundVariable()
 	{
 		
 	}
 	
-	public GameSessionRoundVariable(int category, VariableType param, String uuidOfGameSession, int roundNum) 
+	/**
+	 * 
+	 * @param category
+	 * @param param
+	 * @param uuidOfGameSession
+	 * @param roundNum
+	 */
+	public GameSessionRoundVariable(int category, VariableType param, String uuidOfGameSession, long roundNum) 
 	{
 		super();
 		// TODO Auto-generated constructor stub
@@ -23,18 +41,46 @@ public class GameSessionRoundVariable extends GameSessionVariable
 		this.roundNum = roundNum;
 	}
 
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-		super.save();
+	/**
+	 * 
+	 * @param category
+	 * @param param
+	 * @param uuidOfGameSession
+	 * @param roundNum
+	 */
+	public void createGameSessionRoundVariable(int category, VariableType param, String uuidOfGameSession, long roundNum) 
+	{
+		setVariableName(param.getName());
+		setVariableValue(null);
+		setVariableType(param.getType().value());
+		setUuidOfGameSession(uuidOfGameSession);
+		setVariableCategory(category);
+		this.roundNum = roundNum;
+	}
+	
+	/**
+	 * 
+	 */
+	public void saveSessionRoundVariable() 
+	{
+		gameSessionRoundService.saveGameSessionRoundVariable(this);
 	}
 
-	public int getRoundNum() {
+	public long getRoundNum() {
 		return roundNum;
 	}
 
-	public void setRoundNum(int roundNum) {
+	public void setRoundNum(long roundNum) {
 		this.roundNum = roundNum;
+	}
+
+	public GameSessionRoundService getGameSessionRoundService() {
+		return gameSessionRoundService;
+	}
+
+	public void setGameSessionRoundService(
+			GameSessionRoundService gameSessionRoundService) {
+		this.gameSessionRoundService = gameSessionRoundService;
 	}
 
 }

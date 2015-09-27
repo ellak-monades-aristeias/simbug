@@ -1,9 +1,9 @@
 package gr.aua.simbug.game;
 
-import gr.aua.simbug.beans.Player;
 import gr.aua.simbug.definition.Definition;
 import gr.aua.simbug.definition.ExternalDataType;
 import gr.aua.simbug.definition.ParameterType;
+import gr.aua.simbug.service.GameSessionService;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,17 +19,37 @@ import javax.xml.bind.Unmarshaller;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GameSession implements GameConstants
 {
+	/**
+	 * The GameSession service.
+	 */
+	@Autowired
+	private GameSessionService gameSessionService;
+
 	private Definition definition;
 	private List<GameSessionPlayer> gameSessionPlayers = new ArrayList<GameSessionPlayer>();
 	private List<GameSessionRound> gameSessionRounds = new ArrayList<GameSessionRound>();
 	private List<GameSessionVariable> configurationParameters = new ArrayList<GameSessionVariable>();	
 	private List<GameSessionVariable> externalVariables = new ArrayList<GameSessionVariable>();
-	private int currentRound;
+	private long currentRound;
 	private String uuidOfGameSession;
+	private String definitionData;
+	private String jsonListOfPlayers;
+	
+	@Autowired
+	private GameSessionPlayer gameSessionPlayer;
 
+	@Autowired
+	private GameSessionVariable gameSessionVariable;
+	
+	@Autowired
+	private GameSessionRound gameSessionRound;
+	
 	/**
 	 * 
 	 */
@@ -39,33 +59,22 @@ public class GameSession implements GameConstants
 	}
 
 	/**
-	 * Define the initial state of the game
-	 * 
-	 * @param uuidOfGameSession
-	 * @param definitionString
-	 * @param jsonListOfPlayers
-	 */
-	public GameSession(String uuidOfGameSession, String definitionString, String jsonListOfPlayers) 
-	{
-		super();
-		this.uuidOfGameSession = uuidOfGameSession;
-		currentRound = 1;
-		createSession(definitionString, jsonListOfPlayers);
-		createRound(currentRound);
-	}
-
-	/**
 	 * 
 	 * @param xmlDefinition
 	 * @param jsonListOfPlayers
 	 */
-	private void createSession(String xmlDefinition, String jsonListOfPlayers) 
+	public void createGameSession(String uuidOfGameSession, String xmlDefinition, String jsonListOfPlayers) 
 	{
+		this.uuidOfGameSession = uuidOfGameSession;
+		this.definitionData = xmlDefinition;
+		this.jsonListOfPlayers = jsonListOfPlayers;
+		currentRound = 1;
+
 		createDefinitionFromXml(xmlDefinition);
-		creatListOfPlayers(jsonListOfPlayers);
+		createListOfPlayers(jsonListOfPlayers);
 		
-		// TODO 
 		// Save session data
+		gameSessionService.saveGameSession(this);
 		
 		// Save the session players into the database
 		savePlayers();
@@ -85,6 +94,8 @@ public class GameSession implements GameConstants
 		// into the xmlDefinition and is not saved separately into the database
 		System.out.println("\nChoicesToStateAlgorithm");
 		// System.out.println(definition.getChoicesToStateAlgorithm());
+		
+		createRound(currentRound);
 	}
 
 	/**
@@ -96,8 +107,9 @@ public class GameSession implements GameConstants
 		System.out.println("\nExternalParameters");
 		for (ExternalDataType param : externalVariables) 
 		{
-			GameSessionVariable var = new GameSessionVariable(EXTERNAL_PARAMETER, param, uuidOfGameSession);
-			var.save();
+			//GameSessionVariable var = new GameSessionVariable(EXTERNAL_PARAMETER, param, uuidOfGameSession);
+			gameSessionVariable.createGameSessionVariable(EXTERNAL_PARAMETER, param, uuidOfGameSession);
+			gameSessionVariable.saveSessionVariable();
 			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
 		}
 	}
@@ -108,11 +120,12 @@ public class GameSession implements GameConstants
 	 */
 	private void saveConfigurationParameters(List<ParameterType> parameters) 
 	{
+		// TODO
 		System.out.println("\nConfiguration");
 		for (ParameterType param : parameters) 
 		{
 			GameSessionVariable var = new GameSessionVariable(CONFIGURATION_PARAMETER, param, uuidOfGameSession);
-			var.save();
+			var.saveSessionVariable();
 			//this.configurationParameters.add(var);
 			System.out.println(param.getName() + "-" + param.getValue() + "-" + param.getType());
 		}
@@ -125,7 +138,8 @@ public class GameSession implements GameConstants
 	{
 		for (GameSessionPlayer player : gameSessionPlayers) 
 		{
-			player.save();
+			gameSessionPlayer.createSessionPlayer(player, this);
+			gameSessionPlayer.save();
 		}		
 		showPlayers();
 	}
@@ -146,9 +160,9 @@ public class GameSession implements GameConstants
 	 * 
 	 * @param round
 	 */
-	private void createRound(int round) 
+	private void createRound(long round) 
 	{
-		GameSessionRound gameSessionRound = new GameSessionRound(this, currentRound);
+		gameSessionRound.createRound(this, currentRound);
 
 		// Save WorldStateVariables
 		gameSessionRound.saveWorldStateVariables(definition.getWorldStateVariables().getWorldStateVariable());
@@ -164,7 +178,7 @@ public class GameSession implements GameConstants
 	 * Gets as input the json string jsonListOfPlayers (array of uuids) and
 	 * creates ArrayList<gameSessionPlayers> players
 	 */
-	private void creatListOfPlayers(String jsonListOfPlayers)
+	private void createListOfPlayers(String jsonListOfPlayers)
 	{
 		System.out.println("\n\nListOfPlayers"); // ListOfPlayers
 		System.out.println(jsonListOfPlayers);
@@ -174,7 +188,8 @@ public class GameSession implements GameConstants
 		try 
 		{
 			gameSessionPlayers = objectMapper.readValue(jsonListOfPlayers, 
-					objectMapper.getTypeFactory().constructCollectionType(List.class, Player.class));
+					objectMapper.getTypeFactory().constructCollectionType(List.class, GameSessionPlayer.class));
+			System.out.println("NumOfPlayers: " + gameSessionPlayers.size());
 		} 
 		catch (JsonParseException e) 
 		{
@@ -232,7 +247,7 @@ public class GameSession implements GameConstants
 	/**
 	 * @return the currentRound
 	 */
-	public int getCurrentRound() 
+	public long getCurrentRound() 
 	{
 		return currentRound;
 	}
@@ -241,7 +256,7 @@ public class GameSession implements GameConstants
 	 * @param currentRound
 	 *            the currentRound to set
 	 */
-	public void setCurrentRound(int currentRound) 
+	public void setCurrentRound(long currentRound) 
 	{
 		this.currentRound = currentRound;
 	}
@@ -285,6 +300,30 @@ public class GameSession implements GameConstants
 
 	public void setUuidOfGameSession(String uuidOfGameSession) {
 		this.uuidOfGameSession = uuidOfGameSession;
+	}
+
+	public String getDefinitionData() {
+		return definitionData;
+	}
+
+	public void setDefinitionData(String definitionData) {
+		this.definitionData = definitionData;
+	}
+
+	public String getJsonListOfPlayers() {
+		return jsonListOfPlayers;
+	}
+
+	public void setJsonListOfPlayers(String jsonListOfPlayers) {
+		this.jsonListOfPlayers = jsonListOfPlayers;
+	}
+
+	public GameSessionService getGameSessionService() {
+		return gameSessionService;
+	}
+
+	public void setGameSessionService(GameSessionService gameSessionService) {
+		this.gameSessionService = gameSessionService;
 	}
 
 }

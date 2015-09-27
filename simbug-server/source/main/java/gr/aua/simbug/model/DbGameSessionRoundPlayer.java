@@ -1,5 +1,7 @@
 package gr.aua.simbug.model;
 
+import gr.aua.simbug.game.GameSessionRoundPlayer;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -40,7 +42,7 @@ public class DbGameSessionRoundPlayer implements Serializable
 	 * The round of this game session round.
 	 */
 	@Column(name = "round_num", nullable = false)
-	private Integer roundNum;
+	private Long roundNum;
 
 	/**
 	 * The game session of this round.
@@ -48,4 +50,64 @@ public class DbGameSessionRoundPlayer implements Serializable
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "game_session_id", nullable = false)
 	private DbGameSession gameSession;
+
+	transient private String sessionUuid;
+
+	/**
+	 * 
+	 */
+	public DbGameSessionRoundPlayer() 
+	{
+	}
+
+	/**
+	 * 
+	 * @param gameSessionRoundPlayer
+	 */
+	public DbGameSessionRoundPlayer(GameSessionRoundPlayer gsrp) 
+	{
+		this.playerUuid = gsrp.getUuid();
+		this.sessionUuid = gsrp.getGameSession().getUuidOfGameSession();
+		this.roundNum = gsrp.getRoundNum();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getPlayerUuid() {
+		return playerUuid;
+	}
+
+	public void setPlayerUuid(String playerUuid) {
+		this.playerUuid = playerUuid;
+	}
+
+	public Long getRoundNum() {
+		return roundNum;
+	}
+
+	public void setRoundNum(Long roundNum) {
+		this.roundNum = roundNum;
+	}
+
+	public DbGameSession getGameSession() {
+		return gameSession;
+	}
+
+	public void setGameSession(DbGameSession gameSession) {
+		this.gameSession = gameSession;
+	}
+
+	public String getSessionUuid() {
+		return sessionUuid;
+	}
+
+	public void setSessionUuid(String sessionUuid) {
+		this.sessionUuid = sessionUuid;
+	}
 }

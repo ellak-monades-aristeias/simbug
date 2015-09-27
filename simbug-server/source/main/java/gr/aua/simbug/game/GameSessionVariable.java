@@ -1,10 +1,21 @@
 package gr.aua.simbug.game;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import gr.aua.simbug.definition.ExternalDataType;
 import gr.aua.simbug.definition.ParameterType;
+import gr.aua.simbug.service.GameSessionService;
 
-
+@Service
 public class GameSessionVariable 
 {
+	/**
+	 * The GameSession service.
+	 */
+	@Autowired
+	private GameSessionService gameSessionService;
+	
 	private String variableName;
 	private String variableValue;	
 	private String variableType;
@@ -26,6 +37,20 @@ public class GameSessionVariable
 		this.variableCategory = category;
 	}
 	
+	public void createGameSessionVariable(int category, ExternalDataType param, String uuidOfGameSession) 
+	{
+		this.variableName = param.getName();
+		this.variableValue = param.getValue();
+		this.variableType = param.getType().value();
+		this.uuidOfGameSession = uuidOfGameSession;
+		this.variableCategory = category;
+	}
+	
+	public void saveSessionVariable() 
+	{
+		gameSessionService.saveGameSessionVariable(this);
+	}
+
 	public String getVariableName() {
 		return variableName;
 	}
@@ -45,12 +70,6 @@ public class GameSessionVariable
 		this.variableType = variableType;
 	}
 
-	public void save() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 	public int getVariableCategory() {
 		return variableCategory;
 	}
@@ -66,7 +85,13 @@ public class GameSessionVariable
 	public void setUuidOfGameSession(String uuidOfGameSession) {
 		this.uuidOfGameSession = uuidOfGameSession;
 	}
-	
-	
+
+	public GameSessionService getGameSessionService() {
+		return gameSessionService;
+	}
+
+	public void setGameSessionService(GameSessionService gameSessionService) {
+		this.gameSessionService = gameSessionService;
+	}
 
 }

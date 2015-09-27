@@ -1,14 +1,13 @@
 package gr.aua.simbug.model;
 
+import gr.aua.simbug.game.GameSession;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -63,8 +62,70 @@ public class DbGameSession implements Serializable
 	/**
 	 * The game of this session.
 	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "game_id", nullable = false)
-	private DbGame game;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "game_id", nullable = false)
+//	private DbGame game;
+
+	public DbGameSession() 
+	{
+	}
+
+	public DbGameSession(GameSession gs) 
+	{
+		this.currentRound = gs.getCurrentRound();
+		this.definitionData = gs.getDefinitionData();
+		this.definitionFile = null;
+		this.gameSessionUuid = gs.getUuidOfGameSession();
+		//this.game;
+		this.players = gs.getJsonListOfPlayers();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getGameSessionUuid() {
+		return gameSessionUuid;
+	}
+
+	public void setGameSessionUuid(String gameSessionUuid) {
+		this.gameSessionUuid = gameSessionUuid;
+	}
+
+	public String getDefinitionData() {
+		return definitionData;
+	}
+
+	public void setDefinitionData(String definitionData) {
+		this.definitionData = definitionData;
+	}
+
+	public String getDefinitionFile() {
+		return definitionFile;
+	}
+
+	public void setDefinitionFile(String definitionFile) {
+		this.definitionFile = definitionFile;
+	}
+
+	public String getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(String players) {
+		this.players = players;
+	}
+
+	public Long getCurrentRound() {
+		return currentRound;
+	}
+
+	public void setCurrentRound(Long currentRound) {
+		this.currentRound = currentRound;
+	}
 
 }
