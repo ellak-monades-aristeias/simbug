@@ -39,6 +39,12 @@ public class GameSessionController
 			@RequestParam(value = "definitionString", required = false) String definitionString, 
 			@RequestParam(value = "listOfPlayers", required = false) String jsonListOfPlayers)
 	{
+		gameSession = gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
+		if (gameSession != null)
+		{
+			return "Error: SessionId already exists";
+		}
+		
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
 		definitionString = SimbugUtils.fileToString(definitionFile);
