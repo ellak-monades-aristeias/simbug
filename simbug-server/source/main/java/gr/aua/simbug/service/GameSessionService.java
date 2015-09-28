@@ -13,7 +13,7 @@ public interface GameSessionService
 
 	void deleteGameSession(String uuidOfGameSession);
 
-	GameSession fetchGameSessionByUuid();
+	GameSession fetchGameSessionByUuid(String uuidOfGameSession);
 
 	void saveGameSessionVariable(GameSessionVariable gameSessionVariable);
 }

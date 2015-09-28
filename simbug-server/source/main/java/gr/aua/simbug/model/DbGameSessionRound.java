@@ -47,6 +47,10 @@ public class DbGameSessionRound implements Serializable
 
 	transient private String sessionUuid;
 	
+	public DbGameSessionRound() 
+	{
+	}
+	
 	/**
 	 * 
 	 * @param gsr

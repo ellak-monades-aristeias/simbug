@@ -2,6 +2,7 @@ package gr.aua.simbug.service;
 
 import gr.aua.simbug.game.GameSessionPlayer;
 import gr.aua.simbug.game.GameSessionRoundPlayer;
+import gr.aua.simbug.game.GameSessionRoundPlayerVariable;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface GameSessionPlayerService
 	List<GameSessionPlayer> fetchListOfGameSessionPlayersBySessionUuid(String uuid);
 
 	void saveRoundPlayer(GameSessionRoundPlayer gameSessionRoundPlayer);
+
+	void updateRoundPlayerVariable(GameSessionRoundPlayerVariable gsrpv);
 	
 }

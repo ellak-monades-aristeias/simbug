@@ -1,7 +1,13 @@
 package gr.aua.simbug.controller;
 
 import gr.aua.simbug.game.GameSession;
+import gr.aua.simbug.game.GameSessionRoundPlayerVariable;
+import gr.aua.simbug.game.GameSessionRoundVariable;
+import gr.aua.simbug.service.GameSessionRoundService;
+import gr.aua.simbug.service.GameSessionService;
 import gr.aua.simbug.utils.SimbugUtils;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +18,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GameSessionController
 {
+	/**
+	 * The GameSession service.
+	 */
+	@Autowired
+	private GameSessionService gameSessionService;
+
+	/**
+	 * The GameSessionRound service.
+	 */
+	@Autowired
+	private GameSessionRoundService gameSessionRoundService;
+
 	@Autowired
 	private GameSession gameSession;
 	
-	@RequestMapping("/initGameSession/{UuidOfGameSession}")
-	public String initGameSession(@PathVariable String UuidOfGameSession, 
+	
+	@RequestMapping("/initGameSession/{uuidOfGameSession}")
+	public String initGameSession(@PathVariable String uuidOfGameSession, 
 			@RequestParam(value = "definitionString", required = false) String definitionString, 
 			@RequestParam(value = "listOfPlayers", required = false) String jsonListOfPlayers)
 	{
@@ -26,48 +45,80 @@ public class GameSessionController
 		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
 		
 		// Create game session. Update database
-		gameSession.createGameSession(UuidOfGameSession, definitionString, jsonListOfPlayers);
+		gameSession.createGameSession(uuidOfGameSession, definitionString, jsonListOfPlayers);
 		
-		return UuidOfGameSession;
+		return uuidOfGameSession;
 	}
 	
-	@RequestMapping("/advanceTurn/{UuidOfGameSession}")
-	public String advanceTurn( @PathVariable String UuidOfGameSession)
+	@RequestMapping("/advanceTurn/{uuidOfGameSession}")
+	public String advanceTurn( @PathVariable String uuidOfGameSession)
 	{
 		// Calculates new state. Runs algorithm. Updates database.
-		return UuidOfGameSession;
+		return uuidOfGameSession;
 	}
 
-	@RequestMapping("/submitChoices/{UuidOfGameSession}")
-	public String submitChoices( @PathVariable String UuidOfGameSession, @RequestParam("jsonString") String jsonString)
+	@RequestMapping("/submitChoices/{uuidOfGameSession}")
+	public String submitChoices( @PathVariable String uuidOfGameSession, 
+			@RequestParam(value = "jsonString", required = false) String jsonString)
 	{
 		// Gets variables and set player's choices. Updates database.
 		
 		// POST variables:
-		// JSON string {player_uuid: array[choice_variable_name: value]} 
+		// JSON string {"uuid":"1", "choiceVariables":{"numberChoice":"22"}} 
+
+		gameSession.savePlayerChoiceVariables(uuidOfGameSession, jsonString);
 		// Returns: "ok"
-
-		return UuidOfGameSession;
+		return "Session: " + uuidOfGameSession + " - Choice variables set OK.";
 	}
 
-	@RequestMapping("/getWorldState/{UuidOfGameSession}")
-	public String getWorldState( @PathVariable String UuidOfGameSession)
+	@RequestMapping("/getWorldState/{uuidOfGameSession}")
+	public String getWorldState( @PathVariable String uuidOfGameSession)
 	{
+		// Gets session
+		gameSession = gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
+		
 		// Returns world state variables.
-		
 		// Returns: JSON string of world variables {world_state_variable_name: value]}
-
-		return UuidOfGameSession;
+		List<GameSessionRoundVariable> worldStateVariables = gameSessionRoundService.fetchWorldStateVariablesByUuidByRound(gameSession);
+		String json = "{";
+		int counter = 1;
+		for (GameSessionRoundVariable gsrv : worldStateVariables) 
+		{
+			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue();
+			if (counter < worldStateVariables.size())
+			{
+				json += ",";
+			}
+			counter++;
+			System.out.println(gsrv.getVariableName());
+		}
+		json += "}";
+		return json;
 	}
 
-	@RequestMapping("/getPlayerState/{UuidOfGameSession}/{UuidOfPlayer}")
-	public String getPlayerState( @PathVariable String UuidOfGameSession, @PathVariable String UuidOfPlayer)
+	@RequestMapping("/getPlayerState/{uuidOfGameSession}/{uuidOfPlayer}")
+	public String getPlayerState( @PathVariable String uuidOfGameSession, @PathVariable String uuidOfPlayer)
 	{
-		// Returns player state variables.
+		// Gets session
+		gameSession = gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
 		
+		// Returns player state variables.	
 		// Returns: JSON string of world variables {user_state_variable_name: value]}
-
-		return UuidOfGameSession + "/" + UuidOfPlayer;
+		List<GameSessionRoundPlayerVariable> playerStateVariables = gameSessionRoundService.fetchPlayerStateVariablesByUuidByRoundByPlayer(gameSession, uuidOfPlayer);
+		String json = "{";
+		int counter = 1;
+		for (GameSessionRoundPlayerVariable gsrv : playerStateVariables) 
+		{
+			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue();
+			if (counter < playerStateVariables.size())
+			{
+				json += ",";
+			}
+			counter++;
+			System.out.println(gsrv.getVariableName());
+		}
+		json += "}";
+		return json;
 	}
 
 	public GameSession getGameSession() 
@@ -78,6 +129,14 @@ public class GameSessionController
 	public void setGameSession(GameSession gameSession) 
 	{
 		this.gameSession = gameSession;
+	}
+
+	public GameSessionService getGameSessionService() {
+		return gameSessionService;
+	}
+
+	public void setGameSessionService(GameSessionService gameSessionService) {
+		this.gameSessionService = gameSessionService;
 	}
 
 }

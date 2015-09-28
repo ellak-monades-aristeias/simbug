@@ -1,6 +1,7 @@
 package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.model.DbGameSessionRoundVariable;
 import gr.aua.simbug.service.GameSessionRoundService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,26 @@ public class GameSessionRoundVariable extends GameSessionVariable
 	public GameSessionRoundVariable(int category, VariableType param, String uuidOfGameSession, long roundNum) 
 	{
 		super();
-		// TODO Auto-generated constructor stub
 		setVariableName(param.getName());
 		setVariableValue(null);
 		setVariableType(param.getType().value());
 		setUuidOfGameSession(uuidOfGameSession);
 		setVariableCategory(category);
 		this.roundNum = roundNum;
+	}
+
+	/**
+	 * 
+	 * @param dbgsrv
+	 */
+	public GameSessionRoundVariable(DbGameSessionRoundVariable dbgsrv) 
+	{
+		setVariableName(dbgsrv.getVariableName());
+		setVariableValue(dbgsrv.getVariableValue());
+		setVariableType(dbgsrv.getVariableType());
+		setUuidOfGameSession(dbgsrv.getSessionUuid());
+		setVariableCategory(dbgsrv.getCategory());
+		this.roundNum = dbgsrv.getRoundNum();
 	}
 
 	/**

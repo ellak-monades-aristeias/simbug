@@ -67,6 +67,10 @@ public class DbGameSessionVariable implements Serializable
 
 	transient private String sessionUuid;
 
+	public DbGameSessionVariable() 
+	{
+	}
+
 	/**
 	 * 
 	 * @param gsv

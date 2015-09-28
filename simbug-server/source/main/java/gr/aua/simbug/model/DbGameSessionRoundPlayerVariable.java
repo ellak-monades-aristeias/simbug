@@ -77,6 +77,10 @@ public class DbGameSessionRoundPlayerVariable implements Serializable
 
 	transient private String sessionUuid;
 
+	public DbGameSessionRoundPlayerVariable() 
+	{
+	}
+
 	/**
 	 * 
 	 * @param gsrpv

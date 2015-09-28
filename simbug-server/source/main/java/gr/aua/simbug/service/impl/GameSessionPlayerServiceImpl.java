@@ -3,11 +3,14 @@ package gr.aua.simbug.service.impl;
 import gr.aua.simbug.dao.GameSessionDAO;
 import gr.aua.simbug.dao.GameSessionPlayerDAO;
 import gr.aua.simbug.dao.GameSessionRoundPlayerDAO;
+import gr.aua.simbug.dao.GameSessionRoundPlayerVariableDAO;
 import gr.aua.simbug.game.GameSessionPlayer;
 import gr.aua.simbug.game.GameSessionRoundPlayer;
+import gr.aua.simbug.game.GameSessionRoundPlayerVariable;
 import gr.aua.simbug.model.DbGameSession;
 import gr.aua.simbug.model.DbGameSessionPlayer;
 import gr.aua.simbug.model.DbGameSessionRoundPlayer;
+import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 import gr.aua.simbug.service.GameSessionPlayerService;
 
 import java.util.List;
@@ -35,6 +38,12 @@ public class GameSessionPlayerServiceImpl implements GameSessionPlayerService
 	private GameSessionRoundPlayerDAO gameSessionRoundPlayerDAO;
 	
 	/**
+	 * The GameSessionRoundPlayerVariable DAO.
+	 */
+	@Autowired
+	private GameSessionRoundPlayerVariableDAO gameSessionRoundPlayerVariableDAO;
+
+	/**
 	 * 
 	 */
 	@Override
@@ -58,6 +67,14 @@ public class GameSessionPlayerServiceImpl implements GameSessionPlayerService
 		gameSessionRoundPlayerDAO.save(dbGameSessionRoundPlayer);
 	}
 
+
+	@Override
+	public void updateRoundPlayerVariable(GameSessionRoundPlayerVariable gsrpv) 
+	{
+		DbGameSessionRoundPlayerVariable dbgsrpv = gameSessionRoundPlayerVariableDAO.findByUuidByRoundByPlayerByName(gsrpv);
+		dbgsrpv.setVariableValue(gsrpv.getVariableValue());
+		gameSessionRoundPlayerVariableDAO.save(dbgsrpv);
+	}
 
 	@Override
 	public void delete(String uuid) 

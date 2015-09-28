@@ -113,9 +113,17 @@ public class GameSessionControllerTest
 	 * Test method for {@link gr.aua.simbug.controller.GameSessionController#submitChoices(java.lang.String)}.
 	 */
 	@Test
-	public void testSubmitChoices()
+	public void testSubmitChoices() throws Exception
 	{
-		fail("Not yet implemented");
+		String listOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
+	    Integer UuidOfGameSession = 1;
+		
+		MockHttpServletRequestBuilder initGameSession = post("/submitChoices/{UuidOfGameSession}",UuidOfGameSession)
+				.param("listOfPlayers", listOfPlayers);
+	    mockMvc.perform(initGameSession)
+        .andDo(print()) // print the request/response in the console
+        .andExpect(status().isOk())
+        .andExpect(content().string(UuidOfGameSession.toString()));	    
 	}
 
 	/**

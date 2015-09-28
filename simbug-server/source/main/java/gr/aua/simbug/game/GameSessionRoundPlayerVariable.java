@@ -1,6 +1,7 @@
 package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,21 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 	
 	public GameSessionRoundPlayerVariable() 
 	{
+	}
+
+	/**
+	 * 
+	 * @param dbgsrpv
+	 */
+	public GameSessionRoundPlayerVariable(DbGameSessionRoundPlayerVariable dbgsrpv) 
+	{
+		setVariableName(dbgsrpv.getVariableName());
+		setVariableValue(dbgsrpv.getVariableValue());
+		setVariableType(dbgsrpv.getVariableType());
+		setUuidOfGameSession(dbgsrpv.getSessionUuid());
+		setVariableCategory(dbgsrpv.getCategory());
+		setRoundNum(dbgsrpv.getRoundNum());
+		this.playerUuid = dbgsrpv.getPlayerUuid();
 	}
 
 	/**

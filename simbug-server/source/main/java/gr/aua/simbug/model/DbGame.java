@@ -39,4 +39,10 @@ public class DbGame implements Serializable
 	@Column(name = "type", nullable = true, length = 500)
 	private String type;
 
+	public DbGame() 
+	{
+	}
+	
+	
+
 }

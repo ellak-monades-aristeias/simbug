@@ -42,10 +42,11 @@ public class GameSessionServiceImpl implements GameSessionService
 
 
 	@Override
-	public GameSession fetchGameSessionByUuid() 
+	public GameSession fetchGameSessionByUuid(String uuidOfGameSession) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		DbGameSession dbgs = gameSessionDAO.findGameSessionByUuid(uuidOfGameSession);
+		GameSession gs = new GameSession(dbgs);
+		return gs;
 	}
 
 

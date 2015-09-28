@@ -41,7 +41,6 @@
 	<bean id="GameSessionService" class="gr.aua.simbug.service.impl.GameSessionServiceImpl" />
 	<bean id="GameSessionRoundService" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl" />
 	<bean id="GameSessionPlayerService" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl" />
-	<bean id="GameSessionRoundPlayerService" class="gr.aua.simbug.service.impl.GameSessionRoundPlayerServiceImpl" />
 
 	<!-- beans. -->
 	<bean id="GameSession" class="gr.aua.simbug.game.GameSession" />
