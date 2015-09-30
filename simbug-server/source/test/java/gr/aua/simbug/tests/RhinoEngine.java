@@ -1,11 +1,14 @@
 package gr.aua.simbug.tests;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
@@ -25,8 +28,8 @@ public class RhinoEngine
 	public void testSimpleJsScript()
 	{
 		Integer alpha = 7;
-		String script = "a=alpha; b=1; c=a+b;c; var arr= new Object(); arr['1'] = new Object(); arr['1']['2'] = new Object(); arr['1']['2']['3']=5"
-				+ ""
+		String script = "a=alpha; b=1; c=a+b;c; var arr= new Object(); arr['1'] = new Object(); arr['1']['2'] = new Object(); arr['1']['2']['3']=5;"
+				+ "javaArray[0] + '-----'"
 				+ ""
 				+ ""
 				+ ""
@@ -35,6 +38,7 @@ public class RhinoEngine
 
 		Context cx = Context.enter();
 
+		String[] ar = { "Alpha", "Beta"};
 		try
 		{
 			// Initialize the standard objects (Object, Function, etc.). This must be done before scripts can be
@@ -45,6 +49,8 @@ public class RhinoEngine
 
 			Object wrappedOut = Context.javaToJS(alpha, scope);
 			ScriptableObject.putProperty(scope, "alpha", wrappedOut);
+			Object o1 = Context.javaToJS(ar, scope);
+			ScriptableObject.putProperty(scope, "javaArray", o1);
 			
 			Object obj = cx .evaluateString(scope, script, "TestScript", 1, null);
 			System.out.println("Object: " + obj);
@@ -76,15 +82,47 @@ public class RhinoEngine
 
 	            // Now we can evaluate a script. Let's create a new object
 	            // using the object literal notation.
-	            Object result = cx.evaluateString(scope, "obj = {a:1, b:['x','y']}",
-	                                              "MySource", 1, null);
+	            String script = "res={world:{'A':'1', 'B':'2'}, players:{'1':{'C':'3'}, '2':{'D':'4'} } }";
+	            Object result1 = cx.evaluateString(scope, script, "MySource", 1, null);
+	            Scriptable world = (Scriptable) scope.get("res", scope);
+	            System.out.println(world);
+	            NativeObject result2 = (NativeObject)result1;
+	            for (Entry<Object, Object> p : result2.entrySet()) 
+	            {
+                    System.out.println(p.getKey() + ": " + p.getValue());
+	            	if (p.getKey().equals("world"))
+	            	{
+	            		NativeObject r1 = (NativeObject)p.getValue();
+	            		for (Entry<Object, Object> p1 : r1.entrySet()) 
+	    	            {
+	            			System.out.println(p1.getKey() + ": " + p1.getValue());
+	    	            }
+	            		
+	            	}
+	            	if (p.getKey().equals("players"))
+	            	{
+	            		NativeObject r1 = (NativeObject)p.getValue();
+	            		for (Entry<Object, Object> p1 : r1.entrySet()) 
+	    	            {
+	            			System.out.println(p1.getKey() + ": " + p1.getValue());
+	            			NativeObject r2 = (NativeObject)p1.getValue();
+		            		for (Entry<Object, Object> p2 : r2.entrySet()) 
+		    	            {
+		            			System.out.println(p2.getKey() + ": " + p2.getValue());
+		    	            }
+	    	            }
+	            		
+	            	}
+                }
+	            
+	            
+	            Object result = cx.evaluateString(scope, "obj = {a:1, b:['x','y']}", "MySource", 1, null);
 
 	            Scriptable obj = (Scriptable) scope.get("obj", scope);
 
 	            // Should print "obj == result" (Since the result of an assignment
 	            // expression is the value that was assigned)
-	            System.out.println("obj " + (obj == result ? "==" : "!=") +
-	                               " result");
+	            System.out.println("obj " + (obj == result ? "==" : "!=") + " result");
 
 	            // Should print "obj.a == 1"
 	            System.out.println("obj.a == " + obj.get("a", obj));
@@ -105,6 +143,23 @@ public class RhinoEngine
 	        }
 	    }
 	   
+	public static void jsStaticFunction_test(NativeObject obj) 
+	{
+	    HashMap<String, String> mapParams = new HashMap<String, String>();
+
+	    if(obj != null) 
+	    {
+	        Object[] propIds = NativeObject.getPropertyIds(obj);
+	        for(Object propId: propIds) {
+	            String key = propId.toString();
+	            String value = NativeObject.getProperty(obj, key).toString();
+	            mapParams.put(key, value);
+	            System.out.println("key: " + key + " - value: " + value); 
+	        }
+	    }
+	    //work with mapParams next..
+	}
+	
 	@Test
 	public void testRegex()
 	{
