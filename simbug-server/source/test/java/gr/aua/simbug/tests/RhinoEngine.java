@@ -181,4 +181,27 @@ public class RhinoEngine
 
 	}
 	
+	/*
+	 * 
+	iterators seem to be the key!
+	
+	if you want to iterate over all entries of a map, you could do the following
+	
+	JAVA
+	
+	//pass  the map and map.keySet().iterator() to the javascript
+	Object wrappedParameterMap = Context.javaToJS(parameterMap, scope);
+	ScriptableObject.putProperty(scope, "parameterMap", wrappedParameterMap);
+	Object wrappedParameterNames = Context.javaToJS(parameterMap.keySet().iterator(), scope);
+	ScriptableObject.putProperty(scope, "parameterNames", wrappedParameterNames);
+	
+	JAVASCRIPT
+	
+	while(parameterNames.hasNext()) {
+	  key = parameterNames.next();
+	  value = parameterMap.get(key);
+	}
+
+*/
+	
 }
