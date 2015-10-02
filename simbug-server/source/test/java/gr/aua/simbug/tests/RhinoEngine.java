@@ -35,6 +35,10 @@ public class RhinoEngine
 				+ ""
 				+ ""
 				+ "";
+		script = "var INFO = new Object();";
+		script += "INFO.num_players = 2;";
+		script += "INFO.cur_turn = 3;";
+		script += "INFO.players = new Object(); INFO";
 
 		Context cx = Context.enter();
 
@@ -64,6 +68,79 @@ public class RhinoEngine
 			// Exit the Context. This removes the association between the Context and the current thread and is an
 			// essential cleanup action. There should be a call to exit for every call to enter.
 			Context.exit();
+		}
+	}
+
+	@Test
+	public void testInfoScript()
+	{
+		String script = "var INFO = new Object();";
+		script += "INFO.num_players = 2;";
+		script += "INFO.cur_turn = 3;";
+		script += "INFO.players = new Object();";
+		script += "INFO.players[0] = '1';";
+		script += "INFO.players[1] = '2';";
+		script += "choice = new Object();";
+		script += "choice['1'] = new Object();";
+		script += "choice['1']['1'] = 3;";
+		script ="var INFO = new Object();INFO.num_players = 3;INFO.cur_turn = 1;INFO.players = new Object();INFO.players[0] = 1;INFO.players[1] = 2;INFO.players[2] = 3;CONFIG = new Object();PLAYER_CHOICE_VARIABLES = new Object();PLAYER_CHOICE_VARIABLES[1] = new Object();PLAYER_CHOICE_VARIABLES[1]['1'] = new Object();PLAYER_CHOICE_VARIABLES[1]['1']['numberChoice'] = 23;PLAYER_CHOICE_VARIABLES[1]['2'] = new Object();PLAYER_CHOICE_VARIABLES[1]['2']['numberChoice'] = null;PLAYER_CHOICE_VARIABLES[1]['3'] = new Object();PLAYER_CHOICE_VARIABLES[1]['3']['numberChoice'] = null;";
+		script += "PLAYER_STATE_VARIABLES = new Object();PLAYER_STATE_VARIABLES[1] = new Object();PLAYER_STATE_VARIABLES[1]['1'] = new Object();PLAYER_STATE_VARIABLES[1]['1']['roundDistanceFromAverage'] = null;PLAYER_STATE_VARIABLES[1]['1']['roundRank'] = null;PLAYER_STATE_VARIABLES[1]['1']['overallScore'] = null;PLAYER_STATE_VARIABLES[1]['2'] = new Object();PLAYER_STATE_VARIABLES[1]['2']['roundDistanceFromAverage'] = null;PLAYER_STATE_VARIABLES[1]['2']['roundRank'] = null;PLAYER_STATE_VARIABLES[1]['2']['overallScore'] = null;PLAYER_STATE_VARIABLES[1]['3'] = new Object();PLAYER_STATE_VARIABLES[1]['3']['roundDistanceFromAverage'] = null;PLAYER_STATE_VARIABLES[1]['3']['roundRank'] = null;PLAYER_STATE_VARIABLES[1]['3']['overallScore'] = null;";
+		script += "WORLD_STATE_VARIABLES = new Object();WORLD_STATE_VARIABLES[1] = new Object();WORLD_STATE_VARIABLES[1]['averageAllPlayers'] = 22;";
+		script += "var RESULTS = new Object(); RESULTS['world'] = new Object; RESULTS['player'] = new Object; RESULTS['world']['averageAllPlayers'] =22;";
+		script += "RESULTS['player']['roundDistanceFromAverage'] = new Object(); RESULTS['player']['roundDistanceFromAverage']['1']=11; RESULTS['player']['roundDistanceFromAverage']['2']=11; RESULTS['player']['roundDistanceFromAverage']['3']=11;";
+		//script += "var myJsonString = JSON.stringify(INFO);";
+		script += "RESULTS;";
+		
+		Object obj = runScript(script);
+		System.out.println("Object: " + obj);
+		handleResults((NativeObject)obj);
+	}
+	
+	private Object runScript(String script) 
+	{
+		Context cx = Context.enter();
+		try
+		{
+			Scriptable scope = cx.initStandardObjects();
+			Object obj = cx .evaluateString(scope, script, "TestScript", 1, null);
+			
+			return obj;
+
+           //Scriptable res = (Scriptable) scope.get("obj", scope);
+			//System.out.println("INFO.num_players: " + res.get("num_players", res));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			Context.exit();
+		}
+		return null;
+	}
+
+	private void handleResults(NativeObject res) 
+	{
+		for (Entry<Object, Object> p : res.entrySet()) 
+		{
+			NativeObject r1 = (NativeObject)p.getValue();
+            for (Entry<Object, Object> p1 : r1.entrySet()) 
+            {
+				if (p.getKey().equals("world"))
+				{
+					System.out.println(p.getKey() + ": " + p1.getKey() + ": " + p1.getValue());
+				}
+				if (p.getKey().equals("player"))
+				{
+					NativeObject r2 = (NativeObject)p1.getValue();
+		            for (Entry<Object, Object> p2 : r2.entrySet()) 
+		            {
+						System.out.println(p.getKey() + ": " + p1.getKey() + ": " + p2.getKey() + ": " + p2.getValue());			            	
+		            }	            	
+	            }
+			}
+
 		}
 	}
 

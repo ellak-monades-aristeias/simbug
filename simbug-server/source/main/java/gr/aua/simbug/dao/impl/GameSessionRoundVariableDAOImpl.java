@@ -39,13 +39,28 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerVariablesByUuidByRoundByPlayer(
+	public List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerStateVariablesByUuidByRoundByPlayer(
 			String uuidOfGameSession, long currentRound, String uuidOfPlayer) 
 	{
 		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
 		sql += " AND playerUuid=? AND category=?";
 		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
 				.find(sql, new Object[] { uuidOfGameSession, currentRound, uuidOfPlayer, PLAYER_STATE_VARIABLE });
+		return temp;	
+	}
+
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerChoiceVariablesByUuidByRoundByPlayer(
+			String uuidOfGameSession, long currentRound, String playerUuid) 
+	{
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
+		sql += " AND playerUuid=? AND category=?";
+		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
+				.find(sql, new Object[] { uuidOfGameSession, currentRound, playerUuid, PLAYER_CHOICE_VARIABLE });
 		return temp;	
 	}
 

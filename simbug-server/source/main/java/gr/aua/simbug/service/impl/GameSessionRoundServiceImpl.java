@@ -67,7 +67,7 @@ public class GameSessionRoundServiceImpl implements GameSessionRoundService
 	public List<GameSessionRoundPlayerVariable> fetchPlayerStateVariablesByUuidByRoundByPlayer(GameSession gs, String uuidOfPlayer) 
 	{
 		List<DbGameSessionRoundPlayerVariable> dbgsrpvList = gameSessionRoundVariableDAO
-				.findGameSessionRoundPlayerVariablesByUuidByRoundByPlayer(gs.getUuidOfGameSession(), gs.getCurrentRound(), uuidOfPlayer);
+				.findGameSessionRoundPlayerStateVariablesByUuidByRoundByPlayer(gs.getUuidOfGameSession(), gs.getCurrentRound(), uuidOfPlayer);
 		List<GameSessionRoundPlayerVariable> gsrpvList = new ArrayList<GameSessionRoundPlayerVariable>();
 		for (DbGameSessionRoundPlayerVariable dbgsrpv : dbgsrpvList) 
 		{
@@ -145,6 +145,23 @@ public class GameSessionRoundServiceImpl implements GameSessionRoundService
 	public void setGameSessionRoundPlayerVariableDAO(
 			GameSessionRoundPlayerVariableDAO gameSessionRoundPlayerVariableDAO) {
 		this.gameSessionRoundPlayerVariableDAO = gameSessionRoundPlayerVariableDAO;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public List<GameSessionRoundPlayerVariable> fetchPlayerChoiceVariablesByUuidByRoundByPlayer(GameSession gs, String uuid) 
+	{
+		List<DbGameSessionRoundPlayerVariable> dbgsrpvList = gameSessionRoundVariableDAO
+				.findGameSessionRoundPlayerChoiceVariablesByUuidByRoundByPlayer(gs.getUuidOfGameSession(), gs.getCurrentRound(), uuid);
+		List<GameSessionRoundPlayerVariable> gsrpvList = new ArrayList<GameSessionRoundPlayerVariable>();
+		for (DbGameSessionRoundPlayerVariable dbgsrpv : dbgsrpvList) 
+		{
+			GameSessionRoundPlayerVariable gsrv = new GameSessionRoundPlayerVariable(dbgsrpv);
+			gsrpvList.add(gsrv);
+		}
+		return gsrpvList;
 	}
 
 }

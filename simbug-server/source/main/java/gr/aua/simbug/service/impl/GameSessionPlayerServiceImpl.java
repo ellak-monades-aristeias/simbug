@@ -13,8 +13,6 @@ import gr.aua.simbug.model.DbGameSessionRoundPlayer;
 import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 import gr.aua.simbug.service.GameSessionPlayerService;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class GameSessionPlayerServiceImpl implements GameSessionPlayerService
@@ -86,13 +84,6 @@ public class GameSessionPlayerServiceImpl implements GameSessionPlayerService
 	@Override
 	public GameSessionPlayer fetchGameSessionPlayerByPlayerUuid(String uuid) 
 	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<GameSessionPlayer> fetchListOfGameSessionPlayersBySessionUuid(
-			String uuid) {
 		// TODO Auto-generated method stub
 		return null;
 	}

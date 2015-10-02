@@ -13,7 +13,8 @@ public interface GameSessionRoundVariableDAO
 
 	List<DbGameSessionRoundVariable> findGameSessionRoundVariablesByUuidByRound(String uuidOfGameSession, long currentRound);
 
-	List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerVariablesByUuidByRoundByPlayer(
-			String uuidOfGameSession, long currentRound, String uuidOfPlayer);
+	List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerStateVariablesByUuidByRoundByPlayer(String uuidOfGameSession, long currentRound, String uuidOfPlayer);
+
+	List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerChoiceVariablesByUuidByRoundByPlayer(String uuidOfGameSession, long currentRound, String uuid);
 
 }

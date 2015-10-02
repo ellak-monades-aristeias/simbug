@@ -85,7 +85,7 @@ public class GameSession implements GameConstants
 		this.uuidOfGameSession = uuidOfGameSession;
 		this.definitionData = xmlDefinition;
 		this.jsonListOfPlayers = jsonListOfPlayers;
-		currentRound = 1;
+		currentRound = 0; // initial round
 
 		createDefinitionFromXml(xmlDefinition);
 		createListOfPlayers(jsonListOfPlayers);
@@ -302,6 +302,15 @@ public class GameSession implements GameConstants
 		{
 			e1.printStackTrace();
 		}
+	}
+
+	/**
+	 * Creates the Definition definition object from the definitionData (xml structure)
+	 */
+	public Definition createDefinitionFromXml() 
+	{
+		createDefinitionFromXml(definitionData);
+		return definition;
 	}
 
 	/**
