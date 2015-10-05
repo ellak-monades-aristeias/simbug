@@ -14,7 +14,7 @@ public class GameSessionDAOImpl extends HibernateDaoSupport implements GameSessi
 	@Override
 	public void save(DbGameSession dbGameSession) 
 	{
-		getHibernateTemplate().save(dbGameSession);
+		getHibernateTemplate().saveOrUpdate(dbGameSession);
 	}
 
 	@SuppressWarnings("unchecked")

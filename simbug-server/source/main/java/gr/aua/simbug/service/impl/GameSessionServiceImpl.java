@@ -40,10 +40,19 @@ public class GameSessionServiceImpl implements GameSessionService
 	private GameSessionPlayerDAO gameSessionPlayerDAO;
 	
 	@Override
-	public void saveGameSession(GameSession gameSession) 
+	public void saveGameSession(GameSession gs) 
 	{
-		DbGameSession dbGameSession = new DbGameSession(gameSession);
-		gameSessionDAO.save(dbGameSession);
+		DbGameSession dbgs = gameSessionDAO.findGameSessionByUuid(gs.getUuidOfGameSession());		
+		if(dbgs == null)
+			dbgs = new DbGameSession();
+		dbgs.setCurrentRound(gs.getCurrentRound());
+		dbgs.setDefinitionData(gs.getDefinitionData());
+		dbgs.setDefinitionFile(null);
+		dbgs.setGameSessionUuid(gs.getUuidOfGameSession());
+		//this.game;
+		dbgs.setPlayers(gs.getJsonListOfPlayers());
+
+		gameSessionDAO.save(dbgs);
 	}
 
 
@@ -59,8 +68,12 @@ public class GameSessionServiceImpl implements GameSessionService
 	public GameSession fetchGameSessionByUuid(String uuidOfGameSession) 
 	{
 		DbGameSession dbgs = gameSessionDAO.findGameSessionByUuid(uuidOfGameSession);
-		GameSession gs = new GameSession(dbgs);
-		return gs;
+		if (dbgs != null)
+		{
+			GameSession gs = new GameSession(dbgs);
+			return gs;
+		}
+		return null;
 	}
 
 

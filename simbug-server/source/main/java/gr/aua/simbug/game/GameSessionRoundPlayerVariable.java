@@ -47,6 +47,25 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 	/**
 	 * 
 	 * @param category
+	 * @param name
+	 * @param value
+	 * @param uuidOfGameSession
+	 * @param roundNum
+	 * @param playerUuid
+	 */
+	public GameSessionRoundPlayerVariable(int category, Object name, Object value, String uuidOfGameSession, long roundNum, Object playerUuid)
+	{
+		setVariableName((String)name);
+		setVariableValue((String)value);
+		setUuidOfGameSession(uuidOfGameSession);
+		setVariableCategory(category);
+		setRoundNum(roundNum);
+		this.playerUuid = (String)playerUuid;
+	}
+
+	/**
+	 * 
+	 * @param category
 	 * @param param
 	 * @param uuidOfGameSession
 	 * @param roundNum

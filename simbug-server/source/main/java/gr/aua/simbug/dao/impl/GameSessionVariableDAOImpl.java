@@ -11,7 +11,7 @@ public class GameSessionVariableDAOImpl extends HibernateDaoSupport implements G
 	@Override
 	public void save(DbGameSessionVariable dbGameSessionVariable) 
 	{
-		getHibernateTemplate().save(dbGameSessionVariable);
+		getHibernateTemplate().saveOrUpdate(dbGameSessionVariable);
 	}
 
 }

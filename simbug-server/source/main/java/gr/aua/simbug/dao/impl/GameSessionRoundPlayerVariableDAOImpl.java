@@ -19,7 +19,7 @@ public class GameSessionRoundPlayerVariableDAOImpl extends HibernateDaoSupport i
 	@Override
 	public void save(DbGameSessionRoundPlayerVariable dbgsrpv) 
 	{
-		getHibernateTemplate().save(dbgsrpv);
+		getHibernateTemplate().saveOrUpdate(dbgsrpv);
 	}
 
 	/**

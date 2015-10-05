@@ -95,10 +95,21 @@ public class GameSessionRoundServiceImpl implements GameSessionRoundService
 	@Override
 	public void saveGameSessionRoundVariable(GameSessionRoundVariable gsrv) 
 	{
-		DbGameSessionRoundVariable dbGameSessionRoundVariable = new DbGameSessionRoundVariable(gsrv);
-		DbGameSession gs = gameSessionDAO.findGameSessionByUuid(gsrv.getUuidOfGameSession());		
-		dbGameSessionRoundVariable.setGameSession(gs);
-		gameSessionRoundVariableDAO.save(dbGameSessionRoundVariable);
+		DbGameSessionRoundVariable dbgsrv = gameSessionRoundVariableDAO.
+				findGameSessionRoundVariablesByUuidByRound(gsrv.getUuidOfGameSession(), gsrv.getRoundNum(), gsrv.getVariableName());
+		if (dbgsrv == null)
+			dbgsrv = new DbGameSessionRoundVariable();
+		DbGameSession gs = gameSessionDAO.findGameSessionByUuid(gsrv.getUuidOfGameSession());	
+		
+		dbgsrv.setGameSession(gs);
+		dbgsrv.setCategory(gsrv.getVariableCategory());
+		dbgsrv.setVariableName(gsrv.getVariableName());
+		dbgsrv.setVariableValue(gsrv.getVariableValue());
+		dbgsrv.setVariableType(gsrv.getVariableType());
+		dbgsrv.setSessionUuid(gsrv.getUuidOfGameSession());
+		dbgsrv.setRoundNum(gsrv.getRoundNum());
+		
+		gameSessionRoundVariableDAO.save(dbgsrv);		
 	}
 
 	/**
@@ -107,10 +118,22 @@ public class GameSessionRoundServiceImpl implements GameSessionRoundService
 	@Override
 	public void saveGameSessionRoundPlayerVariable(GameSessionRoundPlayerVariable gsrpv) 
 	{
-		DbGameSessionRoundPlayerVariable dbGameSessionRoundPlayerVariable = new DbGameSessionRoundPlayerVariable(gsrpv);
-		DbGameSession gs = gameSessionDAO.findGameSessionByUuid(gsrpv.getUuidOfGameSession());		
-		dbGameSessionRoundPlayerVariable.setGameSession(gs);
-		gameSessionRoundPlayerVariableDAO.save(dbGameSessionRoundPlayerVariable);
+		DbGameSessionRoundPlayerVariable dbgsrpv = gameSessionRoundVariableDAO
+				.findGameSessionRoundPlayerStateVariableByUuidByRoundByPlayer(gsrpv.getUuidOfGameSession(), gsrpv.getRoundNum(), gsrpv.getPlayerUuid(), gsrpv.getVariableName());
+		if (dbgsrpv == null)
+			dbgsrpv = new DbGameSessionRoundPlayerVariable();
+		DbGameSession gs = gameSessionDAO.findGameSessionByUuid(gsrpv.getUuidOfGameSession());	
+		
+		dbgsrpv.setGameSession(gs);
+		dbgsrpv.setCategory(gsrpv.getVariableCategory());
+		dbgsrpv.setVariableName(gsrpv.getVariableName());
+		dbgsrpv.setVariableValue(gsrpv.getVariableValue());
+		dbgsrpv.setVariableType(gsrpv.getVariableType());
+		dbgsrpv.setSessionUuid(gsrpv.getUuidOfGameSession());
+		dbgsrpv.setRoundNum(gsrpv.getRoundNum());
+		dbgsrpv.setPlayerUuid(gsrpv.getPlayerUuid());
+		
+		gameSessionRoundPlayerVariableDAO.save(dbgsrpv);
 	}
 
 	public GameSessionDAO getGameSessionDAO() {
@@ -162,6 +185,45 @@ public class GameSessionRoundServiceImpl implements GameSessionRoundService
 			gsrpvList.add(gsrv);
 		}
 		return gsrpvList;
+	}
+
+	@Override
+	public GameSessionRoundPlayerVariable fetchPlayerChoiceVariableByNameByUuidByRoundByPlayer(GameSession gs, String uuid, String name)
+	{
+		DbGameSessionRoundPlayerVariable dbgsrpv = gameSessionRoundVariableDAO
+				.findGameSessionRoundPlayerChoiceVariableByUuidByRoundByPlayer(gs.getUuidOfGameSession(), gs.getCurrentRound(), uuid, name);
+		if (dbgsrpv != null)
+		{
+			GameSessionRoundPlayerVariable gsrv = new GameSessionRoundPlayerVariable(dbgsrpv);
+			return gsrv;
+		}
+		return null;
+	}
+
+	@Override
+	public GameSessionRoundPlayerVariable fetchPlayerStateVariableByNameByUuidByRoundByPlayer(
+			GameSession gs, String uuid, String name)
+	{
+		DbGameSessionRoundPlayerVariable dbgsrpv = gameSessionRoundVariableDAO
+				.findGameSessionRoundPlayerStateVariableByUuidByRoundByPlayer(gs.getUuidOfGameSession(), gs.getCurrentRound(), uuid, name);
+		if (dbgsrpv != null)
+		{
+			GameSessionRoundPlayerVariable gsrv = new GameSessionRoundPlayerVariable(dbgsrpv);
+			return gsrv;
+		}
+		return null;
+	}
+
+	@Override
+	public GameSessionRoundVariable fetchWorldStateVariableByNameByUuidByRound(GameSession gs, String name)
+	{
+		DbGameSessionRoundVariable dbgsrv = gameSessionRoundVariableDAO.findGameSessionRoundVariablesByUuidByRound(gs.getUuidOfGameSession(), gs.getCurrentRound(), name);
+		if (dbgsrv != null)
+		{
+			GameSessionRoundVariable gsrv = new GameSessionRoundVariable(dbgsrv);
+			return gsrv;
+		}
+		return null;
 	}
 
 }

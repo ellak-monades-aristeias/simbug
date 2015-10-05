@@ -55,6 +55,15 @@ public class GameSessionRoundVariable extends GameSessionVariable
 		this.roundNum = dbgsrv.getRoundNum();
 	}
 
+	public GameSessionRoundVariable(int worldStateVariable, Object name, Object value, String uuidOfGameSession, long roundNum)
+	{
+		setVariableName((String)name);
+		setVariableValue((String)value);
+		setUuidOfGameSession(uuidOfGameSession);
+		setVariableCategory(worldStateVariable);
+		this.roundNum = roundNum;
+	}
+
 	/**
 	 * 
 	 * @param category

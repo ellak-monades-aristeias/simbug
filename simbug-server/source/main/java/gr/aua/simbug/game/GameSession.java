@@ -224,7 +224,6 @@ public class GameSession implements GameConstants
 				
 				gameSessionPlayerService.updateRoundPlayerVariable(gsrpv);
 			}		
-
 		} 
 		catch (JsonParseException e) 
 		{
@@ -238,7 +237,6 @@ public class GameSession implements GameConstants
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

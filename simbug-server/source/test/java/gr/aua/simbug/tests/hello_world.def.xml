@@ -48,7 +48,7 @@
 		distance = new Array(INFO['num_players']);
 		for (i = 0; i < INFO['num_players']; i++) {
 			player_id = INFO['players'][i];
-			distance[i] = Math.abs(avg_all - PLAYER_CHOICE_VARIABLES['numberChoice'][player_id][INFO['cur_turn']);
+			distance[i] = Math.abs(avg_all - PLAYER_CHOICE_VARIABLES['numberChoice'][player_id][INFO['cur_turn']]);
 			RESULTS['PlayerStateVariables']['roundDistanceFromAverage'][player_id] = distance[i];
 		}	 
 		

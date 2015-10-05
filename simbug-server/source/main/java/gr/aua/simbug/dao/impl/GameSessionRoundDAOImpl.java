@@ -11,7 +11,7 @@ public class GameSessionRoundDAOImpl extends HibernateDaoSupport implements Game
 	@Override
 	public void save(DbGameSessionRound dbGameSessionRound) 
 	{
-		getHibernateTemplate().save(dbGameSessionRound);	
+		getHibernateTemplate().saveOrUpdate(dbGameSessionRound);	
 	}
 
 }

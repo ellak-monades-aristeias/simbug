@@ -42,7 +42,7 @@ public class GameSessionRound implements GameConstants
 	}
 
 	/**
-	 * 
+	 * Save a new round and the players
 	 * @param gameSession
 	 * @param round
 	 */
@@ -70,7 +70,7 @@ public class GameSessionRound implements GameConstants
 		{
 			gameSessionRoundVariable.createGameSessionRoundVariable(WORLD_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum);
 			gameSessionRoundVariable.saveSessionRoundVariable();
-			System.out.println(param.getName() + "-" + param.getType());
+			System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 		}
 	}
 
@@ -89,7 +89,7 @@ public class GameSessionRound implements GameConstants
 			{
 				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_CHOICE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
 				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
-				System.out.println(param.getName() + "-" + param.getType());
+				System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ public class GameSessionRound implements GameConstants
 			{
 				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
 				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
-				System.out.println(param.getName() + "-" + param.getType());
+				System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 			}
 		}
 	}

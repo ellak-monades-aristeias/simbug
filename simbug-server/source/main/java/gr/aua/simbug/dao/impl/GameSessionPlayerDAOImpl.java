@@ -13,7 +13,7 @@ public class GameSessionPlayerDAOImpl extends HibernateDaoSupport implements Gam
 	@Override
 	public void save(DbGameSessionPlayer gameSessionPlayer) 
 	{
-		getHibernateTemplate().save(gameSessionPlayer);	
+		getHibernateTemplate().saveOrUpdate(gameSessionPlayer);	
 	}
 
 	/**

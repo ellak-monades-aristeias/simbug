@@ -25,4 +25,10 @@ public interface GameSessionRoundService
 
 	List<GameSessionRoundPlayerVariable> fetchPlayerChoiceVariablesByUuidByRoundByPlayer(GameSession gameSession, String uuid);
 
+	GameSessionRoundPlayerVariable fetchPlayerChoiceVariableByNameByUuidByRoundByPlayer(GameSession gameSession, String uuid, String name);
+
+	GameSessionRoundPlayerVariable fetchPlayerStateVariableByNameByUuidByRoundByPlayer(GameSession gameSession, String uuid, String name);
+
+	GameSessionRoundVariable fetchWorldStateVariableByNameByUuidByRound(GameSession gameSession, String name);
+
 }
