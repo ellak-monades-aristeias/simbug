@@ -199,8 +199,10 @@ public class GameSession implements GameConstants
 	public void savePlayerChoiceVariables(String uuidOfGameSession, String jsonString) 
 	{
 		GameSession gs = readSessionByUuid(uuidOfGameSession);
-		
-		jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\", \"numberChoice\":\"23\"}}";
+
+		// TODO
+		// TO BE DELETED
+		//jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\", \"numberChoice\":\"23\"}}";
 		
 		System.out.println("\n\nPlayer Data"); // ListOfPlayers
 		System.out.println(jsonString);

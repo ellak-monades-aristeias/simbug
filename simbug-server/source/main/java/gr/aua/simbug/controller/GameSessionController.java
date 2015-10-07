@@ -67,6 +67,7 @@ public class GameSessionController implements GameConstants
 			return "{status: 'Error', errorMessage: 'sessionUuid '" +  sessionUuid + "' already exists'}";
 		}
 		
+		// TODO
 		// TO BE DELETED START
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
@@ -99,17 +100,14 @@ public class GameSessionController implements GameConstants
 		Definition definition = gameSession.createDefinitionFromXml();
 
 		List<GameSessionPlayer> players = gameSessionService.fetchListOfGameSessionPlayersBySessionUuid(sessionUuid);
+		gameSession.setGameSessionPlayers(players);
 		Info info = new Info(gameSession, players);
 		StringBuffer script = new StringBuffer("var INFO = new Object();");
-		//script.append("INFO.num_players = " + info.getNumOfPlayers() + ";");
 		script.append("INFO['num_players'] = " + info.getNumOfPlayers() + ";");
-		//script.append("INFO.cur_turn = " + info.getCurrentTurn() + ";");
 		script.append("INFO['cur_turn'] = " + info.getCurrentTurn() + ";");
-		//script.append("INFO.players = new Object();");
 		script.append("INFO['players'] = new Object();");
 		for (int i = 0; i < players.size(); i++)
 		{
-			//script.append("INFO.players[" + i + "] = " + players.get(i).getUuid() + ";" );
 			script.append("INFO['players'][" + i + "] = " + players.get(i).getUuid() + ";" );
 		}
 
@@ -135,6 +133,7 @@ public class GameSessionController implements GameConstants
 				for (int i = 0; i <= gameSession.getCurrentRound(); i++)
 				{
 					GameSessionRoundPlayerVariable gsrpv = gameSessionRoundService.fetchPlayerChoiceVariableByNameByUuidByRoundByPlayer(gameSession, player.getUuid(), param.getName());
+					System.out.println(param.getName() + " - " + player.getUuid() );
 					script.append("PLAYER_CHOICE_VARIABLES['" + param.getName() + "']['" + player.getUuid() + "'][" +  i + "] = " + gsrpv.getVariableValue() + ";");
 				}
 			}
@@ -165,18 +164,24 @@ public class GameSessionController implements GameConstants
 				script.append("WORLD_STATE_VARIABLES['" + param.getName() + "'][" +  i + "] = " + gsrv.getVariableValue() + ";");
 			}
 		}
-		script.append("RESULTS = new Object();");
+
+		// TODO
+		// TO BE DELETED START
+/*		script.append("RESULTS = new Object();");
 		script.append("RESULTS['WorldStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundDistanceFromAverage'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundRank'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['overallScore'] = new Object();");
+*/		// TO BE DELETED END
 		
 		System.out.println("Script: " + script.toString());
 
 		// Results
 		String algorithm = definition.getChoicesToStateAlgorithm();
-		algorithm += "RESULTS;";
+		// TODO
+		// TO BE DELETED START
+		//algorithm += "RESULTS;";
 		
 		Object obj = runScript(script.toString() + algorithm);
 		handleResults((NativeObject)obj, gameSession.getCurrentRound(), players);
@@ -195,9 +200,7 @@ public class GameSessionController implements GameConstants
 		gameSessionRound.savePlayerChoiceVariables(players, definition.getPlayerChoiceVariables().getPlayerChoiceVariable());
 
 		// Save playerStateVariables
-		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());
-		
-
+		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());		
 		
 		// "{status: 'ok', errorMessage: }"
 		return script.toString();
