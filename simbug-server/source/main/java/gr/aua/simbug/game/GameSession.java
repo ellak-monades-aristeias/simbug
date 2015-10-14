@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameSession implements GameConstants
 {
+	private String jsonError = null;
 	/**
 	 * The GameSession service.
 	 */
@@ -200,10 +201,6 @@ public class GameSession implements GameConstants
 	{
 		GameSession gs = readSessionByUuid(uuidOfGameSession);
 
-		// TODO
-		// TO BE DELETED
-		//jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\", \"numberChoice\":\"23\"}}";
-		
 		System.out.println("\n\nPlayer Data"); // ListOfPlayers
 		System.out.println(jsonString);
 
@@ -255,7 +252,7 @@ public class GameSession implements GameConstants
 	 * Gets as input the json string jsonListOfPlayers (array of uuids) and
 	 * creates ArrayList<gameSessionPlayers> players
 	 */
-	private void createListOfPlayers(String jsonListOfPlayers)
+	private void createListOfPlayers(String jsonListOfPlayers) //throws Exception
 	{
 		System.out.println("\n\nListOfPlayers"); // ListOfPlayers
 		System.out.println(jsonListOfPlayers);
@@ -271,6 +268,8 @@ public class GameSession implements GameConstants
 		catch (JsonParseException e) 
 		{
 			e.printStackTrace();
+			jsonError = e.getMessage();
+			//throw e;
 		} 
 		catch (JsonMappingException e) 
 		{
@@ -443,6 +442,22 @@ public class GameSession implements GameConstants
 	public void setGameSessionPlayerService(
 			GameSessionPlayerService gameSessionPlayerService) {
 		this.gameSessionPlayerService = gameSessionPlayerService;
+	}
+
+	/**
+	 * @return the jsonError
+	 */
+	public String getJsonError()
+	{
+		return jsonError;
+	}
+
+	/**
+	 * @param jsonError the jsonError to set
+	 */
+	public void setJsonError(String jsonError)
+	{
+		this.jsonError = jsonError;
 	}
 
 }
