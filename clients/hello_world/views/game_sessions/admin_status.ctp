@@ -54,9 +54,19 @@ $(document).ready(function() {
             </div>
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
-                    
-                    <p>Decisions</p>
-
+                    <table class="table table-bordered table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                		<th>User</th>
+										<th>Current Round Decisions</th>
+		
+                        </thead>
+                        <tbody>
+                   <?php  foreach($data['Player'] as $p): ?>
+                   <tr><td><?php  echo $p['showName']; ?></td><td><?php  echo print_r($p['Decisions'], TRUE); ?></td></tr>
+                   <?php  endforeach; ?>
+                   </tbody>
+				    </table>
                 </div>
             </div>
         </div>

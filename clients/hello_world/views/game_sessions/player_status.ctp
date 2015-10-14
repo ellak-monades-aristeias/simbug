@@ -19,7 +19,20 @@
             <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
                     
-                    <p>Decisions</p>
+                    <form method="POST" action="<?php  echo $this->webroot; ?>game_sessions/submitChoice/<?php echo $data['GameSession']['id']; ?>">
+                    	<div class="form-group">
+                            <label class="col-sm-2 control-label" for="id561df43ff3ca2">Give a number from 1-100</label>
+                            <div class="col-sm-6">
+                                <input type="text" maxlength="255" empty="" class="form-control" id="id561df43ff3ca2" name="data[Decision][numberChoice]">  
+                            </div>
+                        </div>
+                        <div class="form-group">
+			                <div class="col-sm-offset-2 col-sm-2">
+			                    <input type="submit" value="Take Decision" class="btn btn-primary btn-lg">
+			                </div>
+			            </div>
+                        
+                    </form>
 
                 </div>
             </div>

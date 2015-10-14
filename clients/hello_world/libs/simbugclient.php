@@ -20,6 +20,33 @@ class SimBugClient extends Object {
 	
 	/**
 	 * 
+	 * @param unknown $gs
+	 * @param unknown $player
+	 */
+	function getPlayerChoices($gs,$player) {
+		$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']);
+		
+		App::import('Vendor','Services_JSON', array('file'=>'services_json.php'));
+		$json = new Services_JSON();
+		
+		return $json->decode($results);
+	}
+	
+	
+	/**
+	 * 
+	 * @param array $gs The GameSession record 
+	 * @return asnwer from server as JSON php array
+	 */
+	function advanceTurn($gs) {
+		$results = $this->HttpSocket->post($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);
+		
+		return $results;
+	}
+	
+	
+	/**
+	 * 
 	 * @param array $gs The GameSession record 
 	 * @return asnwer from server as JSON php array
 	 */
@@ -47,6 +74,28 @@ class SimBugClient extends Object {
 
 		
 
+	}
+	
+	
+	function submitChoices($gs,$player,$choice) {
+//pr($gs);pr($player);pr($choice);die;
+		
+		//construct chouces
+		$sep='';$choices_string='{';
+		foreach($choice as $k=>$v) {
+			$choices_string.=$sep.'"'.$k.'":';
+			$choices_string.='"'.$v.'"';
+			$sep=',';
+		}
+		$choices_string.='}';
+		
+		//JsonString={"uuid": "56030487-0cf0-4f60-b10c-4d8a8fe9baf7", "choiceVariables": {"numberChoice": "10"}}
+		$data=array();
+		$data['jsonString'] = '{"uuid":"'.$player['id'].'","choiceVariables":'.$choices_string.'}';
+//pr($data['JsonString']);die;		
+		$results = $this->HttpSocket->post($this->rest_server_url.'/submitChoices/'.$gs['GameSession']['uuid'],$data);
+//pr($data);pr($results);die;		
+		return $results;
 	}
 	
 }
