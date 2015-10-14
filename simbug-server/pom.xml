@@ -125,6 +125,7 @@
 	</properties>
 	<build>
 		<sourceDirectory>source</sourceDirectory>
+		<pluginManagement>
  		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
@@ -158,13 +159,30 @@
 									<artifactId>
 										maven-compiler-plugin
 									</artifactId>
-									<versionRange>[3.3,)</versionRange>
+									<versionRange>[0.0,)</versionRange>
 									<goals>
 										<goal>compile</goal>
 									</goals>
 								</pluginExecutionFilter>
 								<action>
-									<execute/>
+									<ignore></ignore>
+								</action>
+							</pluginExecution>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>
+										org.apache.maven.plugins
+									</groupId>
+									<artifactId>
+										maven-compiler-plugin
+									</artifactId>
+									<versionRange>[3.3,)</versionRange>
+									<goals>
+										<goal>testCompile</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore></ignore>
 								</action>
 							</pluginExecution>
 						</pluginExecutions>
@@ -172,5 +190,6 @@
 				</configuration>
 			</plugin>
  		</plugins>
+ 		</pluginManagement>
 	</build>
 </project>
