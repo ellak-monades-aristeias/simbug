@@ -41,6 +41,14 @@ class GameSessionsController  extends AppController {
 		}
 		
 	}
+	
+	
+	function initgamesession($id) {
+		App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
+		$sc = new SimBugClient();
+		$result=$sc->initGameSession($this->GameSession->find('first',array('conditions'=>array('GameSession.id'=>$id))));
+		$this->set('results',$result);
+	}
 
 	
 }

@@ -34,6 +34,8 @@ $button_name = ($this->action === 'add') ? 'Add' : 'Save';
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <?php if ($this->action !== 'add'): ?>
+                            <li><a href="<?php  echo $this->webroot; ?>game_sessions/initgamesession/<?php echo $this->Form->value($modelClass . '.' . $primaryKey); ?>" >Initialize on REST Server</a></li>
+ 							
                             <li><?php
                                 echo $this->Html->link(
                                         __d('cake', 'Delete', true), array('action' => 'delete', $this->Form->value($modelClass . '.' . $primaryKey)), null,  sprintf(__d('cake', 'Are you sure you want to delete # %s?',true), $this->Form->value($modelClass . '.' . $primaryKey)));
@@ -46,10 +48,10 @@ $button_name = ($this->action === 'add') ? 'Add' : 'Save';
                             foreach ($_data as $_alias => $_details) {
                                 if ($_details['controller'] != $this->name && !in_array($_details['controller'], $done)) {
                                     echo "\t\t<li>" . $this->Html->link(
-                                             sprintf(__d('cake', 'List %s',true), Inflector::humanize($_details['controller'])), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'index')
+                                             sprintf(__d('cake', 'List %s',true), Inflector::humanize($_details['controller'])), array( 'controller' => $_details['controller'], 'action' => 'index')
                                     ) . "</li>\n";
                                     echo "\t\t<li>" . $this->Html->link(
-                                             sprintf(__d('cake', 'New %s',true), Inflector::humanize(Inflector::underscore($_alias))), array('plugin' => $_details['plugin'], 'controller' => $_details['controller'], 'action' => 'add')
+                                             sprintf(__d('cake', 'New %s',true), Inflector::humanize(Inflector::underscore($_alias))), array( 'controller' => $_details['controller'], 'action' => 'add')
                                     ) . "</li>\n";
                                     $done[] = $_details['controller'];
                                 }

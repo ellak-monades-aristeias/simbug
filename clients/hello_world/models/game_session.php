@@ -8,7 +8,18 @@ class GameSession extends AppModel {
 	
 	var $displayField = 'name';
 	
+	/**
+	 * 
+	 * @param unknown $data
+	 * @param unknown $filterKey
+	 */
+	function create($data = array(), $filterKey = false) {
+		$d = parent::create($data,$filterKey);
+		$d['GameSession']['uuid']= String::uuid();
+		return $d;
+	}
 	
+
 	
 	
 }
