@@ -32,7 +32,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations = {
+		"classpath:/application-context.xml", 
+		"file:WebContent/WEB-INF/simbug-servlet.xml"
+})
 @WebAppConfiguration
 public class GameSessionControllerTest
 {

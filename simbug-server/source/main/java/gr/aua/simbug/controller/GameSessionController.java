@@ -13,6 +13,7 @@ import gr.aua.simbug.game.GameSessionRoundVariable;
 import gr.aua.simbug.game.GameSessionVariable;
 import gr.aua.simbug.service.GameSessionRoundService;
 import gr.aua.simbug.service.GameSessionService;
+import gr.aua.simbug.utils.SimbugUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,25 +64,33 @@ public class GameSessionController implements GameConstants
 	{
 		if (gameSessionService.fetchGameSessionByUuid(sessionUuid) != null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" already exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' already exists\"}";
 		}
 		
 		// TODO
 		// TO BE DELETED START
-/*		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
-		definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
+		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
 		definitionString = SimbugUtils.fileToString(definitionFile);
 		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
-		jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
-*/		// TO BE DELETED END
-		
+		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
+		// TO BE DELETED END
+
+		if ((definitionString == null) || (definitionString.isEmpty()))
+		{
+			return "{\"status\": \"Error\", \"errorMessage\": \"'definitionString' should not be empty.\"}";	
+		}
+		if ((jsonListOfPlayers == null) || (jsonListOfPlayers.isEmpty()))
+		{
+			return "{\"status\": \"Error\", \"errorMessage\": \"'listOfPlayers' should not be empty.\"}";	
+		}
 		// Create game session. Update database
 		gameSession.createGameSession(sessionUuid, definitionString, jsonListOfPlayers);
 		
-		String status = "{status: \"ok\", errorMessage: }";
-		if (!gameSession.getJsonError().isEmpty())
-			status = "{status: \"error\", errorMessage: \"" + gameSession.getJsonError() + "\"}";
+		String status = "{\"status\": \"ok\", \"errorMessage\": }";
+		if ((gameSession.getJsonError() != null) && !gameSession.getJsonError().isEmpty())
+			status = "{\"status\": \"error\", \"errorMessage\": \"" + gameSession.getJsonError() + "\"}";
 		
 		return status;
 	}
@@ -99,7 +108,7 @@ public class GameSessionController implements GameConstants
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}
 		Definition definition = gameSession.createDefinitionFromXml();
 
@@ -204,7 +213,7 @@ public class GameSessionController implements GameConstants
 		// Save playerStateVariables
 		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());		
 		
-		// "{status: 'ok', errorMessage: }"
+		// "{\"status\": 'ok', \"errorMessage\": }"
 		return script.toString();
 	}
 
@@ -226,14 +235,14 @@ public class GameSessionController implements GameConstants
 		
 		if ((jsonString == null) || (jsonString.isEmpty()))
 		{
-			return "{status: \"Error\", errorMessage: \"jsonString \" should not be empty.}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"'jsonString' should not be empty.\"}";
 		}
 		if (gameSessionService.fetchGameSessionByUuid(sessionUuid) == null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}
 		gameSession.savePlayerChoiceVariables(sessionUuid, jsonString);
-		return "{status: \"ok\", errorMessage: }";
+		return "{\"status\": \"ok\", \"errorMessage\": }";
 	}
 
 	/**
@@ -248,7 +257,7 @@ public class GameSessionController implements GameConstants
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}		
 		List<GameSessionRoundVariable> worldStateVariables = gameSessionRoundService.fetchWorldStateVariablesByUuidByRound(gameSession);
 		String json = "{";
@@ -280,7 +289,7 @@ public class GameSessionController implements GameConstants
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}		
 		List<GameSessionRoundPlayerVariable> playerStateVariables = gameSessionRoundService.fetchPlayerStateVariablesByUuidByRoundByPlayer(gameSession, playerUuid);
 		String json = "{";
@@ -312,7 +321,7 @@ public class GameSessionController implements GameConstants
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{status: \"Error\", errorMessage: \"sessionUuid \"" +  sessionUuid + "\" not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}		
 		
 		List<GameSessionRoundPlayerVariable> playerChoiceVariables = gameSessionRoundService.fetchPlayerChoiceVariablesByUuidByRoundByPlayer(gameSession, playerUuid);

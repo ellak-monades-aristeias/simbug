@@ -124,8 +124,8 @@
 		<org.apache.tiles.version>3.0.5</org.apache.tiles.version>
 	</properties>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<plugins>
+		<sourceDirectory>source</sourceDirectory>
+ 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
@@ -142,6 +142,35 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-		</plugins>
+			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<lifecycleMappingMetadata>
+						<pluginExecutions>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>
+										org.apache.maven.plugins
+									</groupId>
+									<artifactId>
+										maven-compiler-plugin
+									</artifactId>
+									<versionRange>[3.3,)</versionRange>
+									<goals>
+										<goal>compile</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<execute/>
+								</action>
+							</pluginExecution>
+						</pluginExecutions>
+					</lifecycleMappingMetadata>
+				</configuration>
+			</plugin>
+ 		</plugins>
 	</build>
 </project>
