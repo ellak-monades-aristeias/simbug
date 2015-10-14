@@ -21,29 +21,29 @@ class SimBugClient extends Object {
 	/**
 	 * 
 	 * @param array $gs The GameSession record 
-	 * @return boolean 1=success, 0=failure
+	 * @return asnwer from server as JSON php array
 	 */
 	function initGameSession($gs) {
 		
 		$sep='';$players_string='[';
 		foreach($gs['Player'] as $pl) {
-			$players_string.=$sep."{'uuid':'";
+			$players_string.=$sep.'{"uuid":"';
 			$players_string.=$pl['id'];
-			$players_string.="'}";
+			$players_string.='"}';
 			$sep=',';
 		}
 		$players_string.=']';
-		
+//pr($players_string);die;		
 		//form data
 		$data=array();
 		$data['listOfPlayers'] = $players_string;
 		$data['definitionString']=$gs['Game']['definition'];
 		
 		$results = $this->HttpSocket->post($this->rest_server_url.'/initGameSession/'.$gs['GameSession']['uuid'],$data);
-		
-		$results_json = json_decode($results, TRUE);
+//pr($results);die;		
+//		$results_json = json_decode($results, TRUE);
 
-		return $results_json;
+		return $results;
 
 		
 

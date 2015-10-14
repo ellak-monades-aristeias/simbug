@@ -35,6 +35,8 @@ $id = false;
                         Actions <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
+                    	 <li><a href="<?php  echo $this->webroot; ?>game_sessions/initgamesession/<?php echo $this->Form->value($modelClass . '.' . $primaryKey); ?>" ><span class="glyphicon glyphicon-play-circle"></span>Initialize on REST Server</a></li>
+                    
                         <?php
                         echo "\t\t<li>";
                         echo $this->Html->link( sprintf(__d('cake', '<span class="glyphicon glyphicon-tags"></span> Status',true)), array('action' => 'admin_status', ${$singularVar}[$modelClass][$primaryKey]), array('escape' => false));
@@ -110,7 +112,7 @@ $id = false;
                     if ($isKey !== true) {
                         // if ($_field = $this->model->promaryKey)
 
-                        if (!$simple_view || ($simple_view && !in_array($_field, array('id', 'created', 'updated', 'create_user_id', 'update_user_id')))) {
+                        if (!$simple_view || ($simple_view && !in_array($_field, array( 'updated', 'create_user_id', 'update_user_id')))) {
                             echo "\t\t<dt>" . Inflector::humanize($_field) . "</dt>\n";
                             switch ($field_type[$_field]) {
                                 case 'boolean':
@@ -225,7 +227,7 @@ $id = false;
                                     unset($otherFields[$index]);
                                 }
                                 foreach ($otherFields as $_field) {
-                                    if (!$simple_view || ($simple_view && !in_array($_field, array('id', 'created', 'updated', 'create_user_id', 'update_user_id'))))
+                                    if (!$simple_view || ($simple_view && !in_array($_field, array('password','created', 'updated', 'create_user_id', 'update_user_id'))))
                                         echo "\t\t<th>" . Inflector::humanize($_field) . "</th>\n";
                                 }
                                 ?>
@@ -239,7 +241,7 @@ $id = false;
                                 echo "\t\t<tr>\n";
 
                                 foreach ($otherFields as $_field) {
-                                    if (!$simple_view || ($simple_view && !in_array($_field, array('id', 'created', 'updated', 'create_user_id', 'update_user_id'))))
+                                    if (!$simple_view || ($simple_view && !in_array($_field, array( 'password','created', 'updated', 'create_user_id', 'update_user_id'))))
                                         echo "\t\t\t<td>" . ${$otherSingularVar}[$_field] . "</td>\n";
                                 }
 

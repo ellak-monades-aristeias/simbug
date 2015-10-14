@@ -47,7 +47,15 @@ class GameSessionsController  extends AppController {
 		App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
 		$sc = new SimBugClient();
 		$result=$sc->initGameSession($this->GameSession->find('first',array('conditions'=>array('GameSession.id'=>$id))));
-		$this->set('results',$result);
+		
+		//if($result['status']=='ok') {
+		//	$this->GameSession->id=$id;$this->GameSession->saveField('round',0);
+		//}
+		
+		$this->Session->setFlash('An initializaion message was sent to the SIMBUG-SERVER. The response was:<pre>'.print_r($result,TRUE).'</pre>');
+		
+		$this->redirect('/game_sessions/admin_status/'.$id);
+
 	}
 
 	
