@@ -245,6 +245,10 @@ public class GameSession implements GameConstants
 	 */
 	private GameSession readSessionByUuid(String uuidOfGameSession) 
 	{
+		if (gameSessionService == null)
+		{
+			System.out.println("gameSessionService-errrrrrrrrrrrrrrrr");
+		}
 		return gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
 	}
 

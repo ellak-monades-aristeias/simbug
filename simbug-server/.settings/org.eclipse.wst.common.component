@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/source/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/source/main/resource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="context-root" value="simbug-server"/>
         <property name="java-output-path" value="/simbug-server/build/classes"/>
     </wb-module>

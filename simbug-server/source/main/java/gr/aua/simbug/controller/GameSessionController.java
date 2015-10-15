@@ -64,33 +64,37 @@ public class GameSessionController implements GameConstants
 	{
 		if (gameSessionService.fetchGameSessionByUuid(sessionUuid) != null)
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' already exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' already exists\", \"result\":\"\"}";
 		}
 		
 		// TODO
 		// TO BE DELETED START
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
-		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
-		definitionString = SimbugUtils.fileToString(definitionFile);
-		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
-		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
+//		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
+//		definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
+//		definitionString = SimbugUtils.fileToString(definitionFile);
+//		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
+//		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
 		// TO BE DELETED END
 
 		if ((definitionString == null) || (definitionString.isEmpty()))
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"'definitionString' should not be empty.\"}";	
+			return "{\"status\": \"Error\", \"errorMessage\": \"'definitionString' should not be empty.\", \"result\":\"\"}";	
 		}
 		if ((jsonListOfPlayers == null) || (jsonListOfPlayers.isEmpty()))
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"'listOfPlayers' should not be empty.\"}";	
+			return "{\"status\": \"Error\", \"errorMessage\": \"'listOfPlayers' should not be empty.\", \"result\":\"\"}";	
 		}
 		// Create game session. Update database
+		if (gameSession == null)
+		{
+			System.out.println("errrrrrrrrrrrrrrr");
+		}
 		gameSession.createGameSession(sessionUuid, definitionString, jsonListOfPlayers);
 		
-		String status = "{\"status\": \"ok\", \"errorMessage\": }";
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\" }";
 		if ((gameSession.getJsonError() != null) && !gameSession.getJsonError().isEmpty())
-			status = "{\"status\": \"error\", \"errorMessage\": \"" + gameSession.getJsonError() + "\"}";
+			status = "{\"status\": \"error\", \"errorMessage\": \"" + gameSession.getJsonError() + "\", \"result\":\"\"}";
 		
 		return status;
 	}
@@ -108,7 +112,7 @@ public class GameSessionController implements GameConstants
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
 		}
 		Definition definition = gameSession.createDefinitionFromXml();
 
@@ -121,7 +125,7 @@ public class GameSessionController implements GameConstants
 		script.append("INFO['players'] = new Object();");
 		for (int i = 0; i < players.size(); i++)
 		{
-			script.append("INFO['players'][" + i + "] = " + players.get(i).getUuid() + ";" );
+			script.append("INFO['players'][" + i + "] = '" + players.get(i).getUuid() + "';" );
 		}
 
 		// Get configuration parameters
@@ -194,6 +198,8 @@ public class GameSessionController implements GameConstants
 		String algorithm = definition.getChoicesToStateAlgorithm();
 		algorithm += "RESULTS;";
 		
+		System.out.println("Script: " + script.toString() + algorithm);
+		
 		Object obj = runScript(script.toString() + algorithm);
 		handleResults((NativeObject)obj, gameSession.getCurrentRound(), players);
 		
@@ -213,8 +219,8 @@ public class GameSessionController implements GameConstants
 		// Save playerStateVariables
 		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());		
 		
-		// "{\"status\": 'ok', \"errorMessage\": }"
-		return script.toString();
+		String status = "{\"status\": 'ok', \"errorMessage\":\"\", \"result\":\"\"}";
+		return status;
 	}
 
 	/**
@@ -235,14 +241,14 @@ public class GameSessionController implements GameConstants
 		
 		if ((jsonString == null) || (jsonString.isEmpty()))
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"'jsonString' should not be empty.\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"'jsonString' should not be empty.\", \"result\":\"\"}";
 		}
 		if (gameSessionService.fetchGameSessionByUuid(sessionUuid) == null)
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
 		}
 		gameSession.savePlayerChoiceVariables(sessionUuid, jsonString);
-		return "{\"status\": \"ok\", \"errorMessage\": }";
+		return "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\"}";
 	}
 
 	/**
@@ -250,21 +256,25 @@ public class GameSessionController implements GameConstants
 	 * @param sessionUuid
 	 * @return world state variables as JSON string {world_state_variable_name: value]}
 	 */
-	@RequestMapping("/getWorldState/{sessionUuid}")
-	public String getWorldState( @PathVariable String sessionUuid)
+	@RequestMapping("/getWorldState/{sessionUuid}/{round}")
+	public String getWorldState( @PathVariable String sessionUuid, @PathVariable String round)
 	{
 		// Gets session
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
 		if (gameSession == null)
 		{
-			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
 		}		
+		if ((round != null) && (!round.isEmpty()))
+		{
+			gameSession.setCurrentRound(Long.valueOf(round));
+		}
 		List<GameSessionRoundVariable> worldStateVariables = gameSessionRoundService.fetchWorldStateVariablesByUuidByRound(gameSession);
 		String json = "{";
 		int counter = 1;
 		for (GameSessionRoundVariable gsrv : worldStateVariables) 
 		{
-			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue();
+			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue() + "\"";
 			if (counter < worldStateVariables.size())
 			{
 				json += ",";
@@ -273,7 +283,8 @@ public class GameSessionController implements GameConstants
 			System.out.println(gsrv.getVariableName());
 		}
 		json += "}";
-		return json;
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":" + json + "}";
+		return status;
 	}
 
 	/**
@@ -282,8 +293,8 @@ public class GameSessionController implements GameConstants
 	 * @param playerUuid
 	 * @return player state variables as JSON string {player_state_variable_name: value]}
 	 */
-	@RequestMapping("/getPlayerState/{sessionUuid}/{playerUuid}")
-	public String getPlayerState( @PathVariable String sessionUuid, @PathVariable String playerUuid)
+	@RequestMapping("/getPlayerState/{sessionUuid}/{playerUuid}/{round}")
+	public String getPlayerState( @PathVariable String sessionUuid, @PathVariable String playerUuid, @PathVariable String round)
 	{
 		// Gets session
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
@@ -291,12 +302,16 @@ public class GameSessionController implements GameConstants
 		{
 			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}		
+		if ((round != null) && (!round.isEmpty()))
+		{
+			gameSession.setCurrentRound(Long.valueOf(round));
+		}
 		List<GameSessionRoundPlayerVariable> playerStateVariables = gameSessionRoundService.fetchPlayerStateVariablesByUuidByRoundByPlayer(gameSession, playerUuid);
 		String json = "{";
 		int counter = 1;
 		for (GameSessionRoundPlayerVariable gsrv : playerStateVariables) 
 		{
-			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue();
+			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue() + "\"";
 			if (counter < playerStateVariables.size())
 			{
 				json += ",";
@@ -305,7 +320,8 @@ public class GameSessionController implements GameConstants
 			System.out.println(gsrv.getVariableName());
 		}
 		json += "}";
-		return json;
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":" + json + "}";
+		return status;
 	}
 
 	/**
@@ -314,8 +330,8 @@ public class GameSessionController implements GameConstants
 	 * @param playerUuid
 	 * @return player choice variables as JSON string {player_state_variable_name: value]}
 	 */
-	@RequestMapping("/getPlayerChoices/{sessionUuid}/{playerUuid}")
-	public String getPlayerChoices( @PathVariable String sessionUuid, @PathVariable String playerUuid)
+	@RequestMapping("/getPlayerChoices/{sessionUuid}/{playerUuid}/{round}")
+	public String getPlayerChoices( @PathVariable String sessionUuid, @PathVariable String playerUuid, @PathVariable String round)
 	{
 		// Gets session
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
@@ -323,13 +339,16 @@ public class GameSessionController implements GameConstants
 		{
 			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\"}";
 		}		
-		
+		if ((round != null) && (!round.isEmpty()))
+		{
+			gameSession.setCurrentRound(Long.valueOf(round));
+		}
 		List<GameSessionRoundPlayerVariable> playerChoiceVariables = gameSessionRoundService.fetchPlayerChoiceVariablesByUuidByRoundByPlayer(gameSession, playerUuid);
 		String json = "{";
 		int counter = 1;
 		for (GameSessionRoundPlayerVariable gsrv : playerChoiceVariables) 
 		{
-			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue();
+			json += "\"" + gsrv.getVariableName() + "\":\"" + gsrv.getVariableValue() + "\"";
 			if (counter < playerChoiceVariables.size())
 			{
 				json += ",";
@@ -338,7 +357,8 @@ public class GameSessionController implements GameConstants
 			System.out.println(gsrv.getVariableName());
 		}
 		json += "}";
-		return json;
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":" + json + "}";
+		return status;
 	}
 	
 	/**
