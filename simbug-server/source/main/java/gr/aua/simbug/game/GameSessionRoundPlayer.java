@@ -16,6 +16,7 @@ public class GameSessionRoundPlayer extends GameSessionPlayer
 	public GameSessionRoundPlayer()
 	{
 		super();
+		System.out.println("creating bean GameSessionRoundPlayer: " + this);
 	}
 
 	public void createSessionRoundPlayer(GameSessionPlayer player, GameSessionRound gameSessionRound) 

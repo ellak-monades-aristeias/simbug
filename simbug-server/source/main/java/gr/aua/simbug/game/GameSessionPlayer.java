@@ -24,6 +24,7 @@ public class GameSessionPlayer extends Player
 	public GameSessionPlayer()
 	{
 		super();
+		System.out.println("creating bean GameSessionPlayer: " + this);
 	}
 
 	public GameSessionPlayer(DbGameSessionPlayer dbgsrv) 

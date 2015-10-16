@@ -6,12 +6,11 @@ import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
 @Repository
-public class GameSessionRoundPlayerVariableDAOImpl extends HibernateDaoSupport implements GameSessionRoundPlayerVariableDAO
+public class GameSessionRoundPlayerVariableDAOImpl extends DAOHibernate implements GameSessionRoundPlayerVariableDAO
 {
 
 	/**
@@ -21,7 +20,7 @@ public class GameSessionRoundPlayerVariableDAOImpl extends HibernateDaoSupport i
 	@Override
 	public void save(DbGameSessionRoundPlayerVariable dbgsrpv) 
 	{
-		getHibernateTemplate().saveOrUpdate(dbgsrpv);
+		this.getSession().saveOrUpdate(dbgsrpv);
 	}
 
 	/**
@@ -33,12 +32,16 @@ public class GameSessionRoundPlayerVariableDAOImpl extends HibernateDaoSupport i
 	@Override
 	public DbGameSessionRoundPlayerVariable findByUuidByRoundByPlayerByName(GameSessionRoundPlayerVariable gsrpv) 
 	{
-		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? ";
-		sql += "AND roundNum=? AND playerUuid=? AND variableName=?";
-		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { gsrpv.getUuidOfGameSession(), gsrpv.getRoundNum(), gsrpv.getPlayerUuid(), gsrpv.getVariableName() });
-		if (CollectionUtils.isEmpty(temp))
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=:gameSessionUuid ";
+		sql += "AND roundNum=:roundNum AND playerUuid=:playerUuid AND variableName=:variableName";
+		List<DbGameSessionRoundPlayerVariable> list = (List<DbGameSessionRoundPlayerVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", gsrpv.getUuidOfGameSession())
+				.setParameter("roundNum", gsrpv.getRoundNum())
+				.setParameter("playerUuid", gsrpv.getPlayerUuid())
+				.setParameter("variableName", gsrpv.getVariableName())
+				.list();
+		if (CollectionUtils.isEmpty(list))
 			return null;
-		return temp.get(0);	}
-
+		return list.get(0);
+	}
 }

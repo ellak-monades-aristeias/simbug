@@ -39,6 +39,7 @@ public class GameSessionRound implements GameConstants
 	public GameSessionRound()
 	{
 		super();
+		System.out.println("creating bean GameSessionRound: " + this);
 	}
 
 	/**

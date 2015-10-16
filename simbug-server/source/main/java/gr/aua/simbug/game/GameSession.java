@@ -66,6 +66,7 @@ public class GameSession implements GameConstants
 	public GameSession() 
 	{
 		super();
+		System.out.println("creating bean GameSession: " + this);
 	}
 
 	public GameSession(DbGameSession dbgs) 

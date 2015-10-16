@@ -22,9 +22,12 @@ public class Player
 	public String toString()
 	{
 		String str = "Player [uuid=" + uuid + ",choiceVariables[";
-		for (Map.Entry<String, String> entry : choiceVariables.entrySet()) 
+		if (choiceVariables != null)
 		{
-			str += entry.getKey() + " : " + entry.getValue() + ",";
+			for (Map.Entry<String, String> entry : choiceVariables.entrySet()) 
+			{
+				str += entry.getKey() + " : " + entry.getValue() + ",";
+			}
 		}
 		str += "] ]";
 		return str;

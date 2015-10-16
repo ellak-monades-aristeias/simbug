@@ -10,6 +10,12 @@ public class GameServiceImpl implements GameService
 	@Autowired
 	private GameDAO gameDAO;
 
+	public GameServiceImpl()
+	{
+		super();
+		System.out.println("creating bean GameServiceImpl: " + this);
+	}
+	
 	/**
 	 * @return the gameDAO
 	 */

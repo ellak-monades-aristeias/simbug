@@ -42,15 +42,6 @@
 	<bean id="GameSessionRoundService" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl" />
 	<bean id="GameSessionPlayerService" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl" />
 
-	<!-- beans. -->
-	<bean id="GameSession" class="gr.aua.simbug.game.GameSession" />
-<!-- 	<bean id="GameSessionPlayer" class="gr.aua.simbug.game.GameSessionPlayer" /> -->
-	<bean id="GameSessionRound" class="gr.aua.simbug.game.GameSessionRound" />
-	<bean id="GameSessionRoundPlayer" class="gr.aua.simbug.game.GameSessionRoundPlayer" />
-	<bean id="GameSessionRoundPlayerVariable" class="gr.aua.simbug.game.GameSessionRoundPlayerVariable" />
-<!-- 	<bean id="GameSessionRoundVariable" class="gr.aua.simbug.game.GameSessionRoundVariable" /> -->
-<!-- 	<bean id="GameSessionVariable" class="gr.aua.simbug.game.GameSessionVariable" /> -->
-
 	<!-- Security thingies. -->
 <!-- 	<import resource="application-context-security.xml" /> -->
 

@@ -69,13 +69,13 @@ public class GameSessionController implements GameConstants
 		
 		// TODO
 		// TO BE DELETED START
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+/*		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
-		definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
+		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
 		definitionString = SimbugUtils.fileToString(definitionFile);
 		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
 		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
-		// TO BE DELETED END
+*/		// TO BE DELETED END
 
 		if ((definitionString == null) || (definitionString.isEmpty()))
 		{

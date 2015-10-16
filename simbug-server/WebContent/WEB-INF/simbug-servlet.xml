@@ -13,7 +13,7 @@
  
 <!-- 	<mvc:default-servlet-handler /> -->
 
-	<context:component-scan base-package="gr.aua.simbug.controller" />
+	<context:component-scan base-package="gr.aua.simbug" />
  
 	<mvc:annotation-driven />
 	

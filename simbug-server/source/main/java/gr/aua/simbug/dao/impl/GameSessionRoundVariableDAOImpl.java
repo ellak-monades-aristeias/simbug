@@ -7,11 +7,11 @@ import gr.aua.simbug.model.DbGameSessionRoundVariable;
 
 import java.util.List;
 
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 @Repository
-public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport implements GameSessionRoundVariableDAO, GameConstants
+public class GameSessionRoundVariableDAOImpl extends DAOHibernate implements GameSessionRoundVariableDAO, GameConstants
 {
 
 	/**
@@ -20,7 +20,7 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	@Override
 	public void save(DbGameSessionRoundVariable dbGameSessionRoundVariable) 
 	{
-		getHibernateTemplate().saveOrUpdate(dbGameSessionRoundVariable);
+		this.getSession().saveOrUpdate(dbGameSessionRoundVariable);
 	}
 
 	/**
@@ -30,10 +30,12 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	@Override
 	public List<DbGameSessionRoundVariable> findGameSessionRoundVariablesByUuidByRound(String uuidOfGameSession, long currentRound) 
 	{
-		String sql = "from DbGameSessionRoundVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		final List<DbGameSessionRoundVariable> temp = (List<DbGameSessionRoundVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound });
-		return temp;	
+		String sql = "from DbGameSessionRoundVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		List<DbGameSessionRoundVariable> list = (List<DbGameSessionRoundVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.list();
+		return list;	
 	}
 
 	/**
@@ -44,11 +46,17 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	public List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerStateVariablesByUuidByRoundByPlayer(
 			String uuidOfGameSession, long currentRound, String uuidOfPlayer) 
 	{
-		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		sql += " AND playerUuid=? AND category=?";
-		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound, uuidOfPlayer, PLAYER_STATE_VARIABLE });
-		return temp;	
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		sql += " AND playerUuid=:playerUuid AND category=:category";
+		List<DbGameSessionRoundPlayerVariable> list = (List<DbGameSessionRoundPlayerVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.setParameter("playerUuid", uuidOfPlayer)
+				.setParameter("category", PLAYER_STATE_VARIABLE)
+				.list();
+		if (CollectionUtils.isEmpty(list))
+			return null;
+		return list;	
 	}
 
 	/**
@@ -59,11 +67,15 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	public List<DbGameSessionRoundPlayerVariable> findGameSessionRoundPlayerChoiceVariablesByUuidByRoundByPlayer(
 			String uuidOfGameSession, long currentRound, String playerUuid) 
 	{
-		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		sql += " AND playerUuid=? AND category=?";
-		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound, playerUuid, PLAYER_CHOICE_VARIABLE });
-		return temp;	
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		sql += " AND playerUuid=:playerUuid AND category=:category";
+		List<DbGameSessionRoundPlayerVariable> list = (List<DbGameSessionRoundPlayerVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.setParameter("playerUuid", playerUuid)
+				.setParameter("category", PLAYER_CHOICE_VARIABLE)
+				.list();
+		return list;	
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,13 +83,17 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	public DbGameSessionRoundPlayerVariable findGameSessionRoundPlayerChoiceVariableByUuidByRoundByPlayer(
 			String uuidOfGameSession, long currentRound, String playerUuid, String name)
 	{
-		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		sql += " AND playerUuid=? AND category=? AND variableName=?";
-		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound, playerUuid, PLAYER_CHOICE_VARIABLE, name });
-		if ((temp != null) && !temp.isEmpty())
-			return temp.get(0);
-		return null;	
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		sql += " AND playerUuid=:playerUuid AND category=:category";
+		List<DbGameSessionRoundPlayerVariable> list = (List<DbGameSessionRoundPlayerVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.setParameter("playerUuid", playerUuid)
+				.setParameter("category", PLAYER_CHOICE_VARIABLE)
+				.list();
+		if (CollectionUtils.isEmpty(list))
+			return null;
+		return list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,26 +101,34 @@ public class GameSessionRoundVariableDAOImpl extends HibernateDaoSupport impleme
 	public DbGameSessionRoundPlayerVariable findGameSessionRoundPlayerStateVariableByUuidByRoundByPlayer(
 			String uuidOfGameSession, long currentRound, String playerUuid, String name)
 	{
-		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		sql += " AND playerUuid=? AND category=? AND variableName=?";
-		final List<DbGameSessionRoundPlayerVariable> temp = (List<DbGameSessionRoundPlayerVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound, playerUuid, PLAYER_STATE_VARIABLE, name });
-		if ((temp != null) && !temp.isEmpty())
-			return temp.get(0);
-		return null;	
+		String sql = "from DbGameSessionRoundPlayerVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		sql += " AND playerUuid=:playerUuid AND category=:category AND variableName=:variableName";
+		List<DbGameSessionRoundPlayerVariable> list = (List<DbGameSessionRoundPlayerVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.setParameter("playerUuid", playerUuid)
+				.setParameter("category", PLAYER_STATE_VARIABLE)
+				.setParameter("variableName", name)
+				.list();
+		if (CollectionUtils.isEmpty(list))
+			return null;
+		return list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public DbGameSessionRoundVariable findGameSessionRoundVariablesByUuidByRound( String uuidOfGameSession, long currentRound, String name)
 	{
-		String sql = "from DbGameSessionRoundVariable gs where gameSession.gameSessionUuid=? AND roundNum=? ";
-		sql += " AND variableName=?";
-		final List<DbGameSessionRoundVariable> temp = (List<DbGameSessionRoundVariable>)getHibernateTemplate()
-				.find(sql, new Object[] { uuidOfGameSession, currentRound, name });
-		if ((temp != null) && !temp.isEmpty())
-			return temp.get(0);
-		return null;	
+		String sql = "from DbGameSessionRoundVariable gs where gameSession.gameSessionUuid=:gameSessionUuid AND roundNum=:roundNum ";
+		sql += " AND variableName=:variableName";
+		List<DbGameSessionRoundVariable> list = (List<DbGameSessionRoundVariable>) getSession().createQuery(sql)
+				.setParameter("gameSessionUuid", uuidOfGameSession)
+				.setParameter("roundNum", currentRound)
+				.setParameter("variableName", name)
+				.list();
+		if (CollectionUtils.isEmpty(list))
+			return null;
+		return list.get(0);
 	}
 
 }

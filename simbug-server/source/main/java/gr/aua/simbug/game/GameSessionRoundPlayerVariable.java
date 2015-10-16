@@ -13,6 +13,8 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 	
 	public GameSessionRoundPlayerVariable() 
 	{
+		super();
+		System.out.println("creating bean GameSessionRoundPlayerVariable: " + this);
 	}
 
 	/**
