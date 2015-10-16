@@ -107,6 +107,7 @@ public class GameSessionController implements GameConstants
 	@RequestMapping("/advanceTurn/{sessionUuid}")
 	public String advanceTurn( @PathVariable String sessionUuid)
 	{
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\"}";
 		// Calculates new state. Runs algorithm. Updates database.
 		// Gets session
 		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
@@ -184,13 +185,13 @@ public class GameSessionController implements GameConstants
 
 		// TODO
 		// TO BE DELETED START
-/*		script.append("RESULTS = new Object();");
+		script.append("RESULTS = new Object();");
 		script.append("RESULTS['WorldStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundDistanceFromAverage'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundRank'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['overallScore'] = new Object();");
-*/		// TO BE DELETED END
+		// TO BE DELETED END
 		
 		System.out.println("Script: " + script.toString());
 
@@ -199,8 +200,13 @@ public class GameSessionController implements GameConstants
 		algorithm += "RESULTS;";
 		
 		System.out.println("Script: " + script.toString() + algorithm);
-		
-		Object obj = runScript(script.toString() + algorithm);
+		Object obj = runScript(script.toString() + algorithm);			
+
+		if (obj == null)
+		{
+			status = "{\"status\": \"Error\", \"errorMessage\":\"Error in javascript.\", \"result\":\"\"}";
+			return status;
+		}
 		handleResults((NativeObject)obj, gameSession.getCurrentRound(), players);
 		
 		// Create next round
@@ -219,7 +225,6 @@ public class GameSessionController implements GameConstants
 		// Save playerStateVariables
 		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());		
 		
-		String status = "{\"status\": 'ok', \"errorMessage\":\"\", \"result\":\"\"}";
 		return status;
 	}
 

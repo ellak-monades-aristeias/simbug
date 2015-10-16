@@ -3,9 +3,9 @@ package gr.aua.simbug.game;
 import gr.aua.simbug.definition.VariableType;
 import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 {
 

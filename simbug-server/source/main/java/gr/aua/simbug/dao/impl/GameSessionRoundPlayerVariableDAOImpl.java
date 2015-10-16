@@ -7,8 +7,10 @@ import gr.aua.simbug.model.DbGameSessionRoundPlayerVariable;
 import java.util.List;
 
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+@Repository
 public class GameSessionRoundPlayerVariableDAOImpl extends HibernateDaoSupport implements GameSessionRoundPlayerVariableDAO
 {
 

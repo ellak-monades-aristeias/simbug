@@ -6,8 +6,10 @@ import gr.aua.simbug.model.DbGameSession;
 import java.util.List;
 
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+@Repository
 public class GameSessionDAOImpl extends HibernateDaoSupport implements GameSessionDAO
 {
 

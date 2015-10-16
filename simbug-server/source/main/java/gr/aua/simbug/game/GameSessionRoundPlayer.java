@@ -3,9 +3,9 @@ package gr.aua.simbug.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class GameSessionRoundPlayer extends GameSessionPlayer
 {
 	private List<GameSessionRoundPlayerVariable> playerChoiceVariables = new ArrayList<GameSessionRoundPlayerVariable>();

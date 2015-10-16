@@ -5,9 +5,9 @@ import gr.aua.simbug.model.DbGameSessionRoundVariable;
 import gr.aua.simbug.service.GameSessionRoundService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class GameSessionRoundVariable extends GameSessionVariable 
 {
 	/**

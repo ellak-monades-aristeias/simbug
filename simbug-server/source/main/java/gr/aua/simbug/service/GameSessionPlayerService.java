@@ -4,8 +4,10 @@ import gr.aua.simbug.game.GameSessionPlayer;
 import gr.aua.simbug.game.GameSessionRoundPlayer;
 import gr.aua.simbug.game.GameSessionRoundPlayerVariable;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 @Transactional(readOnly = false)
 public interface GameSessionPlayerService
 {

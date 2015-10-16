@@ -1,15 +1,15 @@
 package gr.aua.simbug.game;
 
-import java.util.Map;
-
 import gr.aua.simbug.beans.Player;
 import gr.aua.simbug.model.DbGameSessionPlayer;
 import gr.aua.simbug.service.GameSessionPlayerService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
-@Service
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class GameSessionPlayer extends Player
 {
 	

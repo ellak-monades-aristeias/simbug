@@ -1,13 +1,13 @@
 package gr.aua.simbug.game;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import gr.aua.simbug.definition.ExternalDataType;
 import gr.aua.simbug.definition.ParameterType;
 import gr.aua.simbug.service.GameSessionService;
 
-@Service
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class GameSessionVariable 
 {
 	/**
