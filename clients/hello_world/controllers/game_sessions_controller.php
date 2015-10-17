@@ -1,4 +1,6 @@
 <?php
+App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
+
 class GameSessionsController  extends AppController {
 
 	var $name = 'GameSessions';
@@ -27,27 +29,39 @@ class GameSessionsController  extends AppController {
 
 	function advanceRound($id) {
 		$data = $this->GameSession->find('first',array('recursive'=>1,'conditions'=>array('GameSession.id'=>$id)));
-		
-		
 		$this->set('data',$data);
+		
+		//App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
+		$sc = new SimBugClient();
+		$result=	$sc->advanceTurn($data);
+		
+		$this->Session->setFlash('An initializaion message was sent to the SIMBUG-SERVER. The response was:<pre>'.print_r($result,TRUE).'</pre>');
+		
+		$this->redirect('/game_sessions/admin_status/'.$id);
+		
+		
+		
 	}
 	
 	
 	
 	function admin_status($id) {
-		App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
+		
 		$sc = new SimBugClient();
 		
 		
 		$data = $this->GameSession->find('first',array('recursive'=>1,'conditions'=>array('GameSession.id'=>$id)));
-		
-		//find player decision
+//pr($data);die;		
+		//find current player decision
 		foreach($data['Player'] as $k=>$p) {
-			$cc = $sc->getPlayerChoices($data,$this->Session->read('Auth.Player'));
-			$data['Player'][$k]['Decisions'] = $cc;
+			$cc = $sc->getPlayerChoices($data,$p,$data['GameSession']['round']);
+			if($cc['status']=='ok') {
+				$data['Player'][$k]['Decisions'] = $cc['result'];
+			}
+			
 			//insert value to $data['Player'][$k]['Decisions'][xxx]
 		}
-		
+//die;		
 		$this->set('data',$data);
 	}
 	
@@ -76,7 +90,7 @@ class GameSessionsController  extends AppController {
 	
 	
 	function initgamesession($id) {
-		App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
+		//App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
 		$sc = new SimBugClient();
 		$result=$sc->initGameSession($this->GameSession->find('first',array('conditions'=>array('GameSession.id'=>$id))));
 		

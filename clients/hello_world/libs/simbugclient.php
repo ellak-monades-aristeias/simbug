@@ -1,21 +1,30 @@
 <?php
 
 App::import('HttpSocket');
-
+App::import('Vendor','Services_JSON', array('file'=>'services_json.php'));
 
 class SimBugClient extends Object {
 	
 	private $HttpSocket = null; 
+	//private $rest_server_url = "http://infostorm.aua.gr:8080/simbug-server";
 	private $rest_server_url = "http://quijote.aua.gr:8080/simbug-server";
+	private $json ;
 	
 	
 	
 	function __construct() {
 		$this->HttpSocket = new HttpSocket();
+		$this->json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
 	}
 	
 	function __destruct() {
 		$this->HttpSocket->disconnect();
+	}
+	
+	function advanceTurn($gs) {
+//pr($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);die;		
+		$results = $this->HttpSocket->post($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);
+		return $results;
 	}
 	
 	/**
@@ -23,26 +32,19 @@ class SimBugClient extends Object {
 	 * @param unknown $gs
 	 * @param unknown $player
 	 */
-	function getPlayerChoices($gs,$player) {
-		$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']);
+	function getPlayerChoices($gs,$player,$turn) {
+pr(($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']));		
+		$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$turn);
+		//$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']);
+pr($results);		
 		
-		App::import('Vendor','Services_JSON', array('file'=>'services_json.php'));
-		$json = new Services_JSON();
-		
-		return $json->decode($results);
+		//$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+//pr($json->decode($results))	;	
+		return $this->json->decode($results);
 	}
 	
 	
-	/**
-	 * 
-	 * @param array $gs The GameSession record 
-	 * @return asnwer from server as JSON php array
-	 */
-	function advanceTurn($gs) {
-		$results = $this->HttpSocket->post($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);
-		
-		return $results;
-	}
+
 	
 	
 	/**
@@ -66,6 +68,8 @@ class SimBugClient extends Object {
 		$data['listOfPlayers'] = $players_string;
 		$data['definitionString']=$gs['Game']['definition'];
 		
+//pr($this->rest_server_url.'/initGameSession/'.$gs['GameSession']['uuid']);pr($data);die;
+
 		$results = $this->HttpSocket->post($this->rest_server_url.'/initGameSession/'.$gs['GameSession']['uuid'],$data);
 //pr($results);die;		
 //		$results_json = json_decode($results, TRUE);
