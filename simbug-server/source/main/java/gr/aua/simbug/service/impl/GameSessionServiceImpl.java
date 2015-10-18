@@ -144,4 +144,25 @@ public class GameSessionServiceImpl implements GameSessionService
 	}
 
 
+	public GameSessionVariableDAO getGameSessionVariableDAO() {
+		return gameSessionVariableDAO;
+	}
+
+
+	public void setGameSessionVariableDAO(
+			GameSessionVariableDAO gameSessionVariableDAO) {
+		this.gameSessionVariableDAO = gameSessionVariableDAO;
+	}
+
+
+	public GameSessionPlayerDAO getGameSessionPlayerDAO() {
+		return gameSessionPlayerDAO;
+	}
+
+
+	public void setGameSessionPlayerDAO(GameSessionPlayerDAO gameSessionPlayerDAO) {
+		this.gameSessionPlayerDAO = gameSessionPlayerDAO;
+	}
+
+
 }

@@ -91,6 +91,59 @@ public class RhinoEngine
 		//script += "var myJsonString = JSON.stringify(INFO);";
 		script += "RESULTS;";
 		
+		script = "var INFO = new Object();INFO['num_players'] = 2;INFO['cur_turn'] = 1;INFO['players'] = new Object();INFO['players'][0] = '56030487-0cf0-4f60-b10c-4d8a8fe9baf7';INFO['players'][1] = '561dec18-8d0c-41f9-833b-1b848fe9baf7';";
+		script += "	CONFIG = new Object();PLAYER_CHOICE_VARIABLES = new Object();PLAYER_CHOICE_VARIABLES['numberChoice'] = new Object();PLAYER_CHOICE_VARIABLES['numberChoice']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'] = new Object();";
+		script += "PLAYER_CHOICE_VARIABLES['numberChoice']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][0] = null;PLAYER_CHOICE_VARIABLES['numberChoice']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][1] = null;";
+		script += "PLAYER_CHOICE_VARIABLES['numberChoice']['561dec18-8d0c-41f9-833b-1b848fe9baf7'] = new Object();PLAYER_CHOICE_VARIABLES['numberChoice']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][0] = null;";
+		script += "PLAYER_CHOICE_VARIABLES['numberChoice']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][1] = null;PLAYER_STATE_VARIABLES = new Object();PLAYER_STATE_VARIABLES['roundDistanceFromAverage'] = new Object();";
+		script += "PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'] = new Object();PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][0] = null;";
+		script += "PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][1] = null;PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['561dec18-8d0c-41f9-833b-1b848fe9baf7'] = new Object();";
+		script += "PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][0] = null;PLAYER_STATE_VARIABLES['roundDistanceFromAverage']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][1] = null;";
+		script += "PLAYER_STATE_VARIABLES['roundRank'] = new Object();PLAYER_STATE_VARIABLES['roundRank']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'] = new Object();PLAYER_STATE_VARIABLES['roundRank']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][0] = null;";
+		script += "PLAYER_STATE_VARIABLES['roundRank']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][1] = null;PLAYER_STATE_VARIABLES['roundRank']['561dec18-8d0c-41f9-833b-1b848fe9baf7'] = new Object();";
+		script += "PLAYER_STATE_VARIABLES['roundRank']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][0] = null;PLAYER_STATE_VARIABLES['roundRank']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][1] = null;PLAYER_STATE_VARIABLES['overallScore'] = new Object();";
+		script += "PLAYER_STATE_VARIABLES['overallScore']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'] = new Object();PLAYER_STATE_VARIABLES['overallScore']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][0] = 4;";
+		script += "PLAYER_STATE_VARIABLES['overallScore']['56030487-0cf0-4f60-b10c-4d8a8fe9baf7'][1] = 3;PLAYER_STATE_VARIABLES['overallScore']['561dec18-8d0c-41f9-833b-1b848fe9baf7'] = new Object();";
+		script += "PLAYER_STATE_VARIABLES['overallScore']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][0] = 2;PLAYER_STATE_VARIABLES['overallScore']['561dec18-8d0c-41f9-833b-1b848fe9baf7'][1] = 6;";
+		script += "WORLD_STATE_VARIABLES = new Object();WORLD_STATE_VARIABLES['averageAllPlayers'] = new Object();WORLD_STATE_VARIABLES['averageAllPlayers'][0] = null;WORLD_STATE_VARIABLES['averageAllPlayers'][1] = null;RESULTS = new Object();";
+		script += "RESULTS['WorldStateVariables'] = new Object();RESULTS['PlayerStateVariables'] = new Object();RESULTS['PlayerStateVariables']['roundDistanceFromAverage'] = new Object();";
+		script += "RESULTS['PlayerStateVariables']['roundRank'] = new Object();RESULTS['PlayerStateVariables']['overallScore'] = new Object();";
+	  	
+		//1. calculate average of all players (world level)
+		script += "sum=0;";
+		script += "for (i = 0; i < INFO['num_players']; i++) {";
+		script += "player_id = INFO['players'][i][INFO['cur_turn']];";
+		script += "sum = sum + PLAYER_CHOICE_VARIABLES['numberChoice'][player_id];";
+		script += "}";	
+		script += "avg_all = sum/INFO['num_players'];";
+		script += "RESULTS['WorldStateVariables']['averageAllPlayers'] = avg_all;";
+
+//2. calculate distance of each player
+		script += "distance = new Array(INFO['num_players']);";
+		script += "for (i = 0; i < INFO['num_players']; i++) {";
+		script += "	player_id = INFO['players'][i][INFO['cur_turn']];";
+		script += "	distance[i] = Math.abs(avg_all - PLAYER_CHOICE_VARIABLES['numberChoice'][player_id]);";
+		script += "	RESULTS['PlayerStateVariables']['roundDistanceFromAverage'][player_id] = distance[i];";
+		script += "}";
+
+		//3. compute rank of each player
+	script += "rank = new Array(INFO['num_players']);";
+	script += "for (i = 0; i < INFO['num_players']; i++) {rank[i]=i;}";
+
+	script += "rank.sort(function (a, b) { return distance[a] < distance[b] ? 1 : distance[a] > distance[b] ? -1 : 0; });";
+	script += "for (i = 0; i < INFO['num_players']; i++) {";
+	script += "	player_id = INFO['players'][i];";
+	script += "	RESULTS['PlayerStateVariables']['roundRank'][player_id] = rank[i];";
+
+	script += "if(INFO['cur_turn']>0) {";
+	//script += "	RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i] + PLAYER_STATE_VARIABLES['overallScore'][player_id][INFO['cur_turn']-1];";
+	script += "	RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i]+ PLAYER_STATE_VARIABLES['overallScore'][player_id][0];";
+	script += "}";
+	script += "else {RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i];}";
+	script += "}";
+		
+	script += "RESULTS;";
+
 		Object obj = runScript(script);
 		System.out.println("Object: " + obj);
 		handleResults((NativeObject)obj);

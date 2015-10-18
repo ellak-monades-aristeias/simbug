@@ -2,20 +2,12 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.VariableType;
 import gr.aua.simbug.model.DbGameSessionRoundVariable;
-import gr.aua.simbug.service.GameSessionRoundService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameSessionRoundVariable extends GameSessionVariable 
 {
-	/**
-	 * The GameSessionRound service.
-	 */
-	@Autowired
-	private GameSessionRoundService gameSessionRoundService;
-	
 	private long roundNum;
 	
 	public GameSessionRoundVariable()
@@ -82,29 +74,20 @@ public class GameSessionRoundVariable extends GameSessionVariable
 		this.roundNum = roundNum;
 	}
 	
-	/**
-	 * 
-	 */
-	public void saveSessionRoundVariable() 
-	{
-		gameSessionRoundService.saveGameSessionRoundVariable(this);
-	}
-
+//	/**
+//	 * 
+//	 */
+//	public void saveSessionRoundVariable() 
+//	{
+//		gameSessionRoundService.saveGameSessionRoundVariable(this);
+//	}
+//
 	public long getRoundNum() {
 		return roundNum;
 	}
 
 	public void setRoundNum(long roundNum) {
 		this.roundNum = roundNum;
-	}
-
-	public GameSessionRoundService getGameSessionRoundService() {
-		return gameSessionRoundService;
-	}
-
-	public void setGameSessionRoundService(
-			GameSessionRoundService gameSessionRoundService) {
-		this.gameSessionRoundService = gameSessionRoundService;
 	}
 
 }

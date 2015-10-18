@@ -57,12 +57,12 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 	 */
 	public GameSessionRoundPlayerVariable(int category, Object name, Object value, String uuidOfGameSession, long roundNum, Object playerUuid)
 	{
-		setVariableName((String)name);
-		setVariableValue((String)value);
+		setVariableName(String.valueOf(name));
+		setVariableValue(String.valueOf(value));
 		setUuidOfGameSession(uuidOfGameSession);
 		setVariableCategory(category);
 		setRoundNum(roundNum);
-		this.playerUuid = (String)playerUuid;
+		this.playerUuid = String.valueOf(playerUuid);
 	}
 
 	/**
@@ -78,14 +78,6 @@ public class GameSessionRoundPlayerVariable extends GameSessionRoundVariable
 		super.createGameSessionRoundVariable(category, param, uuidOfGameSession, roundNum);
 		this.setPlayerUuid(uuid);
 		System.out.println(uuid);
-	}
-
-	/**
-	 * 
-	 */
-	public void saveSessionRoundPlayerVariable() 
-	{
-		getGameSessionRoundService().saveGameSessionRoundPlayerVariable(this);
 	}
 
 	public String getPlayerUuid() {

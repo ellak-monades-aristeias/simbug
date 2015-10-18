@@ -1,8 +1,10 @@
 package gr.aua.simbug.beans;
 
+import gr.aua.simbug.game.BaseSession;
+
 import java.util.Map;
 
-public class Player
+public class Player extends BaseSession
 {
 	private String uuid; 
 	

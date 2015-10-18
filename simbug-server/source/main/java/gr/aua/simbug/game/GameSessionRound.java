@@ -2,31 +2,23 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.PlayerStateVariableDataType;
 import gr.aua.simbug.definition.VariableType;
-import gr.aua.simbug.service.GameSessionRoundService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameSessionRound implements GameConstants
+public class GameSessionRound extends BaseSession implements GameConstants
 {
-	/**
-	 * The GameSessionRound service.
-	 */
-	@Autowired
-	private GameSessionRoundService gameSessionRoundService;
+	//@Autowired
+	private GameSessionRoundVariable gameSessionRoundVariable = new GameSessionRoundVariable();
 	
-	@Autowired
-	private GameSessionRoundVariable gameSessionRoundVariable;
+	//@Autowired
+	private GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable = new GameSessionRoundPlayerVariable();
 	
-	@Autowired
-	GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable;
-	
-	@Autowired
-	GameSessionRoundPlayer gameSessionRoundPlayer;
+	//@Autowired
+	private GameSessionRoundPlayer gameSessionRoundPlayer = new GameSessionRoundPlayer();
 
 	private GameSession gameSession;
 	private long roundNum;
@@ -56,7 +48,7 @@ public class GameSessionRound implements GameConstants
 		for (GameSessionPlayer player : gameSession.getGameSessionPlayers()) 
 		{
 			gameSessionRoundPlayer.createSessionRoundPlayer(player, this);
-			gameSessionRoundPlayer.saveSessionRoundPlayer();
+			gameSessionPlayerService.saveRoundPlayer(gameSessionRoundPlayer);	
 		}		
 	}
 	
@@ -70,11 +62,31 @@ public class GameSessionRound implements GameConstants
 		for (VariableType param : worldStateVariables) 
 		{
 			gameSessionRoundVariable.createGameSessionRoundVariable(WORLD_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum);
-			gameSessionRoundVariable.saveSessionRoundVariable();
+			gameSessionRoundService.saveGameSessionRoundVariable(gameSessionRoundVariable);
 			System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 		}
 	}
 
+	/**
+	 * 
+	 * @param worldStateVariables
+	 */
+	public void saveSessionWorldStateVariables(List<GameSessionRoundVariable> worldStateVariables) 
+	{
+		System.out.println("\nWorldStateVariables");
+		gameSession.setCurrentRound(gameSession.getCurrentRound()-1);
+		for (GameSessionRoundVariable gsrv : worldStateVariables) 
+		{
+			GameSessionRoundVariable prevGsrv = gameSessionRoundService.fetchWorldStateVariableByNameByUuidByRound(gameSession, gsrv.getVariableName());
+			prevGsrv.setUuidOfGameSession(gameSession.getUuidOfGameSession());
+			prevGsrv.setRoundNum(roundNum);
+			prevGsrv.setVariableValue(gsrv.getVariableValue());
+			gameSessionRoundService.saveGameSessionRoundVariable(prevGsrv);
+			System.out.println(gsrv.getVariableName() + "-" + gsrv.getVariableValue() + '-' + roundNum);
+		}
+		gameSession.setCurrentRound(gameSession.getCurrentRound()+1);
+	}
+	
 	/**
 	 * 
 	 * @param players
@@ -89,10 +101,34 @@ public class GameSessionRound implements GameConstants
 			for (VariableType param : variables) 
 			{
 				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_CHOICE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
-				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
+				getGameSessionRoundService().saveGameSessionRoundPlayerVariable(gameSessionRoundPlayerVariable);
 				System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @param players
+	 * @param variables
+	 */
+	public void saveSessionPlayerChoiceVariables(List<GameSessionPlayer> players) 
+	{
+		// Save a value for each player
+		System.out.println("\nPlayerChoiceVariables");
+		gameSession.setCurrentRound(gameSession.getCurrentRound()-1);
+		for (GameSessionPlayer player : players) 
+		{			
+			List<GameSessionRoundPlayerVariable> gsrpvList = gameSessionRoundService.fetchPlayerChoiceVariablesByUuidByRoundByPlayer(gameSession, player.getUuid()); 			
+			for (GameSessionRoundPlayerVariable gsrpv : gsrpvList) 
+			{
+				gsrpv.setUuidOfGameSession(gameSession.getUuidOfGameSession());
+				gsrpv.setRoundNum(roundNum);				
+				gameSessionRoundService.saveGameSessionRoundPlayerVariable(gsrpv);
+				System.out.println(gsrpv.getVariableName() + "-" + gsrpv.getVariableValue() + '-' + roundNum);
+			}
+		}
+		gameSession.setCurrentRound(gameSession.getCurrentRound()+1);
 	}
 
 	/**
@@ -109,10 +145,31 @@ public class GameSessionRound implements GameConstants
 			for (PlayerStateVariableDataType param : variables) 
 			{
 				gameSessionRoundPlayerVariable.createSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, param, gameSession.getUuidOfGameSession(), roundNum, player.getUuid());
-				gameSessionRoundPlayerVariable.saveSessionRoundPlayerVariable();
+				getGameSessionRoundService().saveGameSessionRoundPlayerVariable(gameSessionRoundPlayerVariable);
 				System.out.println(param.getName() + "-" + param.getType() + '-' + roundNum);
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @param playerStateVariables
+	 */
+	public void saveSessionPlayerStateVariables(List<GameSessionRoundPlayerVariable> playerStateVariables) 
+	{
+		// Save a value for each player
+		System.out.println("\nPlayerStateVariables");
+		gameSession.setCurrentRound(gameSession.getCurrentRound()-1);
+		for (GameSessionRoundPlayerVariable gsrpv : playerStateVariables) 
+		{
+			GameSessionRoundPlayerVariable prevGsrpv = gameSessionRoundService.fetchPlayerStateVariableByNameByUuidByRoundByPlayer(gameSession, gsrpv.getPlayerUuid(), gsrpv.getVariableName()); 			
+			prevGsrpv.setUuidOfGameSession(gameSession.getUuidOfGameSession());
+			prevGsrpv.setRoundNum(roundNum);				
+			prevGsrpv.setVariableValue(gsrpv.getVariableValue());
+			gameSessionRoundService.saveGameSessionRoundPlayerVariable(prevGsrpv);
+			System.out.println(gsrpv.getVariableName() + "-" + gsrpv.getVariableValue() + '-' + roundNum);
+		}
+		gameSession.setCurrentRound(gameSession.getCurrentRound()-1);
 	}
 
 	public GameSession getGameSession() {
@@ -147,15 +204,6 @@ public class GameSessionRound implements GameConstants
 	public void setSessionRoundPlayer(
 			List<GameSessionRoundPlayer> sessionRoundPlayer) {
 		this.sessionRoundPlayer = sessionRoundPlayer;
-	}
-
-	public GameSessionRoundService getGameSessionRoundService() {
-		return gameSessionRoundService;
-	}
-
-	public void setGameSessionRoundService(
-			GameSessionRoundService gameSessionRoundService) {
-		this.gameSessionRoundService = gameSessionRoundService;
 	}
 
 	public GameSessionRoundVariable getGameSessionRoundVariable() {

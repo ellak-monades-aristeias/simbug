@@ -37,10 +37,65 @@
 
 	<!-- Services. -->
 
-	<bean id="GameService" class="gr.aua.simbug.service.impl.GameServiceImpl" />
-	<bean id="GameSessionService" class="gr.aua.simbug.service.impl.GameSessionServiceImpl" />
-	<bean id="GameSessionRoundService" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl" />
-	<bean id="GameSessionPlayerService" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl" />
+	<bean id="gameService" class="gr.aua.simbug.service.impl.GameServiceImpl" />
+ 	<bean id="gameSessionService" class="gr.aua.simbug.service.impl.GameSessionServiceImpl"  />
+<!-- 	<bean id="gameSessionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"> -->
+<!-- 		<property name="transactionManager" ref="transactionManager"></property> -->
+<!-- 		<property name="target" ref="gameSessionServiceTarget"></property> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="save*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="remove*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="transact*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean>  -->
+<!-- 	<bean id="gameSessionServiceTarget" class="gr.aua.simbug.service.impl.GameSessionServiceImpl"> -->
+<!-- 		<property name="gameSessionDAO" ref="gameSessionDAO"></property> -->
+<!-- 		<property name="gameSessionVariableDAO" ref="gameSessionVariableDAO"></property> -->
+<!-- 		<property name="gameSessionPlayerDAO" ref="gameSessionPlayerDAO"></property> -->
+<!-- 	</bean> -->
+
+ 	<bean id="gameSessionRoundService" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl" /> 
+<!-- 	<bean id="gameSessionRoundService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"> -->
+<!-- 		<property name="transactionManager" ref="transactionManager"></property> -->
+<!-- 		<property name="target" ref="gameSessionRoundServiceTarget"></property> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="save*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="remove*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="transact*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean>  -->
+<!-- 	<bean id="gameSessionRoundServiceTarget" class="gr.aua.simbug.service.impl.GameSessionRoundServiceImpl"> -->
+<!-- 		<property name="gameSessionDAO" ref="gameSessionDAO"></property> -->
+<!-- 		<property name="gameSessionRoundDAO" ref="gameSessionRoundDAO"></property> -->
+<!-- 		<property name="gameSessionRoundVariableDAO" ref="gameSessionRoundVariableDAO"></property> -->
+<!-- 		<property name="gameSessionRoundPlayerVariableDAO" ref="gameSessionRoundPlayerVariableDAO"></property> -->
+<!-- 	</bean> -->
+
+ 	<bean id="gameSessionPlayerService" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl" /> 
+<!-- 	<bean id="gameSessionPlayerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"> -->
+<!-- 		<property name="transactionManager" ref="transactionManager"></property> -->
+<!-- 		<property name="target" ref="gameSessionPlayerServiceTarget"></property> -->
+<!-- 		<property name="transactionAttributes"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="save*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="remove*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="transact*">PROPAGATION_REQUIRED</prop> -->
+<!-- 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean>  -->
+<!-- 	<bean id="gameSessionPlayerServiceTarget" class="gr.aua.simbug.service.impl.GameSessionPlayerServiceImpl"> -->
+<!-- 		<property name="gameSessionDAO" ref="gameSessionDAO"></property> -->
+<!-- 		<property name="gameSessionPlayerDAO" ref="gameSessionPlayerDAO"></property> -->
+<!-- 		<property name="gameSessionRoundPlayerDAO" ref="gameSessionRoundPlayerDAO"></property> -->
+<!-- 		<property name="gameSessionRoundPlayerVariableDAO" ref="gameSessionRoundPlayerVariableDAO"></property> -->
+<!-- 	</bean> -->
 
 	<!-- Security thingies. -->
 <!-- 	<import resource="application-context-security.xml" /> -->

@@ -2,22 +2,14 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.beans.Player;
 import gr.aua.simbug.model.DbGameSessionPlayer;
-import gr.aua.simbug.service.GameSessionPlayerService;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameSessionPlayer extends Player
 {
-	
-	/**
-	 * The GameSessionPlayer service.
-	 */
-	@Autowired
-	private GameSessionPlayerService gameSessionPlayerService;
 	
 	private GameSession gameSession;
 
@@ -39,14 +31,6 @@ public class GameSessionPlayer extends Player
 	}
 
 	/**
-	 * Saves the player into the database
-	 */
-	public void save() 
-	{
-		gameSessionPlayerService.save(this);		
-	}
-
-	/**
 	 * 
 	 * @param gs
 	 */
@@ -64,16 +48,6 @@ public class GameSessionPlayer extends Player
 			
 			gameSessionPlayerService.updateRoundPlayerVariable(gsrpv);
 		}		
-	}
-
-	public GameSessionPlayerService getGameSessionPlayerService() 
-	{
-		return gameSessionPlayerService;
-	}
-
-	public void setGameSessionPlayerService(GameSessionPlayerService gameSessionPlayerService) 
-	{
-		this.gameSessionPlayerService = gameSessionPlayerService;
 	}
 
 	public GameSession getGameSession() {

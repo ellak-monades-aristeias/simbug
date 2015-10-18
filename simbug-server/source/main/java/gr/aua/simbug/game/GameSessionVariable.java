@@ -2,20 +2,12 @@ package gr.aua.simbug.game;
 
 import gr.aua.simbug.definition.ExternalDataType;
 import gr.aua.simbug.definition.ParameterType;
-import gr.aua.simbug.service.GameSessionService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameSessionVariable 
+public class GameSessionVariable extends BaseSession
 {
-	/**
-	 * The GameSession service.
-	 */
-	@Autowired
-	private GameSessionService gameSessionService;
-	
 	private String variableName;
 	private String variableValue;	
 	private String variableType;
@@ -85,13 +77,4 @@ public class GameSessionVariable
 	public void setUuidOfGameSession(String uuidOfGameSession) {
 		this.uuidOfGameSession = uuidOfGameSession;
 	}
-
-	public GameSessionService getGameSessionService() {
-		return gameSessionService;
-	}
-
-	public void setGameSessionService(GameSessionService gameSessionService) {
-		this.gameSessionService = gameSessionService;
-	}
-
 }

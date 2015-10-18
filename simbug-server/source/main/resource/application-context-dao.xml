@@ -50,29 +50,28 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<!-- DAO's. -->
-
-	<bean id="GameDAO" class="gr.aua.simbug.dao.impl.GameDAOImpl">
+	<bean id="gameDAO" class="gr.aua.simbug.dao.impl.GameDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"> </property>
 	</bean>
-	<bean id="GameSessionDAO" class="gr.aua.simbug.dao.impl.GameSessionDAOImpl">
+	<bean id="gameSessionDAO" class="gr.aua.simbug.dao.impl.GameSessionDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionPlayerDAOImpl">
+	<bean id="gameSessionPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionPlayerDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionRoundDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
+	<bean id="gameSessionRoundDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionRoundPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerDAOImpl">
+	<bean id="gameSessionRoundPlayerDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionVariableDAOImpl">
+	<bean id="gameSessionVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionVariableDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionRoundVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundVariableDAOImpl">
+	<bean id="gameSessionRoundVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundVariableDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
-	<bean id="GameSessionRoundPlayerVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerVariableDAOImpl">
+	<bean id="gameSessionRoundPlayerVariableDAO" class="gr.aua.simbug.dao.impl.GameSessionRoundPlayerVariableDAOImpl">
 		<property name="sessionFactory"> <ref bean="sessionFactory" /> </property>
 	</bean>
 

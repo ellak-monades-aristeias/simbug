@@ -4,8 +4,6 @@ import gr.aua.simbug.definition.Definition;
 import gr.aua.simbug.definition.ExternalDataType;
 import gr.aua.simbug.definition.ParameterType;
 import gr.aua.simbug.model.DbGameSession;
-import gr.aua.simbug.service.GameSessionPlayerService;
-import gr.aua.simbug.service.GameSessionService;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +11,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,25 +19,13 @@ import javax.xml.bind.Unmarshaller;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GameSession implements GameConstants
+public class GameSession extends BaseSession implements GameConstants
 {
 	private String jsonError = null;
-	/**
-	 * The GameSession service.
-	 */
-	@Autowired
-	private GameSessionService gameSessionService;
 
-	/**
-	 * The GameSessionPlayer service.
-	 */
-	@Autowired
-	private GameSessionPlayerService gameSessionPlayerService;
-	
 	private Definition definition;
 	private List<GameSessionPlayer> gameSessionPlayers = new ArrayList<GameSessionPlayer>();
 	private List<GameSessionRound> gameSessionRounds = new ArrayList<GameSessionRound>();
@@ -51,14 +36,9 @@ public class GameSession implements GameConstants
 	private String definitionData;
 	private String jsonListOfPlayers;
 	
-	@Autowired
-	private GameSessionPlayer gameSessionPlayer;
-
-	@Autowired
-	private GameSessionVariable gameSessionVariable;
-	
-	@Autowired
-	private GameSessionRound gameSessionRound;
+	private GameSessionPlayer gameSessionPlayer = new GameSessionPlayer();
+	private GameSessionVariable gameSessionVariable = new GameSessionVariable();
+	private GameSessionRound gameSessionRound = new GameSessionRound();
 	
 	/**
 	 * 
@@ -96,7 +76,16 @@ public class GameSession implements GameConstants
 		gameSessionService.saveGameSession(this);
 		
 		// Save the session players into the database
-		savePlayers();
+		for (GameSessionPlayer player : gameSessionPlayers) 
+		{
+			gameSessionPlayer.createSessionPlayer(player, this);
+			gameSessionPlayerService.save(gameSessionPlayer);		
+		}		
+		System.out.println("\nPlayers: " + gameSessionPlayers.size());
+		for (GameSessionPlayer player : gameSessionPlayers) 
+		{
+			System.out.println(player.getUuid());
+		}
 		
 		// Save Configuration parameters
 		saveConfigurationParameters(definition.getConfiguration().getParameter());
@@ -151,36 +140,15 @@ public class GameSession implements GameConstants
 	}
 
 	/**
-	 * Save session players
-	 */
-	private void savePlayers() 
-	{
-		for (GameSessionPlayer player : gameSessionPlayers) 
-		{
-			gameSessionPlayer.createSessionPlayer(player, this);
-			gameSessionPlayer.save();
-		}		
-		showPlayers();
-	}
-
-	/**
-	 * List content of session players
-	 */
-	private void showPlayers() 
-	{
-		System.out.println("\nPlayers: " + gameSessionPlayers.size());
-		for (GameSessionPlayer player : gameSessionPlayers) 
-		{
-			System.out.println(player.getUuid());
-		}
-	}
-
-	/**
 	 * 
 	 * @param round
 	 */
 	private void createRound(long round) 
 	{
+		gameSessionRound.setGameSessionService(gameSessionService);
+		gameSessionRound.setGameSessionPlayerService(gameSessionPlayerService);
+		gameSessionRound.setGameSessionRoundService(gameSessionRoundService);
+		
 		gameSessionRound.createRound(this, currentRound);
 
 		// Save WorldStateVariables
@@ -200,7 +168,7 @@ public class GameSession implements GameConstants
 	 */
 	public void savePlayerChoiceVariables(String uuidOfGameSession, String jsonString) 
 	{
-		GameSession gs = readSessionByUuid(uuidOfGameSession);
+		GameSession gs = gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
 
 		System.out.println("\n\nPlayer Data"); // ListOfPlayers
 		System.out.println(jsonString);
@@ -212,18 +180,8 @@ public class GameSession implements GameConstants
 			gameSessionPlayer = objectMapper.readValue(jsonString, GameSessionPlayer.class);
 			System.out.println("Player: " + gameSessionPlayer);
 			
-			//gameSessionPlayer.saveChoiceVariables(gs);
-			for (Map.Entry<String, String> entry : gameSessionPlayer.getChoiceVariables().entrySet()) 
-			{
-				GameSessionRoundPlayerVariable gsrpv = new GameSessionRoundPlayerVariable();
-				gsrpv.setUuidOfGameSession(gs.getUuidOfGameSession());
-				gsrpv.setRoundNum(gs.getCurrentRound());
-				gsrpv.setPlayerUuid(gameSessionPlayer.getUuid());
-				gsrpv.setVariableName(entry.getKey());
-				gsrpv.setVariableValue(entry.getValue());
-				
-				gameSessionPlayerService.updateRoundPlayerVariable(gsrpv);
-			}		
+			gameSessionPlayer.setGameSessionPlayerService(gameSessionPlayerService);
+			gameSessionPlayer.saveChoiceVariables(gs);
 		} 
 		catch (JsonParseException e) 
 		{
@@ -237,20 +195,6 @@ public class GameSession implements GameConstants
 		{
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 
-	 * @param uuidOfGameSession
-	 * @return
-	 */
-	private GameSession readSessionByUuid(String uuidOfGameSession) 
-	{
-		if (gameSessionService == null)
-		{
-			System.out.println("gameSessionService-errrrrrrrrrrrrrrrr");
-		}
-		return gameSessionService.fetchGameSessionByUuid(uuidOfGameSession);
 	}
 
 	/**
@@ -408,14 +352,6 @@ public class GameSession implements GameConstants
 		this.jsonListOfPlayers = jsonListOfPlayers;
 	}
 
-	public GameSessionService getGameSessionService() {
-		return gameSessionService;
-	}
-
-	public void setGameSessionService(GameSessionService gameSessionService) {
-		this.gameSessionService = gameSessionService;
-	}
-
 	public GameSessionPlayer getGameSessionPlayer() {
 		return gameSessionPlayer;
 	}
@@ -438,15 +374,6 @@ public class GameSession implements GameConstants
 
 	public void setGameSessionRound(GameSessionRound gameSessionRound) {
 		this.gameSessionRound = gameSessionRound;
-	}
-
-	public GameSessionPlayerService getGameSessionPlayerService() {
-		return gameSessionPlayerService;
-	}
-
-	public void setGameSessionPlayerService(
-			GameSessionPlayerService gameSessionPlayerService) {
-		this.gameSessionPlayerService = gameSessionPlayerService;
 	}
 
 	/**

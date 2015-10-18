@@ -113,4 +113,13 @@ public class GameSessionPlayerServiceImpl implements GameSessionPlayerService
 		this.gameSessionRoundPlayerDAO = gameSessionRoundPlayerDAO;
 	}
 
+	public GameSessionRoundPlayerVariableDAO getGameSessionRoundPlayerVariableDAO() {
+		return gameSessionRoundPlayerVariableDAO;
+	}
+
+	public void setGameSessionRoundPlayerVariableDAO(
+			GameSessionRoundPlayerVariableDAO gameSessionRoundPlayerVariableDAO) {
+		this.gameSessionRoundPlayerVariableDAO = gameSessionRoundPlayerVariableDAO;
+	}
+
 }

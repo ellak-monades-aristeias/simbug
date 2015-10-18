@@ -26,14 +26,6 @@ public class GameSessionRoundPlayer extends GameSessionPlayer
 		this.roundNum = gameSessionRound.getRoundNum();
 	}
 
-	/**
-	 * 
-	 */
-	public void saveSessionRoundPlayer() 
-	{
-		getGameSessionPlayerService().saveRoundPlayer(this);		
-	}
-
 	public List<GameSessionRoundPlayerVariable> getPlayerChoiceVariables() {
 		return playerChoiceVariables;
 	}

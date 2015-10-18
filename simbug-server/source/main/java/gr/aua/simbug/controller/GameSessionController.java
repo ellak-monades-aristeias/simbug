@@ -4,6 +4,7 @@ import gr.aua.simbug.beans.Info;
 import gr.aua.simbug.definition.Definition;
 import gr.aua.simbug.definition.PlayerStateVariableDataType;
 import gr.aua.simbug.definition.VariableType;
+import gr.aua.simbug.game.BaseSession;
 import gr.aua.simbug.game.GameConstants;
 import gr.aua.simbug.game.GameSession;
 import gr.aua.simbug.game.GameSessionPlayer;
@@ -11,45 +12,42 @@ import gr.aua.simbug.game.GameSessionRound;
 import gr.aua.simbug.game.GameSessionRoundPlayerVariable;
 import gr.aua.simbug.game.GameSessionRoundVariable;
 import gr.aua.simbug.game.GameSessionVariable;
-import gr.aua.simbug.service.GameSessionRoundService;
-import gr.aua.simbug.service.GameSessionService;
 import gr.aua.simbug.utils.SimbugUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletContext;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 @RestController
-public class GameSessionController implements GameConstants
-{
-	/**
-	 * The GameSession service.
-	 */
-	@Autowired
-	private GameSessionService gameSessionService;
+public class GameSessionController extends BaseSession implements GameConstants, ServletContextAware 
+{	
+	private static ServletContext servletContext;
 
-	/**
-	 * The GameSessionRound service.
-	 */
-	@Autowired
-	private GameSessionRoundService gameSessionRoundService;
-
-	@Autowired
-	private GameSession gameSession;
+	public void setServletContext(ServletContext context) {
+	     servletContext = context;
+	}
+	//@Autowired
+	private GameSession gameSession = new GameSession();
 	
-	@Autowired
-	private GameSessionRound gameSessionRound;
+	//@Autowired
+	private GameSessionRound gameSessionRound = new GameSessionRound();
 
-	
+	List<GameSessionRoundVariable> worldStateVariables = new ArrayList<GameSessionRoundVariable>();
+	List<GameSessionRoundPlayerVariable> playerStateVariables = new ArrayList<GameSessionRoundPlayerVariable>();
+
 	/**
 	 * 
 	 * @param sessionUuid
@@ -69,13 +67,14 @@ public class GameSessionController implements GameConstants
 		
 		// TODO
 		// TO BE DELETED START
-/*		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
-		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
+		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def2.xml";
 		definitionString = SimbugUtils.fileToString(definitionFile);
-		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}, {\"uuid\":\"3\"}]";
+		jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"}, {\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"}]";
 		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
-*/		// TO BE DELETED END
+		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}]";
+		// TO BE DELETED END
 
 		if ((definitionString == null) || (definitionString.isEmpty()))
 		{
@@ -86,10 +85,9 @@ public class GameSessionController implements GameConstants
 			return "{\"status\": \"Error\", \"errorMessage\": \"'listOfPlayers' should not be empty.\", \"result\":\"\"}";	
 		}
 		// Create game session. Update database
-		if (gameSession == null)
-		{
-			System.out.println("errrrrrrrrrrrrrrr");
-		}
+		gameSession.setGameSessionPlayerService(gameSessionPlayerService);
+		gameSession.setGameSessionService(gameSessionService);
+		gameSession.setGameSessionRoundService(gameSessionRoundService);
 		gameSession.createGameSession(sessionUuid, definitionString, jsonListOfPlayers);
 		
 		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\" }";
@@ -185,13 +183,13 @@ public class GameSessionController implements GameConstants
 
 		// TODO
 		// TO BE DELETED START
-		script.append("RESULTS = new Object();");
+/*		script.append("RESULTS = new Object();");
 		script.append("RESULTS['WorldStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundDistanceFromAverage'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['roundRank'] = new Object();");
 		script.append("RESULTS['PlayerStateVariables']['overallScore'] = new Object();");
-		// TO BE DELETED END
+*/		// TO BE DELETED END
 		
 		System.out.println("Script: " + script.toString());
 
@@ -214,16 +212,19 @@ public class GameSessionController implements GameConstants
 		gameSessionService.saveGameSession(gameSession);
 
 		System.out.println("Next round: " + gameSession.getCurrentRound());
+		gameSessionRound.setGameSessionPlayerService(gameSessionPlayerService);
+		gameSessionRound.setGameSessionService(gameSessionService);
+		gameSessionRound.setGameSessionRoundService(gameSessionRoundService);
 		gameSessionRound.createRound(gameSession, gameSession.getCurrentRound());
 
 		// Save WorldStateVariables
-		gameSessionRound.saveWorldStateVariables(definition.getWorldStateVariables().getWorldStateVariable());
+		gameSessionRound.saveSessionWorldStateVariables(worldStateVariables);
 
 		// Save PlayerChoiceVariables
-		gameSessionRound.savePlayerChoiceVariables(players, definition.getPlayerChoiceVariables().getPlayerChoiceVariable());
+		gameSessionRound.saveSessionPlayerChoiceVariables(players);
 
 		// Save playerStateVariables
-		gameSessionRound.savePlayerStateVariables(players, definition.getPlayerStateVariables().getPlayerStateVariable());		
+		gameSessionRound.saveSessionPlayerStateVariables(playerStateVariables);		
 		
 		return status;
 	}
@@ -241,7 +242,8 @@ public class GameSessionController implements GameConstants
 	{
 		// TODO
 		// TO BE DELETED
-		//jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\", \"numberChoice\":\"23\"}}";
+		jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\"}}";
+		jsonString = "{\"uuid\":\"2\", \"choiceVariables\":{\"numberChoice\":\"44\"}}";
 		//jsonString = "{\"uuid\": \"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\", \"choiceVariables\": {\"numberChoice\": \"10\"}}";
 		
 		if ((jsonString == null) || (jsonString.isEmpty()))
@@ -252,6 +254,9 @@ public class GameSessionController implements GameConstants
 		{
 			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
 		}
+		gameSession.setGameSessionPlayerService(gameSessionPlayerService);
+		gameSession.setGameSessionService(gameSessionService);
+		gameSession.setGameSessionRoundService(gameSessionRoundService);
 		gameSession.savePlayerChoiceVariables(sessionUuid, jsonString);
 		return "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\"}";
 	}
@@ -403,10 +408,7 @@ public class GameSessionController implements GameConstants
 	 */
 	private void handleResults(NativeObject res, long roundNum, List<GameSessionPlayer> players) 
 	{
-		List<GameSessionRoundVariable> worldStateVariables = new ArrayList<GameSessionRoundVariable>();
 		GameSessionRoundVariable gameSessionRoundVariable;
-		
-		List<GameSessionRoundPlayerVariable> playerStateVariables = new ArrayList<GameSessionRoundPlayerVariable>();
 		GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable;
 		
 		for (Entry<Object, Object> p : res.entrySet()) 
@@ -426,8 +428,8 @@ public class GameSessionController implements GameConstants
 		            for (Entry<Object, Object> p2 : r2.entrySet()) 
 		            {
 						System.out.println(p.getKey() + ": " + p1.getKey() + ": " + p2.getKey() + ": " + p2.getValue());	
-						gameSessionRoundPlayerVariable = new GameSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, p1.getKey(), p1.getValue().toString(), 
-								gameSession.getUuidOfGameSession(), roundNum, p1.getKey().toString());
+						gameSessionRoundPlayerVariable = new GameSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, p1.getKey(), p2.getValue(), 
+								gameSession.getUuidOfGameSession(), roundNum, p2.getKey());
 						playerStateVariables.add(gameSessionRoundPlayerVariable);
 		            }	            	
 	            }
@@ -446,31 +448,6 @@ public class GameSessionController implements GameConstants
 		this.gameSession = gameSession;
 	}
 
-	public GameSessionService getGameSessionService() {
-		return gameSessionService;
-	}
-
-	public void setGameSessionService(GameSessionService gameSessionService) {
-		this.gameSessionService = gameSessionService;
-	}
-
-	/**
-	 * @return the gameSessionRoundService
-	 */
-	public GameSessionRoundService getGameSessionRoundService()
-	{
-		return gameSessionRoundService;
-	}
-
-	/**
-	 * @param gameSessionRoundService the gameSessionRoundService to set
-	 */
-	public void setGameSessionRoundService(
-			GameSessionRoundService gameSessionRoundService)
-	{
-		this.gameSessionRoundService = gameSessionRoundService;
-	}
-
 	/**
 	 * @return the gameSessionRound
 	 */
@@ -487,4 +464,24 @@ public class GameSessionController implements GameConstants
 		this.gameSessionRound = gameSessionRound;
 	}
 
+	public static Object getService(String serviceName)
+	{
+		if (servletContext != null)
+		{
+			WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
+			if (serviceName.equals("gameSessionRoundService"))
+			{
+				return wac.getBean("gameSessionRoundService");
+			}
+			else if (serviceName.equals("gameSessionService"))
+			{
+				return wac.getBean("gameSessionService");
+			}
+			else if (serviceName.equals("gameSessionService"))
+			{
+				return wac.getBean("gameSessionService");
+			}
+		}
+		return null;
+	}
 }
