@@ -67,7 +67,7 @@ public class GameSessionController extends BaseSession implements GameConstants,
 		
 		// TODO
 		// TO BE DELETED START
-		System.out.println("Working Directory = " + System.getProperty("user.dir"));
+/*		System.out.println("Working Directory = " + System.getProperty("user.dir"));
 		String definitionFile = "G:/Java/Eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def.xml";
 		//definitionFile = "/home/michael/applications/eclipse/simbug/simbug/simbug-server/source/test/java/gr/aua/simbug/tests/hello_world.def2.xml";
 		definitionString = SimbugUtils.fileToString(definitionFile);
@@ -75,7 +75,7 @@ public class GameSessionController extends BaseSession implements GameConstants,
 		// jsonListOfPlayers = "[{\"uuid\":\"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\"},{\"uuid\":\"561dec18-8d0c-41f9-833b-1b848fe9baf7\"},{\"uuid\":\"7ed8b252-611a-11e5-9d70-feff819cdc9f\"}]";
 		jsonListOfPlayers = "[{\"uuid\":\"1\"}, {\"uuid\":\"2\"}]";
 		// TO BE DELETED END
-
+*/
 		if ((definitionString == null) || (definitionString.isEmpty()))
 		{
 			return "{\"status\": \"Error\", \"errorMessage\": \"'definitionString' should not be empty.\", \"result\":\"\"}";	
@@ -85,6 +85,7 @@ public class GameSessionController extends BaseSession implements GameConstants,
 			return "{\"status\": \"Error\", \"errorMessage\": \"'listOfPlayers' should not be empty.\", \"result\":\"\"}";	
 		}
 		// Create game session. Update database
+		gameSession = new GameSession();
 		gameSession.setGameSessionPlayerService(gameSessionPlayerService);
 		gameSession.setGameSessionService(gameSessionService);
 		gameSession.setGameSessionRoundService(gameSessionRoundService);
@@ -113,10 +114,77 @@ public class GameSessionController extends BaseSession implements GameConstants,
 		{
 			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
 		}
-		Definition definition = gameSession.createDefinitionFromXml();
-
 		List<GameSessionPlayer> players = gameSessionService.fetchListOfGameSessionPlayersBySessionUuid(sessionUuid);
 		gameSession.setGameSessionPlayers(players);
+		
+		String script = createAlgorithmScript(gameSession); 		
+		Object obj = runScript(script);			
+		if (obj == null)
+		{
+			status = "{\"status\": \"Error\", \"errorMessage\":\"Error in javascript.\", \"result\":\"" + script + "\"}";
+			return status;
+		}
+		handleResults((NativeObject)obj, gameSession.getCurrentRound(), players);
+		
+		// Create next round
+		gameSession.setCurrentRound(gameSession.getCurrentRound()+1);
+		gameSessionService.saveGameSession(gameSession);
+
+		System.out.println("Next round: " + gameSession.getCurrentRound());
+		gameSessionRound.setGameSessionPlayerService(gameSessionPlayerService);
+		gameSessionRound.setGameSessionService(gameSessionService);
+		gameSessionRound.setGameSessionRoundService(gameSessionRoundService);
+		gameSessionRound.createRound(gameSession, gameSession.getCurrentRound());
+
+		// Save WorldStateVariables
+		gameSessionRound.saveSessionWorldStateVariables(worldStateVariables);
+
+		// Save PlayerChoiceVariables
+		gameSessionRound.saveSessionPlayerChoiceVariables(players);
+
+		// Save playerStateVariables
+		gameSessionRound.saveSessionPlayerStateVariables(playerStateVariables);		
+		
+		return status;
+	}
+
+	/**
+	 * 
+	 * @param sessionUuid
+	 * @return
+	 */
+	@RequestMapping("/getScript/{sessionUuid}")
+	public String getScript( @PathVariable String sessionUuid)
+	{
+		String status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"\"}";
+		// Calculates new state. Runs algorithm. Updates database.
+		// Gets session
+		gameSession = gameSessionService.fetchGameSessionByUuid(sessionUuid);
+		if (gameSession == null)
+		{
+			return "{\"status\": \"Error\", \"errorMessage\": \"sessionUuid '" +  sessionUuid + "' not exists\", \"result\":\"\"}";
+		}
+		List<GameSessionPlayer> players = gameSessionService.fetchListOfGameSessionPlayersBySessionUuid(sessionUuid);
+		gameSession.setGameSessionPlayers(players);
+		
+		String script = createAlgorithmScript(gameSession); 		
+
+		status = "{\"status\": \"ok\", \"errorMessage\":\"\", \"result\":\"" + script + "\"}";
+		return status;
+	}
+	
+	/**
+	 * 
+	 * @param gameSession
+	 * @param players
+	 * @return
+	 */
+	private String createAlgorithmScript(GameSession gameSession)
+	{
+		Definition definition = gameSession.createDefinitionFromXml();
+		String sessionUuid = gameSession.getUuidOfGameSession();
+		List<GameSessionPlayer> players = gameSession.getGameSessionPlayers();
+		
 		Info info = new Info(gameSession, players);
 		StringBuffer script = new StringBuffer("var INFO = new Object();");
 		script.append("INFO['num_players'] = " + info.getNumOfPlayers() + ";");
@@ -191,42 +259,14 @@ public class GameSessionController extends BaseSession implements GameConstants,
 		script.append("RESULTS['PlayerStateVariables']['overallScore'] = new Object();");
 */		// TO BE DELETED END
 		
-		System.out.println("Script: " + script.toString());
+		//System.out.println("Script: " + script.toString());
 
 		// Results
 		String algorithm = definition.getChoicesToStateAlgorithm();
 		algorithm += "RESULTS;";
 		
 		System.out.println("Script: " + script.toString() + algorithm);
-		Object obj = runScript(script.toString() + algorithm);			
-
-		if (obj == null)
-		{
-			status = "{\"status\": \"Error\", \"errorMessage\":\"Error in javascript.\", \"result\":\"\"}";
-			return status;
-		}
-		handleResults((NativeObject)obj, gameSession.getCurrentRound(), players);
-		
-		// Create next round
-		gameSession.setCurrentRound(gameSession.getCurrentRound()+1);
-		gameSessionService.saveGameSession(gameSession);
-
-		System.out.println("Next round: " + gameSession.getCurrentRound());
-		gameSessionRound.setGameSessionPlayerService(gameSessionPlayerService);
-		gameSessionRound.setGameSessionService(gameSessionService);
-		gameSessionRound.setGameSessionRoundService(gameSessionRoundService);
-		gameSessionRound.createRound(gameSession, gameSession.getCurrentRound());
-
-		// Save WorldStateVariables
-		gameSessionRound.saveSessionWorldStateVariables(worldStateVariables);
-
-		// Save PlayerChoiceVariables
-		gameSessionRound.saveSessionPlayerChoiceVariables(players);
-
-		// Save playerStateVariables
-		gameSessionRound.saveSessionPlayerStateVariables(playerStateVariables);		
-		
-		return status;
+		return script.toString() + algorithm;
 	}
 
 	/**
@@ -242,9 +282,9 @@ public class GameSessionController extends BaseSession implements GameConstants,
 	{
 		// TODO
 		// TO BE DELETED
-		jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\"}}";
+/*		jsonString = "{\"uuid\":\"1\", \"choiceVariables\":{\"numberChoice\":\"22\"}}";
 		jsonString = "{\"uuid\":\"2\", \"choiceVariables\":{\"numberChoice\":\"44\"}}";
-		//jsonString = "{\"uuid\": \"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\", \"choiceVariables\": {\"numberChoice\": \"10\"}}";
+*/		//jsonString = "{\"uuid\": \"56030487-0cf0-4f60-b10c-4d8a8fe9baf7\", \"choiceVariables\": {\"numberChoice\": \"10\"}}";
 		
 		if ((jsonString == null) || (jsonString.isEmpty()))
 		{
@@ -410,7 +450,7 @@ public class GameSessionController extends BaseSession implements GameConstants,
 	{
 		GameSessionRoundVariable gameSessionRoundVariable;
 		GameSessionRoundPlayerVariable gameSessionRoundPlayerVariable;
-		
+			
 		for (Entry<Object, Object> p : res.entrySet()) 
 		{
 			NativeObject r1 = (NativeObject)p.getValue();
@@ -427,9 +467,13 @@ public class GameSessionController extends BaseSession implements GameConstants,
 					NativeObject r2 = (NativeObject)p1.getValue();
 		            for (Entry<Object, Object> p2 : r2.entrySet()) 
 		            {
-						System.out.println(p.getKey() + ": " + p1.getKey() + ": " + p2.getKey() + ": " + p2.getValue());	
-						gameSessionRoundPlayerVariable = new GameSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, p1.getKey(), p2.getValue(), 
-								gameSession.getUuidOfGameSession(), roundNum, p2.getKey());
+						String catName = String.valueOf(p.getKey());
+						String varName = String.valueOf(p1.getKey());
+						String playerId = String.valueOf(p2.getKey());
+						String varValue = String.valueOf(p2.getValue());
+						System.out.println(catName + ": " + varName + ": " + playerId + ": " + varValue);	
+						gameSessionRoundPlayerVariable = new GameSessionRoundPlayerVariable(PLAYER_STATE_VARIABLE, varName, varValue, 
+								gameSession.getUuidOfGameSession(), roundNum, playerId);
 						playerStateVariables.add(gameSessionRoundPlayerVariable);
 		            }	            	
 	            }

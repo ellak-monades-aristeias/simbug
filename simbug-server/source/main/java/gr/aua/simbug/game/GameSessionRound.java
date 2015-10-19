@@ -162,7 +162,8 @@ public class GameSessionRound extends BaseSession implements GameConstants
 		gameSession.setCurrentRound(gameSession.getCurrentRound()-1);
 		for (GameSessionRoundPlayerVariable gsrpv : playerStateVariables) 
 		{
-			GameSessionRoundPlayerVariable prevGsrpv = gameSessionRoundService.fetchPlayerStateVariableByNameByUuidByRoundByPlayer(gameSession, gsrpv.getPlayerUuid(), gsrpv.getVariableName()); 			
+			GameSessionRoundPlayerVariable prevGsrpv = gameSessionRoundService.fetchPlayerStateVariableByNameByUuidByRoundByPlayer(gameSession, gsrpv.getPlayerUuid(), gsrpv.getVariableName()); 	
+			System.out.println(gsrpv.getPlayerUuid() + " - " +  gsrpv.getVariableName());
 			prevGsrpv.setUuidOfGameSession(gameSession.getUuidOfGameSession());
 			prevGsrpv.setRoundNum(roundNum);				
 			prevGsrpv.setVariableValue(gsrpv.getVariableValue());
