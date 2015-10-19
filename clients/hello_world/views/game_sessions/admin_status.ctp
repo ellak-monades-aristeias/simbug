@@ -3,6 +3,9 @@
 <script src="<?php  echo $this->webroot; ?>js/xmltree.js"></script>
 <link href="<?php  echo $this->webroot; ?>js/xmltree.css" rel="stylesheet">
 
+<!-- //TODO, employ D3 for displaying data -->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>  -->
+
 <script>
 $(document).ready(function() {
 	new XMLTree({
@@ -18,7 +21,9 @@ $(document).ready(function() {
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3>
-			<span class="glyphicon glyphicon-list-alt"></span> <?php  echo $data['GameSession']['name']; ?> <small><?php  echo $data['GameSession']['uuid']; ?></small>
+			<span class="glyphicon glyphicon-list-alt"></span> <?php  echo $data['GameSession']['name']; ?> 
+			<small><?php  echo $data['GameSession']['uuid']; ?></small> 
+			<small>Round <?php  echo $data['GameSession']['round']; ?></small>
 			
 			
 			<!--  actions -->
@@ -32,13 +37,7 @@ $(document).ready(function() {
                          <li><a href="<?php  echo $this->webroot; ?>game_sessions/advanceRound/<?php echo $data['GameSession']['id']; ?>" ><span class="glyphicon glyphicon-road"></span>Advance Round</a></li>
                          <li><a href="<?php  echo $this->webroot; ?>game_sessions/edit/<?php echo $data['GameSession']['id']; ?>" ><span class="glyphicon glyphicon-edit"></span>Edit</a></li>
                     </ul>
-                </div>
-			
-			
-			
-			
-			
-			
+                </div>			
 		</h3>
 	</div>
 
@@ -91,14 +90,14 @@ $(document).ready(function() {
           <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">3. Statistics</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. Statistics</a>
                 </h4>
             </div>
 
-            <div id="collapseTwo" class="panel-collapse collapse in">
+            <div id="collapseThree" class="panel-collapse collapse in">
                 <div class="panel-body">
 
-                    <p>Statistics</p>
+                    <div> <p><?php  pr($state_hist);?> </p></div>
 
                 </div>
             </div>

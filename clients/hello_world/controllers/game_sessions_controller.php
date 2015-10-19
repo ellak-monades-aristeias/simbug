@@ -33,7 +33,12 @@ class GameSessionsController  extends AppController {
 		
 		//App::import('Lib','SimBugClient',array('file'=>'simbugclient.php'));
 		$sc = new SimBugClient();
-		$result=	$sc->advanceTurn($data);
+		$result=$sc->advanceTurn($data);
+		
+		if($result['status']=='ok') {
+			$this->GameSession->id = $id;
+			$this->GameSession->saveField('round',$data['GameSession']['round']+1);
+		}
 		
 		$this->Session->setFlash('An initializaion message was sent to the SIMBUG-SERVER. The response was:<pre>'.print_r($result,TRUE).'</pre>');
 		
@@ -43,12 +48,20 @@ class GameSessionsController  extends AppController {
 		
 	}
 	
+	/**
+	 * //TODO
+	 */
+	function getAllPlayerDecisionsAsTsv() {
+		
+	}
 	
-	
+	/**
+	 * 
+	 * @param unknown $id
+	 */
 	function admin_status($id) {
 		
 		$sc = new SimBugClient();
-		
 		
 		$data = $this->GameSession->find('first',array('recursive'=>1,'conditions'=>array('GameSession.id'=>$id)));
 //pr($data);die;		
@@ -60,26 +73,32 @@ class GameSessionsController  extends AppController {
 			}
 			
 			//get choices history
-//pr($sc->getPlayerChoicesAll($data,$p,$data['GameSession']['round']));die;	
-//pr($p);die;
 			$c = $sc->getPlayerChoicesAll($data,$p,$data['GameSession']['round']);
 			$choices_hist[$p['id']] =  $c;
 			
-			//insert value to $data['Player'][$k]['Decisions'][xxx]
+			//get state history
+			$s = $sc->getPlayerStateAll($data,$p,$data['GameSession']['round']);
+			$state_hist[$p['id']] =  $s;
+
 		}
 //die;		
 		$this->set('data',$data);
 		$this->set('choices_hist',$choices_hist);
+		$this->set('state_hist',$state_hist);
 	}
 	
 	function player_status($id) {
+		$sc = new SimBugClient();
+		
 		$data = $this->GameSession->find('first',array('recursive'=>1,'conditions'=>array('GameSession.id'=>$id)));
 		
-		//load decisions, /getPlayerState/UUID_of_GAME_SESSION/UUID_of_PLAYER
-		
+		//get state history
+		$s = $sc->getPlayerStateAll($data,$this->Session->read('Auth.Player'),$data['GameSession']['round']);
+		$state_hist =  $s;
 		
 		
 		$this->set('data',$data);
+		$this->set('state_hist',$state_hist);
 	}
 	
 	

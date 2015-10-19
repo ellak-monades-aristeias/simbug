@@ -48,7 +48,7 @@
             <div id="collapseTwo" class="panel-collapse collapse in">
                 <div class="panel-body">
 
-                    <p>Statistics</p>
+                    <div> <p><?php  pr($state_hist);?> </p></div>
 
                 </div>
             </div>

@@ -21,10 +21,15 @@ class SimBugClient extends Object {
 		$this->HttpSocket->disconnect();
 	}
 	
+	/**
+	 * 
+	 * @param unknown $gs
+	 * @return mixed|boolean|NULL|number|string|stdClass|mixed[]|boolean[]|NULL[]|number[]|string[]|stdClass[]
+	 */
 	function advanceTurn($gs) {
 //pr($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);die;		
 		$results = $this->HttpSocket->post($this->rest_server_url.'/advanceTurn/'.$gs['GameSession']['uuid']);
-		return $results;
+		return $this->json->decode($results);
 	}
 	
 	/**
@@ -33,7 +38,7 @@ class SimBugClient extends Object {
 	 * @param unknown $player
 	 */
 	function getPlayerChoices($gs,$player,$turn) {
-//pr(($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']));		
+//pr($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$turn);	die;	
 		$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$turn);
 		//$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']);
 //pr($results);		
@@ -43,6 +48,13 @@ class SimBugClient extends Object {
 		return $this->json->decode($results);
 	}
 	
+	/**
+	 * 
+	 * @param unknown $gs
+	 * @param unknown $player
+	 * @param unknown $cur_turn
+	 * @return unknown|mixed|boolean|NULL|number|string|stdClass
+	 */
 	function getPlayerChoicesAll($gs,$player,$cur_turn) {
 		
 		for($i=0;$i<=$cur_turn;$i++) {
@@ -59,6 +71,38 @@ class SimBugClient extends Object {
 		}
 		return $data;
 		
+	}
+	
+	/**
+	 * 
+	 * @param unknown $gs
+	 * @param unknown $player
+	 * @param unknown $cur_turn
+	 * @return string|unknown|mixed|boolean|NULL|number|stdClass
+	 */
+	function getPlayerStateAll($gs,$player,$cur_turn) {
+//pr($player);die;		
+		if($cur_turn==0) {
+			$data[0]['State']='No State at round 0';			
+			
+		}
+		else {
+			for($i=0;$i<=($cur_turn);$i++) {
+				$r = $this->HttpSocket->post($this->rest_server_url.'/getPlayerState/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$i);
+				$r=$this->json->decode($r);
+			
+				if($r['status']=='ok') {
+					$data[$i]['State'] = $r['result'];
+				}
+				else {
+					$data[$i]['State'] = $r['errorMessage'];
+				}	
+			}	
+				
+		}
+//pr($data);die;
+		return $data;
+	
 	}
 	
 	
