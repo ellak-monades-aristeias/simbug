@@ -33,14 +33,32 @@ class SimBugClient extends Object {
 	 * @param unknown $player
 	 */
 	function getPlayerChoices($gs,$player,$turn) {
-pr(($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']));		
+//pr(($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']));		
 		$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$turn);
 		//$results = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id']);
-pr($results);		
+//pr($results);		
 		
 		//$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
 //pr($json->decode($results))	;	
 		return $this->json->decode($results);
+	}
+	
+	function getPlayerChoicesAll($gs,$player,$cur_turn) {
+		
+		for($i=0;$i<=$cur_turn;$i++) {
+			$r = $this->HttpSocket->post($this->rest_server_url.'/getPlayerChoices/'.$gs['GameSession']['uuid'].'/'.$player['id'].'/'.$i);
+			$r=$this->json->decode($r);
+			
+			if($r['status']=='ok') {
+				$data[$i]['Decisions'] = $r['result'];
+			}
+			else {
+				$data[$i]['Decisions'] = $r['errorMessage'];
+			}
+			
+		}
+		return $data;
+		
 	}
 	
 	

@@ -76,13 +76,14 @@ $(document).ready(function() {
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. History of Decisions</a>
                 </h4>
+               
             </div>
 
             <div id="collapseTwo" class="panel-collapse collapse in">
                 <div class="panel-body">
-
-                    <p>Statistics</p>
-
+				  <div> <p><?php  pr($choices_hist);?> </p></div>
+				  
+				  
                 </div>
             </div>
         </div>

@@ -59,10 +59,17 @@ class GameSessionsController  extends AppController {
 				$data['Player'][$k]['Decisions'] = $cc['result'];
 			}
 			
+			//get choices history
+//pr($sc->getPlayerChoicesAll($data,$p,$data['GameSession']['round']));die;	
+//pr($p);die;
+			$c = $sc->getPlayerChoicesAll($data,$p,$data['GameSession']['round']);
+			$choices_hist[$p['id']] =  $c;
+			
 			//insert value to $data['Player'][$k]['Decisions'][xxx]
 		}
 //die;		
 		$this->set('data',$data);
+		$this->set('choices_hist',$choices_hist);
 	}
 	
 	function player_status($id) {

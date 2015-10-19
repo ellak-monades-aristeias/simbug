@@ -1,3 +1,11 @@
+//0. define
+  		RESULTS = new Object();
+		RESULTS['WorldStateVariables'] = new Object();
+		RESULTS['PlayerStateVariables'] = new Object();
+		RESULTS['PlayerStateVariables']['roundDistanceFromAverage'] = new Object();
+		RESULTS['PlayerStateVariables']['roundRank'] = new Object();
+		RESULTS['PlayerStateVariables']['overallScore'] = new Object();
+  		
 		//1. calculate average of all players (world level)
 		sum=0;
 		for (i = 0; i < INFO['num_players']; i++) {
@@ -21,10 +29,11 @@
 		
 		rank.sort(function (a, b) { return distance[a] < distance[b] ? 1 : distance[a] > distance[b] ? -1 : 0; });
 		for (i = 0; i < INFO['num_players']; i++) {
+			player_id = INFO['players'][i][INFO['cur_turn']];
 			RESULTS['PlayerStateVariables']['roundRank'][player_id] = rank[i];
-		}
+			if(INFO['cur_turn']>0) {
+				RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i] + PLAYER_STATE_VARIABLES['overallScore'][player_id][INFO['cur_turn']-1];
+			}
+			else {RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i];}
+		}		
 		
-		if(INFO['cur_turn']>0) {
-			RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i] + PLAYER_STATE_VARIABLES['overallScore'][player_id][INFO['cur_turn']-1];
-		}
-		else {RESULTS['PlayerStateVariables']['overallScore'][player_id] = rank[i];}
