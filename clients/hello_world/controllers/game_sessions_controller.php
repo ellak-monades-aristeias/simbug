@@ -5,6 +5,7 @@ class GameSessionsController  extends AppController {
 
 	var $name = 'GameSessions';
 	var $scaffold;
+	var $components = array('RequestHandler');
 	
 
 	function submitChoice($gs_id=null) {
@@ -50,8 +51,28 @@ class GameSessionsController  extends AppController {
 	
 	/**
 	 * //TODO
+	 * player \t round \t variableName \t value
 	 */
-	function getAllPlayerDecisionsAsTsv() {
+	function getAllPlayerDecisionsAsTsv($id) {
+		$sc = new SimBugClient();
+		$data = $this->GameSession->find('first',array('recursive'=>1,'conditions'=>array('GameSession.id'=>$id)));
+	
+		$this->header('Connection: close');
+		$this->RequestHandler->setContent('csv', 'text/csv');
+		$this->disableCache();
+		$this->autoRender = false;
+		$this->layout = 'ajax';
+		Configure::write('debug', 0); // Turn this to 2 for debugging
+		
+		foreach($data['Player'] as $k=>$p) {
+			$c = $sc->getPlayerChoicesAll($data,$p,$data['GameSession']['round']);
+			foreach($c as $round=>$choices) {
+				foreach($choices['Decisions'] as $kk=>$vv) {
+					echo $p['id']."\t".$round."\t".$kk."\t".$vv;
+					echo "\n";
+				}
+			}
+		}
 		
 	}
 	
@@ -79,6 +100,31 @@ class GameSessionsController  extends AppController {
 			//get state history
 			$s = $sc->getPlayerStateAll($data,$p,$data['GameSession']['round']);
 			$state_hist[$p['id']] =  $s;
+			
+			
+			//create rounds labels
+			$round_string='[';$rs_sep='';for($i=0;$i<=$data['GameSession']['round'];$i++) {$round_string.=$rs_sep."'round ".$i."'";$rs_sep=',';}
+			$round_string.=']';
+			$this->set('round_string',$round_string);
+			
+			//create series
+// 			//series: [
+//    				[5, 2, 4, 2, 0]
+//  			]
+			$series_string='[';$ssep='';
+			foreach($choices_hist as $p_id=>$d) {
+				$series_string.=$ssep.'[';
+				
+				$sep='';
+				foreach($d as $round=>$dd) {
+					$series_string.=$sep.$dd['Decisions']['numberChoice'].'';
+					$sep=',';
+				}
+				$series_string.=']';
+				$ssep=',';
+			}
+			$series_string.=']';
+			$this->set('series_string',$series_string);
 
 		}
 //die;		

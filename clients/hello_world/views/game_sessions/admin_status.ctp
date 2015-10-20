@@ -1,10 +1,18 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
-<script src="<?php  echo $this->webroot; ?>js/xmltree.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+
+
+ <script src="<?php  echo $this->webroot; ?>js/xmltree.js"></script>
 <link href="<?php  echo $this->webroot; ?>js/xmltree.css" rel="stylesheet">
 
-<!-- //TODO, employ D3 for displaying data -->
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>  -->
+
+
+
+
+
 
 <script>
 $(document).ready(function() {
@@ -13,9 +21,23 @@ $(document).ready(function() {
 		container: '#tree',
 		startCollapsed: true
 	});
+
+
+	var data = {
+			  // A labels array that can contain any sort of values
+			  labels: <?php  echo $round_string; ?>,
+			  // Our series array that contains series objects or in this case series data arrays
+			  series: <?php  echo $series_string; ?>
+			};
+
+	new Chartist.Line('#choices_hist_chart', data);
+
 	
 });
 </script>
+
+ 
+				  
 
 
 <div class="panel panel-default">
@@ -80,10 +102,18 @@ $(document).ready(function() {
 
             <div id="collapseTwo" class="panel-collapse collapse in">
                 <div class="panel-body">
-				  <div> <p><?php  pr($choices_hist);?> </p></div>
 				  
+				  <div id="choices_hist_chart" style="width:600px;height:300px"></div>
+				  
+				  <!-- //TODO, Line displaying data -->
+				  
+				   
+				
 				  
                 </div>
+                <div> <p><?php  pr($choices_hist);?> </p></div>
+                
+                
             </div>
         </div>
         
