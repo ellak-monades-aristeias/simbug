@@ -10,3 +10,18 @@ SIMBUG is addressed initially to the educational gaming open source community, c
 See the [Wiki page](https://github.com/ellak-monades-aristeias/simbug/wiki/) for details.
 
 [Instructions for potential users](https://github.com/ellak-monades-aristeias/simbug/wiki/Instruction-to-Potential-Users) / [Instructions for Potential Developers](https://github.com/ellak-monades-aristeias/simbug/wiki/Instructions-to-Potential-Developers)
+
+
+The project was financed by 
+
+The original deliverables of the projects were:
+
+N.|Title|Url
+------------
+1 |Κείμενο του Ανοικτού προτύπου SIMBUG open standard, στο οποίο περιγράφονται τα βασικά στοιχεία και οι βασικές λειτουργίες ενός Simulation Business Game|https://github.com/ellak-monades-aristeias/simbug/wiki/Open-Standard-Introduction, https://github.com/ellak-monades-aristeias/simbug/wiki/The-Serious-Game-Abstract-Model
+2|Γλωσσάρι όρων|https://github.com/ellak-monades-aristeias/simbug/wiki/Glossary
+3|Wiki στο οποίο θα φιλοξενούνται|https://github.com/ellak-monades-aristeias/simbug/wiki
+4|Πηγαίος κώδικας, SIMBUG-SERVER|https://github.com/ellak-monades-aristeias/simbug
+5|Τεκμηρίωση του RESTful API|https://github.com/ellak-monades-aristeias/simbug/wiki/The-Three-Tier-Architecture-of-SIMBUG, https://github.com/ellak-monades-aristeias/simbug/wiki/The-Definition-File
+6|Ένα πλήρες λειτουργικό παιχνίδι (hello world client)|http://pub.aoa.aua.gr/_sites/simbug/clients/hello_world/
+7|Πηγαίος κώδικας του client|https://github.com/ellak-monades-aristeias/simbug/tree/clients
