@@ -26,3 +26,5 @@ SIMBUG was initiated by an [MA-ELAAK](https://ma.ellak.gr/) funded project. The 
 | 6 | A full functional game: [The hello world client](http://pub.aoa.aua.gr/_sites/simbug/clients/hello_world/) |
 | 7 | [Source code of the hello-world client](https://github.com/ellak-monades-aristeias/simbug/tree/clients) |
 
+
+You can download a [quick review of the SIMBUG project here](https://github.com/ellak-monades-aristeias/simbug/files/32161/default.pdf)
