@@ -17,8 +17,9 @@ The project was financed by
 The original deliverables of the projects were:
 
 
-N. | Title                               | Url
+|N. | Title| Url     |
 ---------------------
+|1|sdasd|asasd
 | 1 | Κείμενο του Ανοικτού προτύπου SIMBUG open standard, στο οποίο περιγράφονται τα βασικά στοιχεία και οι βασικές λειτουργίες ενός Simulation Business Game | https://github.com/ellak-monades-aristeias/simbug/wiki/Open-Standard-Introduction, https://github.com/ellak-monades-aristeias/simbug/wiki/The-Serious-Game-Abstract-Model
 | 2 | Γλωσσάρι όρων | https://github.com/ellak-monades-aristeias/simbug/wiki/Glossary |
 | 3 | Wiki στο οποίο θα φιλοξενούνται | https://github.com/ellak-monades-aristeias/simbug/wiki |
