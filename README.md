@@ -12,9 +12,7 @@ See the [Wiki page](https://github.com/ellak-monades-aristeias/simbug/wiki/) for
 [Instructions for potential users](https://github.com/ellak-monades-aristeias/simbug/wiki/Instruction-to-Potential-Users) / [Instructions for Potential Developers](https://github.com/ellak-monades-aristeias/simbug/wiki/Instructions-to-Potential-Developers)
 
 
-The project was financed by 
-
-The original deliverables of the projects were:
+SIMBUG was initiated by an [MA-ELAAK](https://ma.ellak.gr/) funded project. The original project consisted of the following deliverables :
 
 
 
