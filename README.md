@@ -16,14 +16,9 @@ SIMBUG was initiated by an [MA-ELAAK](https://ma.ellak.gr/) funded project. The 
 
 
 
-
-
 | **n.** | **Deliverable (url)** |
 | --- | --- |
-| 1 |
-- Open Standard Introduction](https://github.com/ellak-monades-aristeias/simbug/wiki/Open-Standard-Introduction)
-- Serious Game Abstract Model](https://github.com/ellak-monades-aristeias/simbug/wiki/The-Serious-Game-Abstract-Model)
- |
+| 1 | [Open Standard Introduction](https://github.com/ellak-monades-aristeias/simbug/wiki/Open-Standard-Introduction),  [Serious Game Abstract Model](https://github.com/ellak-monades-aristeias/simbug/wiki/The-Serious-Game-Abstract-Model) |
 | 2 | [Term Glossary](https://github.com/ellak-monades-aristeias/simbug/wiki/Glossary) |
 | 3 | [Wiki](https://github.com/ellak-monades-aristeias/simbug/wiki/Glossary) |
 | 4 | [Source Code of SIMBUG server](https://github.com/ellak-monades-aristeias/simbug) |
