@@ -14,3 +14,5 @@ the rules are:
 
 The game finishes after some turns
 
+*In order to see this game, switch to [clients tree](https://github.com/ellak-monades-aristeias/simbug/tree/clients)*
+
