@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/ellak-monades-aristeias/simbug/master/simbug-server/source/main/java/gr/aua/simbug/definition/definition.xsd">
+
+<Configuration>
+	<Parameter>
+		<Name>InitialPlayerLand</Name>
+		<Type>Integer</Type>
+		<Value>100</Value>
+	</Parameter>
+</Configuration>
+
+<PlayerChoiceVariables>
+
+    <PlayerChoiceVariable>
+      <Name>numberChoice</Name>
+      <Type>Integer</Type>
+    </PlayerChoiceVariable>
+    
+</PlayerChoiceVariables>
+
+<PlayerStateVariables>
+	
+	<PlayerStateVariable><Name>LandOwned</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>LandtoRentIn</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>LandtoRentInWTP</Name><Type>Float</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>LandtoRentOut</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>LandtoRentOutWTA</Name><Type>Float</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>CommonWheat_Low</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>CommonWheat_High</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>DurumWheat_Low</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>DurumWheat_High</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>Maize_Low</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>Maize_High</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>Cotton_Low</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>Cotton_High</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	
+</PlayerStateVariables>
+
+
+<WorldStateVariables>
+	<WorldStateVariable><Name>Phase</Name><Type>Integer</Type></WorldStateVariable>
+</WorldStateVariables>
+
+</Definition>
