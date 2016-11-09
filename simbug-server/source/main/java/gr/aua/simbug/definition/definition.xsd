@@ -111,7 +111,10 @@
 			</xs:element>
 			
 			<xs:element name="ChoicesToStateAlgorithm" type="xs:string">
-			</xs:element>			
+			</xs:element>	
+		
+			<xs:element name="InitializeStatesAlgorithm" type="xs:string">
+			</xs:element>
 			
 
     	</xs:all>
