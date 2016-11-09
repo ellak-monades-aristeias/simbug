@@ -10,22 +10,11 @@
 </Configuration>
 
 <PlayerChoiceVariables>
-
-    <PlayerChoiceVariable>
-      <Name>numberChoice</Name>
-      <Type>Integer</Type>
-    </PlayerChoiceVariable>
     
-</PlayerChoiceVariables>
-
-<PlayerStateVariables>
-	
-	<PlayerStateVariable><Name>LandOwned</Name><Type>Integer</Type></PlayerStateVariable>
-	
-	<PlayerStateVariable><Name>LandtoRentIn</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>LandtoRentInWTP</Name><Type>Float</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>LandtoRentOut</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>LandtoRentOutWTA</Name><Type>Float</Type></PlayerStateVariable>
+    <PlayerChoiceVariable><Name>LandtoRentIn</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>LandtoRentInWTP</Name><Type>Float</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>LandtoRentOut</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>LandtoRentOutWTA</Name><Type>Float</Type></PlayerChoiceVariable>
 	
 	<PlayerStateVariable><Name>CommonWheat_Low</Name><Type>Integer</Type></PlayerStateVariable>
 	<PlayerStateVariable><Name>CommonWheat_High</Name><Type>Integer</Type></PlayerStateVariable>
@@ -38,6 +27,18 @@
 	
 	<PlayerStateVariable><Name>Cotton_Low</Name><Type>Integer</Type></PlayerStateVariable>
 	<PlayerStateVariable><Name>Cotton_High</Name><Type>Integer</Type></PlayerStateVariable>
+	 
+</PlayerChoiceVariables>
+
+<PlayerStateVariables>
+	
+	<PlayerStateVariable><Name>LandOwned</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>LandRented</Name><Type>Integer</Type></PlayerStateVariable>
+	
+	<PlayerStateVariable><Name>Liquidity</Name><Type>Float</Type></PlayerStateVariable>
+	
+	
 	
 	
 </PlayerStateVariables>
