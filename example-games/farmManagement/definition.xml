@@ -37,10 +37,8 @@
 	<PlayerStateVariable><Name>Liquidity</Name><Type>Float</Type></PlayerStateVariable>
 	
 	<!-- Phase 1 State --> 
-	<PlayerStateVariable><Name>LandRented</Name><Type>Integer</Type></PlayerStateVariable>
+	<PlayerStateVariable><Name>LandToCultivate</Name><Type>Integer</Type></PlayerStateVariable>
 	
-	<!-- Phase 2 State -->
-	<PlayerStateVariable><Name></Name></PlayerStateVariable>
 	
 </PlayerStateVariables>
 
