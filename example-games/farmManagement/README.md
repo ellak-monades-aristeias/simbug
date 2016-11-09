@@ -1,7 +1,7 @@
 A farm management game with many players
 
 The game is splited in two phases: 
-Phase 1 is where players deide on the land to rent out (to other players) or in from other players.
+Phase 1 is where players decide on the land to rent out (to other players) or in from other players.
 Phase 2 is where players decide on crop plans (common wheat, durum wheat, maize, cotton -all on low or high intensity)
 
 Cultivating a crop incurres costs and produce income.
