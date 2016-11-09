@@ -10,42 +10,61 @@
 </Configuration>
 
 <PlayerChoiceVariables>
-    
+
+	<!-- Phase 1 Variables -->    
     <PlayerChoiceVariable><Name>LandtoRentIn</Name><Type>Integer</Type></PlayerChoiceVariable>
 	<PlayerChoiceVariable><Name>LandtoRentInWTP</Name><Type>Float</Type></PlayerChoiceVariable>
 	<PlayerChoiceVariable><Name>LandtoRentOut</Name><Type>Integer</Type></PlayerChoiceVariable>
 	<PlayerChoiceVariable><Name>LandtoRentOutWTA</Name><Type>Float</Type></PlayerChoiceVariable>
 	
-	<PlayerStateVariable><Name>CommonWheat_Low</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>CommonWheat_High</Name><Type>Integer</Type></PlayerStateVariable>
 	
-	<PlayerStateVariable><Name>DurumWheat_Low</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>DurumWheat_High</Name><Type>Integer</Type></PlayerStateVariable>
-	
-	<PlayerStateVariable><Name>Maize_Low</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>Maize_High</Name><Type>Integer</Type></PlayerStateVariable>
-	
-	<PlayerStateVariable><Name>Cotton_Low</Name><Type>Integer</Type></PlayerStateVariable>
-	<PlayerStateVariable><Name>Cotton_High</Name><Type>Integer</Type></PlayerStateVariable>
+	<!-- Phase 2 Variables -->  
+	<PlayerChoiceVariable><Name>CommonWheat_Low</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>CommonWheat_High</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>DurumWheat_Low</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>DurumWheat_High</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>Maize_Low</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>Maize_High</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>Cotton_Low</Name><Type>Integer</Type></PlayerChoiceVariable>
+	<PlayerChoiceVariable><Name>Cotton_High</Name><Type>Integer</Type></PlayerChoiceVariable>
 	 
 </PlayerChoiceVariables>
 
 <PlayerStateVariables>
 	
+	<!-- Phase 1+2 State -->  
 	<PlayerStateVariable><Name>LandOwned</Name><Type>Integer</Type></PlayerStateVariable>
-	
-	<PlayerStateVariable><Name>LandRented</Name><Type>Integer</Type></PlayerStateVariable>
-	
 	<PlayerStateVariable><Name>Liquidity</Name><Type>Float</Type></PlayerStateVariable>
 	
+	<!-- Phase 1 State --> 
+	<PlayerStateVariable><Name>LandRented</Name><Type>Integer</Type></PlayerStateVariable>
 	
-	
+	<!-- Phase 2 State -->
+	<PlayerStateVariable><Name></Name></PlayerStateVariable>
 	
 </PlayerStateVariables>
 
 
 <WorldStateVariables>
 	<WorldStateVariable><Name>Phase</Name><Type>Integer</Type></WorldStateVariable>
+	
+	<!-- Phase 2 State -->
+	<WorldStateVariable><Name>CommonWheat_Yield</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>DurumWheat_Yield</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Maize_Yield</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Cotton_Yield</Name><Type>Float</Type></WorldStateVariable>
+	
+	<WorldStateVariable><Name>CommonWheat_TotalSupply</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>DurumWheat_TotalSupply</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Maize_TotalSupply</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Cotton_TotalSupply</Name><Type>Float</Type></WorldStateVariable>
+	
+	<WorldStateVariable><Name>CommonWheat_TotalDemand</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>DurumWheat_TotalDemand</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Maize_TotalDemand</Name><Type>Float</Type></WorldStateVariable>
+	<WorldStateVariable><Name>Cotton_TotalDemand</Name><Type>Float</Type></WorldStateVariable>
+	
+	
 </WorldStateVariables>
 
 </Definition>
