@@ -1,5 +1,3 @@
-
-<script>
 //definitions
 WORLD_STATE_VARIABLES = [];WORLD_STATE_VARIABLES["Phase"]=[];
 WORLD_STATE_VARIABLES["Phase"][0]=1;
@@ -19,16 +17,16 @@ PLAYER_STATE_VARIABLES["Liquidity"]=[];
 
 //initial values
 for(var i=1;i<11;i++){
-INFO["players"][i]=[];INFO["players"][i][0]=i;
-var v1=Math.random();var v2=Math.random();
-PLAYER_CHOICE_VARIABLES["LandtoRentIn"][i]=(v1>0.5?v2*20:0);
-PLAYER_CHOICE_VARIABLES["LandtoRentInWTP"][i]=(v1>0.5?v2*2000:0);
-PLAYER_CHOICE_VARIABLES["LandtoRentOut"][i]=(v1>0.5?0:v2*20);
-PLAYER_CHOICE_VARIABLES["LandtoRentOutWTA"][i]=(v1>0.5?0:v2*150);
+	INFO["players"][i]=[];INFO["players"][i][0]=i;
+	var v1=Math.random();var v2=Math.random();
+	PLAYER_CHOICE_VARIABLES["LandtoRentIn"][i]=(v1>0.5?v2*20:0);
+	PLAYER_CHOICE_VARIABLES["LandtoRentInWTP"][i]=(v1>0.5?v2*2000:0);
+	PLAYER_CHOICE_VARIABLES["LandtoRentOut"][i]=(v1>0.5?0:v2*20);
+	PLAYER_CHOICE_VARIABLES["LandtoRentOutWTA"][i]=(v1>0.5?0:v2*150);
 
-PLAYER_STATE_VARIABLES["LandOwned"][i]=[];PLAYER_STATE_VARIABLES["Liquidity"][i]=[];
-PLAYER_STATE_VARIABLES["LandOwned"][i][0]=100;
-PLAYER_STATE_VARIABLES["Liquidity"][i][0]=10000;
+	PLAYER_STATE_VARIABLES["LandOwned"][i]=[];PLAYER_STATE_VARIABLES["Liquidity"][i]=[];
+	PLAYER_STATE_VARIABLES["LandOwned"][i][0]=100;
+	PLAYER_STATE_VARIABLES["Liquidity"][i][0]=10000;
 }
 
 
@@ -48,8 +46,6 @@ if(WORLD_STATE_VARIABLES['Phase'][turn]==1) {
 	//run land market
 	var lm_iterations=INFO['num_players']*3;
     
-    
- 
     	for(var i=1;i<=lm_iterations;i++) {
         		//construct buyers-sellers arrays
 				var buyers=[];var sellers=[];
@@ -89,5 +85,4 @@ else {
 	//run production realization
 }
 
-</script>
-</p>
+
