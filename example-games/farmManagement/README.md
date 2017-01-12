@@ -1,5 +1,11 @@
 A farm management game with many players incorporating yield and price risk. 
 
+In each turn, the players take the following decisions:
+1. Capital Investments
+2. Crop Plans
+3. Short-term or Long-term Loans
+
+
 The game is splited in two phases: 
 Phase 1 is where players decide on the land to rent out (to other players) or in from other players.
 Phase 2 is where players decide on crop plans (common wheat, durum wheat, maize, cotton -all on low or high intensity)
